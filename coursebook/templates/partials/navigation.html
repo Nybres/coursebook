@@ -26,7 +26,7 @@
     <div class="container">
         <div class="nav__inner">
             <div class="nav__left">
-                <a href="./index.html" class="nav__left-logo">
+                <a href="{% url 'home' %}" class="nav__left-logo">
                     CourseBook
                 </a>
                 <div class="nav__left-drop">
@@ -59,7 +59,7 @@
             </div>
             <div class="nav__right">
                 <div class="nav__account">
-                    <a href="./login.html">
+                    <a href="{% url 'login' %}">
                         <svg class="nav__right-user" width="34" height="34" viewBox="0 0 34 34" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path

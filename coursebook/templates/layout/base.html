@@ -45,7 +45,7 @@
     {% endblock %}
 </head>
 
-<body>
+<body {% if request.path != "/" %} class="special"{% endif %}>
     {% include 'partials/navigation.html' %}
     <main>
         {% block content %}
