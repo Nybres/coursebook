@@ -1,0 +1,27 @@
+{% extends "layout/base.html" %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/global.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/login.min.css' %}" />
+{% endblock %} {% block content %}
+<section class="">
+  <h1>Zalogowano</h1>
+  {% comment %} {{ user.is_member(group_name='customer') }} {% endcomment %}
+  
+  {% if user.groups.exists %}
+    <p>Grupy użytkownika:</p>
+    <ul>
+        {% for group in user.groups.all %}
+            {% if group.name == 'customer'%}
+  
+            <p>Widok customer</p>
+
+            {%else%}
+            <p>Widok company</p>
+            
+            {% endif%}
+        {% endfor %}
+    </ul>
+{% endif %}
+</section>
+{% endblock %} {% block scripts %}
+<script src="{% static 'js/main.min.js' %}"></script>
+{% endblock %}
