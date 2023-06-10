@@ -46,6 +46,8 @@
 </head>
 
 <body {% if request.path != "/" %} class="special"{% endif %}>
+    {% include 'partials/alert.html' with messages=messages %}
+    
     {% include 'partials/navigation.html' %}
     <main>
         {% block content %}
