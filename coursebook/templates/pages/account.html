@@ -1,27 +1,126 @@
 {% extends "layout/base.html" %} {% block styles %}
 <link rel="stylesheet" href="{% static 'css/global.min.css' %}" />
-<link rel="stylesheet" href="{% static 'css/login.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/account.min.css' %}" />
 {% endblock %} {% block content %}
-<section class="">
-  <h1>Zalogowano</h1>
-  {% comment %} {{ user.is_member(group_name='customer') }} {% endcomment %}
-  
-  {% if user.groups.exists %}
-    <p>Grupy użytkownika:</p>
-    <ul>
+<section class="user-bar">
+    <div class="container">
+        <div class="user-bar__inner">
+            <div class="user-bar__user">
+                {{user}}
+            </div>
+            <a href="{% url 'logout' %}" class="user-bar__logout">
+                <svg width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M6.66667 27.5C5.93334 27.5 5.30534 27.2387 4.78267 26.716C4.26 26.1933 3.99911 25.5658 4 24.8333V6.16667C4 5.43334 4.26134 4.80534 4.784 4.28267C5.30667 3.76 5.93422 3.49911 6.66667 3.5H16V6.16667H6.66667V24.8333H16V27.5H6.66667ZM21.3333 22.1667L19.5 20.2333L22.9 16.8333H12V14.1667H22.9L19.5 10.7667L21.3333 8.83334L28 15.5L21.3333 22.1667Z"
+                        fill="#12263A" />
+                </svg>
+                Wyloguj się
+            </a>
+        </div>
+    </div>
+</section>
+{% include 'partials/account_panel.html' %}
+{% if user.groups.exists %}
         {% for group in user.groups.all %}
             {% if group.name == 'customer'%}
-  
-            <p>Widok customer</p>
-
+            <section class="list">
+                <div class="container">
+                    <div class="list__inner">
+                        <h1>Brak kursów</h1>
+                    </div>
+                </div>
+            </section>
             {%else%}
-            <p>Widok company</p>
-            
+            <section class="list">
+                <div class="container">
+                    <div class="list__inner">
+                        <div class="list__item">
+                            <div class="list__item-image">
+                                <img loading="lazy" width="200" height="100" src="{% static 'images/offert_1.jpg' %}" alt="">
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Nazwa</p>
+                                <p class="list__box-name">Kurs kuchni Włoskiej</p>
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Prowadzący</p>
+                                <p class="list__box-name">Artur Kowalski</p>
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Cena</p>
+                                <p class="list__box-name">299zł</p>
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Ilość miejsc</p>
+                                <p class="list__box-name">2</p>
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Data kursu</p>
+                                <p class="list__box-name">24.07.2023</p>
+                            </div>
+                            <a class="list__item-edit" href="#">Edytuj</a>
+                        </div>
+                        <!--  -->
+                        <div class="list__item">
+                            <div class="list__item-image">
+                                <img loading="lazy" width="200" height="100" src="{% static 'images/offert_1.jpg' %}" alt=""> 
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Nazwa</p>
+                                <p class="list__box-name">Kurs kuchni Polskiej</p>
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Prowadzący</p>
+                                <p class="list__box-name">Marek Tylecki</p>
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Cena</p>
+                                <p class="list__box-name">499zł</p>
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Ilość miejsc</p>
+                                <p class="list__box-name">10</p>
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Data kursu</p>
+                                <p class="list__box-name">14.02.2023</p>
+                            </div>
+                            <a class="list__item-edit" href="#">Edytuj</a>
+                        </div>
+                        <!--  -->
+                        <div class="list__item">
+                            <div class="list__item-image">
+                                <img loading="lazy" width="200" height="100" src="{% static 'images/offert_1.jpg' %}" alt="">
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Nazwa</p>
+                                <p class="list__box-name">Kurs kuchni Włoskiej</p>
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Prowadzący</p>
+                                <p class="list__box-name">Artur Kowalski</p>
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Cena</p>
+                                <p class="list__box-name">299zł</p>
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Ilość miejsc</p>
+                                <p class="list__box-name">2</p>
+                            </div>
+                            <div class="list__item-box">
+                                <p class="list__box-title">Data kursu</p>
+                                <p class="list__box-name">24.07.2023</p>
+                            </div>
+                            <a class="list__item-edit" href="#">Edytuj</a>
+                        </div>
+                        <!--  -->
+                    </div>
+                </div>
+            </section>
             {% endif%}
         {% endfor %}
-    </ul>
 {% endif %}
-</section>
 {% endblock %} {% block scripts %}
 <script src="{% static 'js/main.min.js' %}"></script>
 {% endblock %}
