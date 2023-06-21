@@ -1,10 +1,8 @@
 <section class="control">
   <div class="container">
     <div class="control__inner">
-      {% if user.groups.exists %} 
-      {% for group in user.groups.all %} 
-      {% if group.name == 'customer'%} 
-      <a href="#" class="control__box {% if request.path == "/account" %}control__box--active{% endif %}">
+      {%if isMember%}
+      <a href="#" class="control__box">
         <svg
           width="42"
           height="42"
@@ -20,7 +18,7 @@
         Zakupione kursy
       </a>
       {%else%}
-      <a href="#" class="control__box {% if request.path == "/account" %}control__box--active{% endif %}">
+      <a href="{% url 'account_courses' %}" class="control__box {% if request.resolver_match.url_name == "account_courses" %}control__box--active{% endif %}">
         <svg
           width="42"
           height="42"
@@ -35,7 +33,7 @@
         </svg>
         Twoje kursy
       </a>
-      <a href="#" class="control__box">
+      <a href="{% url 'account_instructors' %}" class="control__box {% if request.resolver_match.url_name == "account_instructors" %}control__box--active{% endif %}">
         <svg
           width="33"
           height="32"
@@ -50,7 +48,7 @@
         </svg>
         Twoi prowadzący
       </a>
-      <a href="#" class="control__box">
+      <a href="" class="control__box ">
         <svg
           width="32"
           height="32"
@@ -65,52 +63,7 @@
         </svg>
         Twoje wipsy
       </a>
-      <div class="control__box">
-        <svg
-          width="42"
-          height="42"
-          viewBox="0 0 42 42"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M24.5 17.5H5.25V21H24.5V17.5ZM24.5 10.5H5.25V14H24.5V10.5ZM31.5 24.5V17.5H28V24.5H21V28H28V35H31.5V28H38.5V24.5H31.5ZM5.25 28H17.5V24.5H5.25V28Z"
-            fill="#FF7700"
-          />
-        </svg>
-        Dodaj kurs
-      </div>
-      <div class="control__box">
-        <svg
-          width="42"
-          height="42"
-          viewBox="0 0 42 42"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M26.9326 25.48C23.9926 23.975 20.1776 22.75 15.7501 22.75C11.3226 22.75 7.50761 23.975 4.56761 25.48C3.71372 25.9198 2.99839 26.5876 2.50104 27.4093C2.00369 28.2311 1.74376 29.1745 1.75011 30.135V35H29.7501V30.135C29.7501 28.175 28.6826 26.3725 26.9326 25.48ZM15.7501 21C19.6176 21 22.7501 17.8675 22.7501 14C22.7501 10.1325 19.6176 7 15.7501 7C11.8826 7 8.75011 10.1325 8.75011 14C8.75011 17.8675 11.8826 21 15.7501 21ZM35.0001 15.75V12.25C35.0001 11.2875 34.2126 10.5 33.2501 10.5C32.2876 10.5 31.5001 11.2875 31.5001 12.25V15.75H28.0001C27.0376 15.75 26.2501 16.5375 26.2501 17.5C26.2501 18.4625 27.0376 19.25 28.0001 19.25H31.5001V22.75C31.5001 23.7125 32.2876 24.5 33.2501 24.5C34.2126 24.5 35.0001 23.7125 35.0001 22.75V19.25H38.5001C39.4626 19.25 40.2501 18.4625 40.2501 17.5C40.2501 16.5375 39.4626 15.75 38.5001 15.75H35.0001Z"
-            fill="#FF7700"
-          />
-        </svg>
-        Dodaj prowadzącego
-      </div>
-      <div class="control__box">
-        <svg
-          width="42"
-          height="42"
-          viewBox="0 0 42 42"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M24.5 17.5H5.25V21H24.5V17.5ZM24.5 10.5H5.25V14H24.5V10.5ZM31.5 24.5V17.5H28V24.5H21V28H28V35H31.5V28H38.5V24.5H31.5ZM5.25 28H17.5V24.5H5.25V28Z"
-            fill="#FF7700"
-          />
-        </svg>
-        Dodaj wpis
-      </div>
-      {% endif%} {% endfor %} {% endif %}
+      {% endif%}
     </div>
   </div>
 </section>

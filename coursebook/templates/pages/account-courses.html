@@ -1,0 +1,213 @@
+{% extends "layout/base.html" %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/global.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/account.min.css' %}" />
+{% endblock %} {% block content %}
+<section class="user-bar">
+    <div class="container">
+        <div class="user-bar__inner">
+            <div class="user-bar__user">
+                {{user}}
+            </div>
+            <a href="{% url 'logout' %}" class="user-bar__logout">
+                <svg width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M6.66667 27.5C5.93334 27.5 5.30534 27.2387 4.78267 26.716C4.26 26.1933 3.99911 25.5658 4 24.8333V6.16667C4 5.43334 4.26134 4.80534 4.784 4.28267C5.30667 3.76 5.93422 3.49911 6.66667 3.5H16V6.16667H6.66667V24.8333H16V27.5H6.66667ZM21.3333 22.1667L19.5 20.2333L22.9 16.8333H12V14.1667H22.9L19.5 10.7667L21.3333 8.83334L28 15.5L21.3333 22.1667Z"
+                        fill="#12263A" />
+                </svg>
+                Wyloguj się
+            </a>
+        </div>
+    </div>
+</section>
+{% include 'partials/account_panel.html' %}
+
+    {%if isMember%}
+            <section class="list">
+                <div class="container">
+                    <div class="list__inner">
+                        <h1>Brak kursów</h1>
+                    </div>
+                </div>
+            </section>
+    {%else%}
+    <section class="list">
+        <div class="container">
+            <div class="list__inner">
+                <div class="list__panel">
+                    <div class="list__panel-counter">
+                        5 kursów
+                    </div>
+                    <div data-action="course" class="list__panel-add jsAccountAdd">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M17.3333 9.33366H14.6666V14.667H9.33329V17.3337H14.6666V22.667H17.3333V17.3337H22.6666V14.667H17.3333V9.33366ZM16 2.66699C8.63996 2.66699 2.66663 8.64033 2.66663 16.0003C2.66663 23.3603 8.63996 29.3337 16 29.3337C23.36 29.3337 29.3333 23.3603 29.3333 16.0003C29.3333 8.64033 23.36 2.66699 16 2.66699ZM16 26.667C10.12 26.667 5.33329 21.8803 5.33329 16.0003C5.33329 10.1203 10.12 5.33366 16 5.33366C21.88 5.33366 26.6666 10.1203 26.6666 16.0003C26.6666 21.8803 21.88 26.667 16 26.667Z"
+                                fill="#FF7700" />
+                        </svg>
+                        Dodaj kurs
+                    </div>
+                </div>
+                <div class="list__item">
+                    <div class="list__item-image">
+                        <img loading="lazy" width="200" height="100" src="{% static 'images/offert_1.jpg' %}" alt="">
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Nazwa</p>
+                        <p class="list__box-name">Kurs kuchni Włoskiej</p>
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Prowadzący</p>
+                        <p class="list__box-name">Artur Kowalski</p>
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Cena</p>
+                        <p class="list__box-name">299zł</p>
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Ilość miejsc</p>
+                        <p class="list__box-name">2</p>
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Data kursu</p>
+                        <p class="list__box-name">24.07.2023</p>
+                    </div>
+                    <a class="list__item-edit" href="#">Edytuj</a>
+                </div>
+                <!--  -->
+                <div class="list__item">
+                    <div class="list__item-image">
+                        <img loading="lazy" width="200" height="100" src="{% static 'images/offert_1.jpg' %}" alt="">
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Nazwa</p>
+                        <p class="list__box-name">Kurs kuchni Polskiej</p>
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Prowadzący</p>
+                        <p class="list__box-name">Marek Tylecki</p>
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Cena</p>
+                        <p class="list__box-name">499zł</p>
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Ilość miejsc</p>
+                        <p class="list__box-name">10</p>
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Data kursu</p>
+                        <p class="list__box-name">14.02.2023</p>
+                    </div>
+                    <a class="list__item-edit" href="#">Edytuj</a>
+                </div>
+                <!--  -->
+                <div class="list__item">
+                    <div class="list__item-image">
+                        <img loading="lazy" width="200" height="100" src="{% static 'images/offert_1.jpg' %}" alt="">
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Nazwa</p>
+                        <p class="list__box-name">Kurs kuchni Włoskiej</p>
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Prowadzący</p>
+                        <p class="list__box-name">Artur Kowalski</p>
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Cena</p>
+                        <p class="list__box-name">299zł</p>
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Ilość miejsc</p>
+                        <p class="list__box-name">2</p>
+                    </div>
+                    <div class="list__item-box">
+                        <p class="list__box-title">Data kursu</p>
+                        <p class="list__box-name">24.07.2023</p>
+                    </div>
+                    <a class="list__item-edit" href="#">Edytuj</a>
+                </div>
+                <!--  -->
+            </div>
+        </div>
+    </section>
+    <div class="drawer">
+        <div class="drawer__container">
+            <div class="drawer__heading">
+                <div class="drawer__back">
+                    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M34.125 5.25H36.75V36.75H34.125V5.25ZM14.9809 27.0191L10.2743 22.3125H28.875V19.6875H10.2743L14.9809 14.9809L13.125 13.125L5.25 21L13.125 28.875L14.9809 27.0191Z"
+                            fill="#A4243B" />
+                    </svg>
+                    Powrót
+                </div>
+                Dodaj kurs
+            </div>
+
+            <form method="POST" action="" class="">
+                <div class="form__row">
+                    <div class="form__group">
+                        <input placeholder="Tytuł" class="form__group-input" type="text">
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <input placeholder="Ilość miejsc" class="form__group-input" type="number">
+                    </div>
+                    <div class="form__group">
+                        <input placeholder="Miasto" class="form__group-input" type="text">
+                    </div>
+                    <div class="form__group">
+                        <input placeholder="Cena" class="form__group-input" type="number">
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <input placeholder="Data kursu" class="form__group-input" type="date">
+                    </div>
+                    <div class="form__group">
+                        <select class="form__group-input" name="" id="">
+                            <option value="">Podstawowy</option>
+                            <option value="">Wielkopolskie</option>
+                            <option value="">Mazowieckie</option>
+                        </select>
+                    </div>
+                    <div class="form__group">
+                        <select class="form__group-input" name="" id="">
+                            <option value="">Alan Kowalski</option>
+                            <option value="">Marek Warty</option>
+                            <option value="">Iwona Uleka</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <textarea placeholder="Krótki opis" class="form__group-input" rows="5" name=""
+                            id=""></textarea>
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <textarea placeholder="Opis" class="form__group-input" rows="12" name="" id=""></textarea>
+                    </div>
+                </div>
+                <div class="form__submit-box">
+                    <button class="btn btn--primary">
+                        Dodaj
+                        <span class="btn__arrow">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 20L10.575 18.6L16.175 13H4V11H16.175L10.575 5.4L12 4L20 12L12 20Z"
+                                    fill="white" />
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {%endif%}
+{% endblock %} {% block scripts %}
+<script src="{% static 'js/main.min.js' %}"></script>
+{% endblock %}

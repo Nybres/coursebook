@@ -4,7 +4,7 @@ from ..helpers import check_membership
 
 
 @login_required(login_url='login')
-def AccountView(request):
+def AccountCoursesView(request):
     user = request.user
     isMember = check_membership(user)
     context = {
@@ -12,4 +12,4 @@ def AccountView(request):
         'isMember':isMember,
     }
 
-    return render(request, "pages/account.html", context)
+    return render(request, "pages/account-courses.html", context)
