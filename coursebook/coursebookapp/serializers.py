@@ -1,7 +1,11 @@
 from rest_framework import serializers
 
 from django.contrib.auth.models import Group
+
+
+
 from .models.app_user import AppUser
+from .models.instructor import Instructor
 
 
 class AppUserSerializer(serializers.ModelSerializer):
@@ -31,3 +35,16 @@ class AppUserSerializer(serializers.ModelSerializer):
         group_name = "customer" if "register-customer" in url else "company"
 
         return Group.objects.get(name=group_name)
+    
+
+class InstructorSerializer(serializers.ModelSerializer):
+    app_user = serializers.CharField(required=False)
+    class Meta:
+        model = Instructor
+        fields = '__all__'
+
+    def create(self, validated_data):
+        app_user_id = self.context.get("request").user.id
+        app_user = AppUser.objects.get(id=app_user_id)
+        instructor = Instructor.objects.create(app_user=app_user, **validated_data)
+        return instructor

@@ -47,6 +47,14 @@
                         Dodaj prowadzącego
                     </div>
                 </div>
+                {% comment %}  {% endcomment %}
+                {% for instruktor in instructors %}
+  <div>
+    <h3>{{ instruktor.first_name }} {{ instruktor.last_name }}</h3>
+    <p>{{ instruktor.description }}</p>
+  </div>
+{% endfor %}
+                {% comment %}  {% endcomment %}
                 <div class="list__item list__item--instructor">
                     <div class="list__item-image">
                         <img loading="lazy" width="200" height="100" src="{% static 'images/offert_1.jpg' %}" alt="">
@@ -78,22 +86,23 @@
                 Dodaj prowadzącego
             </div>
             <form method="POST" action="" class="">
+                {% csrf_token %}
                 <div class="form__row">
                     <div class="form__group">
-                        <input placeholder="Imię" class="form__group-input" type="text">
+                        <input name="first_name" placeholder="Imię" class="form__group-input" type="text">
                     </div>
                     <div class="form__group">
-                        <input placeholder="Nazwisko" class="form__group-input" type="text">
-                    </div>
-                </div>
-                <div class="form__row">
-                    <div class="form__group">
-                        <textarea placeholder="Opis" class="form__group-input" rows="10" name="" id=""></textarea>
+                        <input name="last_name" placeholder="Nazwisko" class="form__group-input" type="text">
                     </div>
                 </div>
                 <div class="form__row">
                     <div class="form__group">
-                        <input placeholder="zdjęcie" class="form__group-input" type="file">
+                        <textarea placeholder="Opis" class="form__group-input" rows="10" name="description"></textarea>
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <input name="photo" placeholder="zdjęcie" class="form__group-input" type="file">
                     </div>
                 </div>
                 <div class="form__submit-box">

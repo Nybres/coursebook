@@ -11,5 +11,5 @@ urlpatterns = [
     # account
     path("account", views.AccountView, name="account"),
     path("account-courses", views.AccountCoursesView, name="account_courses"),
-    path("account-instructors", views.AccountInstructorsView, name="account_instructors"),
+    path("account-instructors", views.AccountInstructorsView.as_view(), name="account_instructors"),
 ]

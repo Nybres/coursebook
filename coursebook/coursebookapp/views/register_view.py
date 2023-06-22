@@ -7,10 +7,11 @@ from ..serializers import AppUserSerializer
 
 class RegisterView(generics.ListCreateAPIView):
     serializer_class = AppUserSerializer
+    template_name = ""
 
     def get(self, request, *args, **kwargs):
-        template_name = self.get_template_name_from_url(request)
-        return render(request, template_name)
+        self.template_name = self.get_template_name_from_url(request)
+        return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
