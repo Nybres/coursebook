@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.contrib import messages
 
 from rest_framework import generics
 
@@ -17,7 +18,10 @@ class RegisterView(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             self.perform_create(serializer)
-        return render(request, self.template_name, {"serializer": serializer})
+            messages.success(request, 'Rejestracja przebiegła pomyślnie')
+            return redirect('account')
+        else:
+            return render(request, self.template_name, {"serializer": serializer})
 
     def get_template_name_from_url(self, request):
         url = request.path

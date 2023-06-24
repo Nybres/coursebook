@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group
 
 from .models.app_user import AppUser
 from .models.instructor import Instructor
+from .models.course import Course
 
 
 class AppUserSerializer(serializers.ModelSerializer):
@@ -39,6 +40,7 @@ class AppUserSerializer(serializers.ModelSerializer):
 
 class InstructorSerializer(serializers.ModelSerializer):
     app_user = serializers.CharField(required=False)
+    photo = serializers.ImageField(required=False)
     class Meta:
         model = Instructor
         fields = '__all__'
@@ -48,3 +50,13 @@ class InstructorSerializer(serializers.ModelSerializer):
         app_user = AppUser.objects.get(id=app_user_id)
         instructor = Instructor.objects.create(app_user=app_user, **validated_data)
         return instructor
+    
+
+class CourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = '__all__'
+
+    def create(self, validated_data):
+        course = Course.objects.create(**validated_data)
+        return course

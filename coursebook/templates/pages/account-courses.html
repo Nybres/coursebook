@@ -30,6 +30,8 @@
                 </div>
             </section>
     {%else%}
+    <div style="padding:20px 0;" class="container">
+    </div>
     <section class="list">
         <div class="container">
             <div class="list__inner">
@@ -47,87 +49,38 @@
                         Dodaj kurs
                     </div>
                 </div>
-                <div class="list__item">
-                    <div class="list__item-image">
-                        <img loading="lazy" width="200" height="100" src="{% static 'images/offert_1.jpg' %}" alt="">
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Nazwa</p>
-                        <p class="list__box-name">Kurs kuchni Włoskiej</p>
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Prowadzący</p>
-                        <p class="list__box-name">Artur Kowalski</p>
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Cena</p>
-                        <p class="list__box-name">299zł</p>
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Ilość miejsc</p>
-                        <p class="list__box-name">2</p>
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Data kursu</p>
-                        <p class="list__box-name">24.07.2023</p>
-                    </div>
-                    <a class="list__item-edit" href="#">Edytuj</a>
+               {% if courses %}
+               {% for course in courses  %}
+               <div class="list__item">
+                <div class="list__item-image">
+                    <img loading="lazy" width="200" height="100" src="{% static 'images/offert_1.jpg' %}" alt="">
                 </div>
-                <!--  -->
-                <div class="list__item">
-                    <div class="list__item-image">
-                        <img loading="lazy" width="200" height="100" src="{% static 'images/offert_1.jpg' %}" alt="">
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Nazwa</p>
-                        <p class="list__box-name">Kurs kuchni Polskiej</p>
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Prowadzący</p>
-                        <p class="list__box-name">Marek Tylecki</p>
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Cena</p>
-                        <p class="list__box-name">499zł</p>
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Ilość miejsc</p>
-                        <p class="list__box-name">10</p>
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Data kursu</p>
-                        <p class="list__box-name">14.02.2023</p>
-                    </div>
-                    <a class="list__item-edit" href="#">Edytuj</a>
+                <div class="list__item-box">
+                    <p class="list__box-title">Nazwa</p>
+                    <p class="list__box-name">{{course.title}}</p>
                 </div>
-                <!--  -->
-                <div class="list__item">
-                    <div class="list__item-image">
-                        <img loading="lazy" width="200" height="100" src="{% static 'images/offert_1.jpg' %}" alt="">
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Nazwa</p>
-                        <p class="list__box-name">Kurs kuchni Włoskiej</p>
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Prowadzący</p>
-                        <p class="list__box-name">Artur Kowalski</p>
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Cena</p>
-                        <p class="list__box-name">299zł</p>
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Ilość miejsc</p>
-                        <p class="list__box-name">2</p>
-                    </div>
-                    <div class="list__item-box">
-                        <p class="list__box-title">Data kursu</p>
-                        <p class="list__box-name">24.07.2023</p>
-                    </div>
-                    <a class="list__item-edit" href="#">Edytuj</a>
+                <div class="list__item-box">
+                    <p class="list__box-title">Prowadzący</p>
+                    <p class="list__box-name">{{course.instructor.fullname}}</p>
                 </div>
-                <!--  -->
+                <div class="list__item-box">
+                    <p class="list__box-title">Cena</p>
+                    <p class="list__box-name">{{course.price}}ł</p>
+                </div>
+                <div class="list__item-box">
+                    <p class="list__box-title">Ilość miejsc</p>
+                    <p class="list__box-name">{{course.seats}}</p>
+                </div>
+                <div class="list__item-box">
+                    <p class="list__box-title">Data kursu</p>
+                    <p class="list__box-name">{{course.date}}</p>
+                </div>
+                <a class="list__item-edit" href="#">Edytuj</a>
+            </div>
+               {% endfor %}
+              {% else %} 
+               <p>Brak Kursów</p>
+               {% endif %}
             </div>
         </div>
     </section>
@@ -146,64 +99,65 @@
             </div>
 
             <form method="POST" action="" class="">
+                {% csrf_token %}
                 <div class="form__row">
                     <div class="form__group">
-                        <input placeholder="Tytuł" class="form__group-input" type="text">
+                        <input name='title' placeholder="Tytuł" class="form__group-input" type="text">
                     </div>
                 </div>
                 <div class="form__row">
                     <div class="form__group">
-                        <input placeholder="Ilość miejsc" class="form__group-input" type="number">
+                        <input name="seats" placeholder="Ilość miejsc" class="form__group-input" type="number">
                     </div>
                     <div class="form__group">
-                        <input placeholder="Miasto" class="form__group-input" type="text">
+                        <input name="city" placeholder="Miasto" class="form__group-input" type="text">
                     </div>
                     <div class="form__group">
-                        <input placeholder="Cena" class="form__group-input" type="number">
-                    </div>
-                </div>
-                <div class="form__row">
-                    <div class="form__group">
-                        <input placeholder="Data kursu" class="form__group-input" type="date">
-                    </div>
-                    <div class="form__group">
-                        <input placeholder="Data kursu" class="form__group-input" type="time">
+                        <input name="price" placeholder="Cena" class="form__group-input" type="number">
                     </div>
                 </div>
                 <div class="form__row">
                     <div class="form__group">
-                        <select class="form__group-input" name="" id="">
-                            <option value="">Śląskie</option>
-                            <option value="">Wielkopolskie</option>
-                            <option value="">Mazowieckie</option>
+                        <input name="date" placeholder="Data kursu" class="form__group-input" type="date">
+                    </div>
+                    <div class="form__group">
+                        <input name="time_start" placeholder="Data kursu" class="form__group-input" type="time">
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <select class="form__group-input" name="province">
+                            {% for province in provinces  %}
+                            <option value="{{province.0}}">{{province.1}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="form__group">
-                        <select class="form__group-input" name="" id="">
-                            <option value="">Alan Kowalski</option>
-                            <option value="">Marek Warty</option>
-                            <option value="">Iwona Uleka</option>
+                        <select class="form__group-input" name="instructor">
+                            {% for instructor in instructors  %}
+                            <option value="{{instructor.id}}">{{instructor.fullname}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
                 <div class="form__row">
                     <div class="form__group">
-                        <textarea placeholder="Krótki opis" class="form__group-input" rows="4" name=""></textarea>
+                        <textarea placeholder="Krótki opis" class="form__group-input" rows="4" name="short_description"></textarea>
                     </div>
                 </div>
                 <div class="form__row">
                     <div class="form__group">
-                        <textarea placeholder="Opis szkolenia" class="form__group-input" rows="6" name=""></textarea>
+                        <textarea placeholder="Opis szkolenia" class="form__group-input" rows="6" name="course_description"></textarea>
                     </div>
                 </div>
                 <div class="form__row">
                     <div class="form__group">
-                        <textarea placeholder="Dla kogo" class="form__group-input" rows="6" name=""></textarea>
+                        <textarea placeholder="Dla kogo" class="form__group-input" rows="6" name="course_for"></textarea>
                     </div>
                 </div>
                 <div class="form__row">
                     <div class="form__group">
-                        <textarea placeholder="Korzyści" class="form__group-input" rows="6" name=""></textarea>
+                        <textarea placeholder="Korzyści" class="form__group-input" rows="6" name="course_benefit"></textarea>
                     </div>
                 </div>
                 <div class="form__submit-box">

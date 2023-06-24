@@ -3,7 +3,17 @@ from .models.app_user import AppUser
 from .models.instructor import Instructor
 from .models.course import Course
 
-# Register your models here.
-admin.site.register(AppUser)
+
+class CourseAdmin(admin.ModelAdmin):
+    list_display=('title','instructor','price','seats','date')
+
+class AppUserAdmin(admin.ModelAdmin):
+    list_display=('email','company_name','first_name','last_name')
+
+
+
+
+
+admin.site.register(AppUser,AppUserAdmin)
 admin.site.register(Instructor)
-admin.site.register(Course)
+admin.site.register(Course,CourseAdmin)

@@ -8,5 +8,12 @@ class Instructor(models.Model):
     description = models.TextField()
     photo = models.ImageField(upload_to='instructors/', blank=True)
 
+
+    
+    @property
+    def fullname(self):
+        return f"{self.first_name} {self.last_name}"
+    
+
     def __str__(self):
-        return self.last_name
+        return self.fullname
