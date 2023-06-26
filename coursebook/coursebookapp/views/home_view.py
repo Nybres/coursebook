@@ -1,12 +1,3 @@
-# from django.shortcuts import render
-
-
-# def HomeView(request):
-#     context = {"foo": "home"}
-#     return render(request, "pages/index.html", context)
-
-
-
 from django.shortcuts import render
 from rest_framework import generics
 

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from rest_framework import generics
+from django.contrib import messages
 
 from ..models.course import Course
 from ..models.instructor import Instructor
@@ -35,6 +36,8 @@ class AccountCoursesView(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             self.perform_create(serializer)
+            messages.success(self.request, "Kurs został utworzony")
         else:
+            messages.error(self.request, "Nie udało się utworzyć kursu. Spróbuj ponownie")
             print(serializer.errors)
         return redirect('account_courses')

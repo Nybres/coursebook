@@ -8,6 +8,12 @@ window.addEventListener('load', ()=>{
 const loadSelects = ()=>{
     select.forEach((e)=>{
         NiceSelect.bind(e);
+        // if(e.name=='province'){
+        //     console.log('prowincja');
+        //     e.setAttribute('placeholder', 'prowincja');
+        // }else if(e.name=='instructor'){
+        //     console.log('instructor');
+        // }
     }
     )
 }

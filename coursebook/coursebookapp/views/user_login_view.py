@@ -14,7 +14,7 @@ class UserLoginView(LoginView):
 
     def get_success_url(self):
         if self.request.user.is_authenticated:
-            messages.success(self.request, "Pomyślnie zalogowano")
+            messages.success(self.request, "Zostałeś zalogowany")
             return reverse_lazy("account")
         else:
             return reverse_lazy("login")

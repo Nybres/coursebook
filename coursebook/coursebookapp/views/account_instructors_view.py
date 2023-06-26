@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from rest_framework import generics
 from rest_framework.parsers import MultiPartParser
+from django.contrib import messages
 
 from ..models.instructor import Instructor
 from ..serializers import InstructorSerializer
@@ -29,7 +30,9 @@ class AccountInstructorsView(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             self.perform_create(serializer)
+            messages.success(self.request, "Prowadzący został utworzony")
         else:
+            messages.error(self.request, "Nie udało się utworzyć prowadzącego. Spróbuj ponownie")
             print(serializer.errors)
         return redirect('account_instructors')
         # return render(request, self.template_name, {"serializer": serializer})
