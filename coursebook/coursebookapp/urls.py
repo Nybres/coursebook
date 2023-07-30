@@ -14,6 +14,7 @@ urlpatterns = [
     path("account", views.AccountView, name="account"),
     path("account-courses", views.AccountCoursesView.as_view(), name="account_courses"),
     path("delete-course/<int:pk>/", views.AccountCourseDelete.as_view(), name="delete_course"),
+    path("delete-instructor/<int:pk>/", views.AccountInstructorDelete.as_view(), name="delete_instructor"),
     path(
         "account-instructors",
         views.AccountInstructorsView.as_view(),

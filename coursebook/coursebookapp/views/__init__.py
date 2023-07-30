@@ -5,6 +5,7 @@ from .register_view import RegisterView
 from .account_view import AccountView
 from .account_courses_view import AccountCoursesView
 from .account_instructors_view import AccountInstructorsView
+from .account_instructors_delete import AccountInstructorDelete
 from .account_courses_delete import AccountCourseDelete
 
 # from .account_courses_delete import delete_course

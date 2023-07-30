@@ -6,6 +6,7 @@ from django.contrib import messages
 
 from ..models.course import Course
 from ..models.instructor import Instructor
+from ..models.course_image import CourseImage
 from ..serializers import CourseSerializer
 from ..helpers import check_membership
 
@@ -24,6 +25,12 @@ class AccountCoursesView(generics.ListCreateAPIView):
         provinces = Course.province_choices
 
         courses = Course.objects.filter(instructor__app_user=user)
+
+        for course in courses:
+            # images = CourseImage.objects.filter(course=course)
+            image = course.courseimage_set.first()
+            course.image = image
+
         context = {
             "user": user,
             "isMember": isMember,
