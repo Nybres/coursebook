@@ -9,10 +9,13 @@ from ..models.instructor import Instructor
 from ..serializers import CourseSerializer
 from ..helpers import check_membership
 
-@method_decorator(login_required(login_url='login'), name='dispatch')
+from django.http import JsonResponse
+
+
+@method_decorator(login_required(login_url="login"), name="dispatch")
 class AccountCoursesView(generics.ListCreateAPIView):
     serializer_class = CourseSerializer
-    template_name = 'pages/account-courses.html'
+    template_name = "pages/account-courses.html"
 
     def get(self, request, *args, **kwargs):
         user = request.user
@@ -20,16 +23,15 @@ class AccountCoursesView(generics.ListCreateAPIView):
         instructors = Instructor.objects.filter(app_user=user)
         provinces = Course.province_choices
 
-
         courses = Course.objects.filter(instructor__app_user=user)
         context = {
-                'user':user,
-                'isMember':isMember,
-                "courses":courses,
-                "provinces":provinces,
-                "instructors":instructors,
-            }
-        
+            "user": user,
+            "isMember": isMember,
+            "courses": courses,
+            "provinces": provinces,
+            "instructors": instructors,
+        }
+
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -37,7 +39,10 @@ class AccountCoursesView(generics.ListCreateAPIView):
         if serializer.is_valid():
             self.perform_create(serializer)
             messages.success(self.request, "Kurs został utworzony")
+            return JsonResponse(errors, status=200)
         else:
-            messages.error(self.request, "Nie udało się utworzyć kursu. Spróbuj ponownie")
-            print(serializer.errors)
-        return redirect('account_courses')
+            messages.error(
+                self.request, "Nie udało się utworzyć kursu. Spróbuj ponownie"
+            )
+            errors = serializer.errors
+            return JsonResponse(errors, status=400)

@@ -9,21 +9,22 @@ from ..models.instructor import Instructor
 from ..serializers import InstructorSerializer
 from ..helpers import check_membership
 
-@method_decorator(login_required(login_url='login'), name='dispatch')
+
+@method_decorator(login_required(login_url="login"), name="dispatch")
 class AccountInstructorsView(generics.ListCreateAPIView):
     parser_classes = [MultiPartParser]
     serializer_class = InstructorSerializer
-    template_name = 'pages/account-instructors.html'
+    template_name = "pages/account-instructors.html"
 
     def get(self, request, *args, **kwargs):
         user = request.user
         isMember = check_membership(user)
         instructors = Instructor.objects.filter(app_user=user)
         context = {
-                'user':user,
-                'isMember':isMember,
-                "instructors":instructors,
-            }
+            "user": user,
+            "isMember": isMember,
+            "instructors": instructors,
+        }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -32,7 +33,9 @@ class AccountInstructorsView(generics.ListCreateAPIView):
             self.perform_create(serializer)
             messages.success(self.request, "Prowadzący został utworzony")
         else:
-            messages.error(self.request, "Nie udało się utworzyć prowadzącego. Spróbuj ponownie")
+            messages.error(
+                self.request, "Nie udało się utworzyć prowadzącego. Spróbuj ponownie"
+            )
             print(serializer.errors)
-        return redirect('account_instructors')
+        return redirect("account_instructors")
         # return render(request, self.template_name, {"serializer": serializer})

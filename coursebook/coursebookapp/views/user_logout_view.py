@@ -4,8 +4,9 @@ from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.contrib import messages
 
+
 class UserLogoutView(LogoutView):
-    next_page = reverse_lazy('account')
+    next_page = reverse_lazy("account")
 
     def dispatch(self, request, *args, **kwargs):
         logout(request)
