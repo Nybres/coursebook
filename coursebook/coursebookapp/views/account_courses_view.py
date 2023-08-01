@@ -23,8 +23,7 @@ class AccountCoursesView(generics.ListCreateAPIView):
         isMember = check_membership(user)
         instructors = Instructor.objects.filter(app_user=user)
         provinces = Course.province_choices
-
-        courses = Course.objects.filter(instructor__app_user=user)
+        courses = Course.objects.filter(instructor__app_user=user).order_by("-date")
 
         for course in courses:
             # images = CourseImage.objects.filter(course=course)

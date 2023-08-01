@@ -7,5 +7,6 @@ from .account_courses_view import AccountCoursesView
 from .account_instructors_view import AccountInstructorsView
 from .account_instructors_delete import AccountInstructorDelete
 from .account_courses_delete import AccountCourseDelete
+from .course_detail_view import CourseDetailView
 
 # from .account_courses_delete import delete_course

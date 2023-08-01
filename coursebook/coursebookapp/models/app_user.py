@@ -8,12 +8,3 @@ class AppUser(User):
 
     def is_member(self, group_name):
         return self.groups.filter(name=group_name).exists()
-
-
-# Password  - password
-# Email  - email
-# Firstname  - first_name
-# Lastname  - last_name
-
-# Company_name
-# Phone_number

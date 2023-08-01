@@ -1,14 +1,12 @@
 from django.db import models
 from .instructor import Instructor
-
-# from .course_image import CourseImage
+from django.utils.text import slugify
 
 
 class Course(models.Model):
     instructor = models.ForeignKey(
         Instructor, on_delete=models.SET_NULL, null=True, blank=True
     )
-    # images = models.ManyToManyField(CourseImage, blank=True)
     title = models.CharField(max_length=100)
     short_description = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=8, decimal_places=2)
@@ -39,6 +37,13 @@ class Course(models.Model):
     course_description = models.TextField()
     course_for = models.TextField()
     course_benefit = models.TextField()
+    province_slug = models.SlugField(max_length=50, blank=True)
+    slug = models.SlugField(max_length=200, unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.province_slug = slugify(self.province)
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

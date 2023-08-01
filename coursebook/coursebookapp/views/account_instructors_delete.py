@@ -3,7 +3,10 @@ from django.utils.decorators import method_decorator
 from django.views.generic import DeleteView
 from django.urls import reverse_lazy
 from ..models.instructor import Instructor
+from ..models.course import Course
 from django.contrib import messages
+from django.shortcuts import redirect
+
 
 @method_decorator(login_required(login_url="login"), name="dispatch")
 class AccountInstructorDelete(DeleteView):
@@ -12,10 +15,12 @@ class AccountInstructorDelete(DeleteView):
     success_url = reverse_lazy("account_instructors")
 
     def form_valid(self, form):
-        # Get the object being deleted
         self.object = self.get_object()
-        # Call the delete() method from the parent class to handle standard deletion logic
-        response = super().form_valid(form)
-        # Add your custom logic here, such as displaying a success message
-        messages.success(self.request, "Prowadzący został usunięty")
-        return response
+        is_active_courses = Course.objects.filter(instructor=self.object, available=True)
+        if is_active_courses.exists():
+            messages.error(self.request, "Nie można usunąć instruktora, ponieważ jest przypisany do aktywnego kursu")
+            return redirect("account_instructors")
+        else:
+            response = super().form_valid(form)
+            messages.success(self.request, "Prowadzący został usunięty")
+            return response

@@ -107,7 +107,7 @@
                                                         fill="#FF7700" />
                                                 </svg>
                                                 <p class="information-card__information-name">
-                                                    {{recommended.city}}
+                                                    {{recommended.city|title}}
                                                 </p>
                                             </div>
                                             <div class="offert-card__information-box">
@@ -137,7 +137,7 @@
                                             {{recommended.short_description}}
                                         </p>
                                         <div class="offert-card__body-action">
-                                            <a href="#" class="btn btn--primary">Poznaj ofertę
+                                            <a href="{% url 'course_detail' province_slug=recommended.province_slug slug=recommended.slug %}" class="btn btn--primary">Poznaj ofertę
                                                 <span class="btn__arrow">
                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                         xmlns="http://www.w3.org/2000/svg">
