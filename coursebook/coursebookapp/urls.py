@@ -33,6 +33,11 @@ urlpatterns = [
         views.CourseDetailView.as_view(),
         name="course_detail",
     ),
+     path(
+        "course/<str:province_slug>",
+        views.CourseCategoryView.as_view(),
+        name="course_category",
+    ),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

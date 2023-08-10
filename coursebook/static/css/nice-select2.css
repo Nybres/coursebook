@@ -222,3 +222,12 @@
 .nice-select .list {
   margin: 0;
 }
+
+.nice-select.jsSort span.current::before {
+  content: "Sortuj:";
+  margin-right: 4px;
+}
+
+.nice-select.jsSort {
+  min-width: 250px;
+}

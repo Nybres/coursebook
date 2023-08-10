@@ -19,9 +19,9 @@ class CourseDetailView(generics.RetrieveAPIView):
         # user = request.user
         # instructor = Instructor.objects.filter(instructor=instance.instructor)
 
-        # image = instance.courseimage_set.first()
-        # if image:
-        #     instance.image = image
+        image = instance.courseimage_set.first()
+        if image:
+            instance.image = image
 
         context = {
             "course": instance,

@@ -296,13 +296,12 @@
         </div>
       </div>
       <div class="testimonials__image">
-        <p>{{ course.instructor.photo.url }}</p>
         {%if course.instructor.photo%}
         <picture>
           <img
             loading="lazy"
-            width="200"
-            height="150"
+            width="400"
+            height="350"
             src="{{ course.instructor.photo.url }}"
             alt=""
           />
