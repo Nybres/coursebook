@@ -8,6 +8,7 @@ from django.contrib import messages
 from ..models.instructor import Instructor
 from ..serializers import InstructorSerializer
 from ..helpers import check_membership
+from ..helpers import create_thumbnail
 
 
 @method_decorator(login_required(login_url="login"), name="dispatch")

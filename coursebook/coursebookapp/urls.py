@@ -33,7 +33,7 @@ urlpatterns = [
         views.CourseDetailView.as_view(),
         name="course_detail",
     ),
-     path(
+    path(
         "course/<str:province_slug>",
         views.CourseCategoryView.as_view(),
         name="course_category",

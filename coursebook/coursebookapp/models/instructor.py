@@ -13,13 +13,13 @@ class Instructor(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     description = models.TextField()
-    # photo = models.ImageField(upload_to="instructors/", blank=True)
 
     def get_upload_path(instance, filename):
         company_name_slug = slugify(instance.app_user.company_name)
         return f"instructors/{company_name_slug}/{filename}"
-    
+
     photo = models.ImageField(upload_to=get_upload_path, blank=True)
+    photo_thumb = models.ImageField(upload_to=get_upload_path, blank=True)
 
     @property
     def fullname(self):
@@ -33,3 +33,4 @@ class Instructor(models.Model):
 def instructor_pre_delete(sender, instance, **kwargs):
     if instance.photo:
         default_storage.delete(instance.photo.path)
+        default_storage.delete(instance.photo_thumb.path)

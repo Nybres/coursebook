@@ -56,7 +56,7 @@
                 loading="lazy"
                 width="325"
                 height="240"
-                src="{{ image.url }}"
+                src="{{ image.image.url }}"
                 alt="{{ course.title }}"
               />
             </picture>
@@ -263,18 +263,18 @@
       <picture>
         <img
           loading="lazy"
-          width="325"
-          height="240"
-          src="{{ image.url }}"
+          width="500"
+          height="550"
+          src="{{ image.image.url }}"
           alt="{{ course.title }}"
         />
       </picture>
       {%endfor%} {%else%}
       <img
         loading="lazy"
-        width="325"
-        height="400"
-        src=" https://placehold.co/325x240?text={{course.title}}"
+        width="500"
+        height="550"
+        src=" https://placehold.co/500x550?text={{course.title}}"
         alt="{{course.title}}"
       />
       {%endif%}
@@ -334,13 +334,23 @@
             <li class="splide__slide">
               <div class="offert-card">
                 <div class="offert-card__image">
-                  <img
-                    width="400"
-                    height="200"
-                    loading="lazy"
-                    src="{% static 'images/offert_1.jpg' %}"
-                    alt=""
-                  />
+                    {% if random.image.image.url %}
+                    <img
+                        loading="lazy"
+                        width="400"
+                        height="200"
+                        src="{{ random.image.image_medium_thumb.url }}"
+                        alt="{{ random.title }}"
+                    />
+                    {%else%}
+                    <img
+                        loading="lazy"
+                        width="400"
+                        height="200"
+                        src=" https://placehold.co/400x200?text={{random.title}}"
+                        alt=""
+                    />
+                    {% endif %}
                 </div>
                 <div class="offert-card__body">
                   <p class="offert-card__body-overline">

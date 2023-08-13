@@ -2,10 +2,10 @@ from django.shortcuts import render
 from rest_framework import generics
 
 from ..models.course import Course
+
 # from ..models.instructor import Instructor
 # from ..models.course_image import CourseImage
 from ..serializers import CourseSerializer
-
 
 
 class CourseCategoryView(generics.ListAPIView):
@@ -13,7 +13,7 @@ class CourseCategoryView(generics.ListAPIView):
     template_name = "pages/course-category.html"
 
     def get(self, request, *args, **kwargs):
-        province_slug = self.kwargs.get('province_slug')
+        province_slug = self.kwargs.get("province_slug")
 
         if province_slug:
             courses = Course.objects.filter(province_slug=province_slug)
@@ -22,8 +22,6 @@ class CourseCategoryView(generics.ListAPIView):
                 course.image = image
         else:
             courses = {}
-
-        
 
         context = {
             "courses": courses,

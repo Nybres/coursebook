@@ -12,15 +12,20 @@ class CourseImage(models.Model):
 
     def get_upload_path(instance, filename):
         course_slug = slugify(instance.course.title)
-        # return "course_images/{}/{}".format(course_slug, filename)
         return f"course_images/{course_slug}/{filename}"
 
     image = models.ImageField(upload_to=get_upload_path)
+    image_thumb = models.ImageField(upload_to=get_upload_path, blank=True)
+    image_medium_thumb = models.ImageField(upload_to=get_upload_path, blank=True)
 
     def __str__(self):
         return self.course.title
-    
+
+
 @receiver(pre_delete, sender=CourseImage)
 def course_pre_delete(sender, instance, **kwargs):
     if instance.image:
         default_storage.delete(instance.image.path)
+    if instance.image_thumb:
+        default_storage.delete(instance.image_thumb.path)
+        default_storage.delete(instance.image_medium_thumb.path)

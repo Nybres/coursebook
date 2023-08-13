@@ -2,7 +2,6 @@ from django.shortcuts import render
 from rest_framework import generics
 
 from ..models.course import Course
-from ..models.instructor import Instructor
 from ..models.course_image import CourseImage
 from ..serializers import CourseSerializer
 
@@ -16,12 +15,17 @@ class CourseDetailView(generics.RetrieveAPIView):
     def get(self, request, *args, **kwargs):
         instance = self.get_object()
         random_courses = Course.objects.order_by("?")[:6]
-        # user = request.user
-        # instructor = Instructor.objects.filter(instructor=instance.instructor)
 
         image = instance.courseimage_set.first()
         if image:
             instance.image = image
+
+        images = CourseImage.objects.filter(course=instance)
+        instance.images = images
+
+        for course in random_courses:
+            image = course.courseimage_set.first()
+            course.image = image
 
         context = {
             "course": instance,

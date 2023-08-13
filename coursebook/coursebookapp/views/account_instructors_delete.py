@@ -16,9 +16,14 @@ class AccountInstructorDelete(DeleteView):
 
     def form_valid(self, form):
         self.object = self.get_object()
-        is_active_courses = Course.objects.filter(instructor=self.object, available=True)
+        is_active_courses = Course.objects.filter(
+            instructor=self.object, available=True
+        )
         if is_active_courses.exists():
-            messages.error(self.request, "Nie można usunąć instruktora, ponieważ jest przypisany do aktywnego kursu")
+            messages.error(
+                self.request,
+                "Nie można usunąć instruktora, ponieważ jest przypisany do aktywnego kursu",
+            )
             return redirect("account_instructors")
         else:
             response = super().form_valid(form)

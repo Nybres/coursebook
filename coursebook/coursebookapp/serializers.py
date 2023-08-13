@@ -7,6 +7,8 @@ from .models.instructor import Instructor
 from .models.course import Course
 from .models.course_image import CourseImage
 
+from .helpers import create_thumbnail
+
 
 class AppUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,6 +42,7 @@ class AppUserSerializer(serializers.ModelSerializer):
 class InstructorSerializer(serializers.ModelSerializer):
     app_user = serializers.CharField(required=False)
     photo = serializers.ImageField(required=False)
+    photo_thumb = serializers.ImageField(required=False)
 
     class Meta:
         model = Instructor
@@ -48,7 +51,22 @@ class InstructorSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         app_user_id = self.context.get("request").user.id
         app_user = AppUser.objects.get(id=app_user_id)
-        instructor = Instructor.objects.create(app_user=app_user, **validated_data)
+        photo = validated_data.pop("photo")
+        if photo:
+            converted_photo = create_thumbnail(
+                photo, (400, 350), 80, thumb_name="orginal"
+            )
+            thumb = create_thumbnail(photo, (200, 150), 80, thumb_name="thumb")
+        else:
+            photo = None
+            thumb = None
+
+        instructor = Instructor.objects.create(
+            app_user=app_user,
+            photo=converted_photo,
+            photo_thumb=thumb,
+            **validated_data
+        )
         return instructor
 
 
@@ -74,7 +92,25 @@ class CourseSerializer(serializers.ModelSerializer):
         uploaded_images = validated_data.pop("uploaded_images", [])
         course = Course.objects.create(**validated_data)
         images_to_save = []
-        for image in uploaded_images:
-            images_to_save.append(CourseImage(course=course, image=image))
+        for idx, image in enumerate(uploaded_images):
+            if idx == 0:
+                converted_image = create_thumbnail(
+                    image, (500, 550), 80, thumb_name="orginal"
+                )
+                thumb = create_thumbnail(image, (200, 150), 80, thumb_name="thumb")
+                medium_thumb = create_thumbnail(
+                    image, (400, 200), 80, thumb_name="medium_thumb"
+                )
+                images_to_save.append(
+                    CourseImage(
+                        course=course,
+                        image=converted_image,
+                        image_thumb=thumb,
+                        image_medium_thumb=medium_thumb,
+                    )
+                )
+            else:
+                image = create_thumbnail(image, (500, 550), 80, thumb_name="orginal")
+                images_to_save.append(CourseImage(course=course, image=image))
         CourseImage.objects.bulk_create(images_to_save)
         return course
