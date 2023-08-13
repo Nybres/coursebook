@@ -95,7 +95,7 @@ class CourseSerializer(serializers.ModelSerializer):
         for idx, image in enumerate(uploaded_images):
             if idx == 0:
                 converted_image = create_thumbnail(
-                    image, (500, 550), 80, thumb_name="orginal"
+                    image, (550, 605), 80, thumb_name="orginal"
                 )
                 thumb = create_thumbnail(image, (200, 150), 80, thumb_name="thumb")
                 medium_thumb = create_thumbnail(
@@ -110,7 +110,7 @@ class CourseSerializer(serializers.ModelSerializer):
                     )
                 )
             else:
-                image = create_thumbnail(image, (500, 550), 80, thumb_name="orginal")
+                image = create_thumbnail(image, (550, 605), 80, thumb_name="orginal")
                 images_to_save.append(CourseImage(course=course, image=image))
         CourseImage.objects.bulk_create(images_to_save)
         return course

@@ -45,7 +45,15 @@
     <div class="category__bar">
       <div class="category__bar-information">
         <div class="category__bar-name">Wielkopolska</div>
-        <div class="category__bar-count chips chips--secondary">14 kursów</div>
+        <div class="category__bar-count chips chips--secondary">
+            {% if courses|length == 1 %}
+            <p>{{ courses|length }} kurs</p>
+            {% elif courses|length > 1 and courses|length < 5 %}
+            <p>{{ courses|length }} kursy</p>
+            {% else %}
+            <p>{{ courses|length }} kursów</p>
+            {% endif %}
+        </div>
       </div>
       <div class="category__bar-sort">
         <div class="form__row">
@@ -75,7 +83,7 @@
                 loading="lazy"
                 width="400"
                 height="200"
-                src="{{ course.image.image.url }}"
+                src="{{ course.image.image_medium_thumb.url }}"
                 alt=""
               />
             </picture>
@@ -166,7 +174,7 @@
                   </svg>
                 </span>
               </a>
-              <p class="offert-card__body-price">299&nbsp;zł</p>
+              <p class="offert-card__body-price">{{course.price}}&nbsp;zł</p>
             </div>
           </div>
         </div>
