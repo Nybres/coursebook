@@ -1,17 +1,17 @@
 from django.shortcuts import render
 from django.urls import reverse
+from django.core.paginator import Paginator
+from rest_framework.pagination import PageNumberPagination
 from rest_framework import generics
 
 from ..models.course import Course
-
-# from ..models.instructor import Instructor
-# from ..models.course_image import CourseImage
 from ..serializers import CourseSerializer
 
 
 class CourseCategoryView(generics.ListAPIView):
     serializer_class = CourseSerializer
     template_name = "pages/course-category.html"
+    default_page_size = 1
 
     def get(self, request, *args, **kwargs):
         province_slug = self.kwargs.get("province_slug")
@@ -24,6 +24,10 @@ class CourseCategoryView(generics.ListAPIView):
         else:
             courses = {}
 
+        paginator = Paginator(courses, self.default_page_size)
+        page_number = request.GET.get('page')
+        paginated_courses = paginator.get_page(page_number)
+
         breadcrumbs = [
             ("Coursebook", reverse("home")),
             (
@@ -33,7 +37,7 @@ class CourseCategoryView(generics.ListAPIView):
         ]
 
         context = {
-            "courses": courses,
+            "courses": paginated_courses,
             "breadcrumbs": breadcrumbs,
         }
         return render(request, self.template_name, context)
