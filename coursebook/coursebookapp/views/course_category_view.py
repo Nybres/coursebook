@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse
 from rest_framework import generics
 
 from ..models.course import Course
@@ -23,7 +24,16 @@ class CourseCategoryView(generics.ListAPIView):
         else:
             courses = {}
 
+        breadcrumbs = [
+            ("Coursebook", reverse("home")),
+            (
+                province_slug,
+                reverse("course_category", kwargs={"province_slug": province_slug}),
+            ),
+        ]
+
         context = {
             "courses": courses,
+            "breadcrumbs": breadcrumbs,
         }
         return render(request, self.template_name, context)

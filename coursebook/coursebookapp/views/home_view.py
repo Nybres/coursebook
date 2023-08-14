@@ -12,7 +12,6 @@ class HomeView(generics.ListCreateAPIView):
         recommended_courses = Course.objects.all()
 
         for course in recommended_courses:
-            # images = CourseImage.objects.filter(course=course)
             image = course.courseimage_set.first()
             course.image = image
 

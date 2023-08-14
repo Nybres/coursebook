@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
+from django.urls import reverse
 
 from ..models.course import Course
 from ..models.course_image import CourseImage
@@ -16,20 +17,35 @@ class CourseDetailView(generics.RetrieveAPIView):
         instance = self.get_object()
         random_courses = Course.objects.order_by("?")[:6]
 
-        image = instance.courseimage_set.first()
-        if image:
-            instance.image = image
-
-        images = CourseImage.objects.filter(course=instance)
-        instance.images = images
-
+        instance.image = instance.courseimage_set.first()
+        instance.images = CourseImage.objects.filter(course=instance)
         for course in random_courses:
-            image = course.courseimage_set.first()
-            course.image = image
+            course.image = course.courseimage_set.first()
+
+        breadcrumbs = [
+            ("Coursebook", reverse("home")),
+            (
+                instance.province_slug,
+                reverse(
+                    "course_category", kwargs={"province_slug": instance.province_slug}
+                ),
+            ),
+            (
+                instance.title,
+                reverse(
+                    "course_detail",
+                    kwargs={
+                        "province_slug": instance.province_slug,
+                        "slug": instance.slug,
+                    },
+                ),
+            ),
+        ]
 
         context = {
             "course": instance,
             "random_courses": random_courses,
+            "breadcrumbs": breadcrumbs,
         }
 
         return render(request, self.template_name, context)

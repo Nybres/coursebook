@@ -26,7 +26,6 @@ class AccountCoursesView(generics.ListCreateAPIView):
         courses = Course.objects.filter(instructor__app_user=user).order_by("-date")
 
         for course in courses:
-            # images = CourseImage.objects.filter(course=course)
             image = course.courseimage_set.first()
             course.image = image
 
