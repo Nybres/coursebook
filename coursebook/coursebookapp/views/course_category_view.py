@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
+from django.urls import resolve
 from django.core.paginator import Paginator
-from rest_framework.pagination import PageNumberPagination
 from rest_framework import generics
 
 from ..models.course import Course
@@ -25,9 +25,9 @@ class CourseCategoryView(generics.ListAPIView):
             courses = {}
 
         paginator = Paginator(courses, self.default_page_size)
-        page_number = request.GET.get('page')
+        page_number = request.GET.get("page")
         paginated_courses = paginator.get_page(page_number)
-
+        # print(resolve(request.path_info).url_name)
         breadcrumbs = [
             ("Coursebook", reverse("home")),
             (

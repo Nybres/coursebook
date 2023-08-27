@@ -43,22 +43,53 @@ class InstructorSerializer(serializers.ModelSerializer):
     app_user = serializers.CharField(required=False)
     photo = serializers.ImageField(required=False)
     photo_thumb = serializers.ImageField(required=False)
+    photo_unchanged = serializers.BooleanField(write_only=True, required=False, default=False)
 
     class Meta:
         model = Instructor
         fields = "__all__"
 
+    def update(self, instance, validated_data):
+        photo_unchanged = validated_data.get("photo_unchanged")
+        if photo_unchanged == False:
+            photo = validated_data.pop("photo", None)
+            if photo:
+                if instance.photo:
+                    instance.photo.delete(save=False)
+                    instance.photo_thumb.delete(save=False)
+
+                converted_photo = create_thumbnail(
+                    photo, (400, 350), 80, thumb_name="orginal"
+                )
+                thumb = create_thumbnail(photo, (200, 150), 80, thumb_name="thumb")
+                instance.photo = converted_photo
+                instance.photo_thumb = thumb
+            else:
+                if instance.photo:
+                    instance.photo.delete(save=False)
+                    instance.photo_thumb.delete(save=False)
+        elif photo_unchanged == "true":
+            pass
+
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        instance.save()
+        return instance
+
     def create(self, validated_data):
+        photo_unchanged = validated_data.pop("photo_unchanged")
         app_user_id = self.context.get("request").user.id
         app_user = AppUser.objects.get(id=app_user_id)
-        photo = validated_data.pop("photo")
+        photo = validated_data.pop("photo", None)
         if photo:
             converted_photo = create_thumbnail(
                 photo, (400, 350), 80, thumb_name="orginal"
             )
             thumb = create_thumbnail(photo, (200, 150), 80, thumb_name="thumb")
         else:
-            photo = None
+            converted_photo = None
             thumb = None
 
         instructor = Instructor.objects.create(

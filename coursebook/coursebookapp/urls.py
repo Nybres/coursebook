@@ -10,7 +10,6 @@ urlpatterns = [
     path("logout", views.UserLogoutView.as_view(), name="logout"),
     path("register-customer", views.RegisterView.as_view(), name="register_customer"),
     path("register-company", views.RegisterView.as_view(), name="register_company"),
-    # account
     path("account", views.AccountView, name="account"),
     path("account-courses", views.AccountCoursesView.as_view(), name="account_courses"),
     path(
@@ -37,6 +36,11 @@ urlpatterns = [
         "courses/<str:province_slug>",
         views.CourseCategoryView.as_view(),
         name="course_category",
+    ),
+    path(
+        "edit-instructor/<int:pk>",
+        views.EditInstructorView.as_view(),
+        name="edit_instructor",
     ),
 ]
 if settings.DEBUG:
