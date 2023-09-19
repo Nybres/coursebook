@@ -43,17 +43,21 @@ class InstructorSerializer(serializers.ModelSerializer):
     app_user = serializers.CharField(required=False)
     photo = serializers.ImageField(required=False)
     photo_thumb = serializers.ImageField(required=False)
-    photo_unchanged = serializers.BooleanField(write_only=True, required=False, default=False)
+    photo_change = serializers.CharField(write_only=True, required=False, default=False)
 
     class Meta:
         model = Instructor
         fields = "__all__"
 
+        # Jeśli mamy url do zdjęcia tzn ze nic z nim nie zrobiliśmy
+        # Jeśli nie mamy url ale mamy zdjecie to tworzymy nowe zdjecie
+        # Jeśli nie mamy url to patrzymy czy mamy zdjęcie jesli nie to jest puste
+
+        # Najpierw zobaczmy czy mamy url do zdjęcia potem czy mamy zdjecie
+
     def update(self, instance, validated_data):
-        photo_unchanged = validated_data.get("photo_unchanged")
-        if photo_unchanged == False:
-            photo = validated_data.pop("photo", None)
-            if photo:
+        if not validated_data.get("photo_change"):
+            if photo := validated_data.pop("photo", None):
                 if instance.photo:
                     instance.photo.delete(save=False)
                     instance.photo_thumb.delete(save=False)
@@ -68,8 +72,7 @@ class InstructorSerializer(serializers.ModelSerializer):
                 if instance.photo:
                     instance.photo.delete(save=False)
                     instance.photo_thumb.delete(save=False)
-        elif photo_unchanged == "true":
-            pass
+
 
 
         for attr, value in validated_data.items():
@@ -79,7 +82,7 @@ class InstructorSerializer(serializers.ModelSerializer):
         return instance
 
     def create(self, validated_data):
-        photo_unchanged = validated_data.pop("photo_unchanged")
+        validated_data.pop("photo_change", None)
         app_user_id = self.context.get("request").user.id
         app_user = AppUser.objects.get(id=app_user_id)
         photo = validated_data.pop("photo", None)
@@ -96,7 +99,7 @@ class InstructorSerializer(serializers.ModelSerializer):
             app_user=app_user,
             photo=converted_photo,
             photo_thumb=thumb,
-            **validated_data
+            **validated_data,
         )
         return instructor
 
