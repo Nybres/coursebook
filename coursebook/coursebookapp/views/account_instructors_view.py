@@ -8,7 +8,6 @@ from django.contrib import messages
 from ..models.instructor import Instructor
 from ..serializers import InstructorSerializer
 from ..helpers import check_membership
-from ..helpers import create_thumbnail
 
 
 @method_decorator(login_required(login_url="login"), name="dispatch")
@@ -32,11 +31,13 @@ class AccountInstructorsView(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             self.perform_create(serializer)
-            messages.success(self.request, "Prowadzący został utworzony")
+            messages.success(request, "Prowadzący został utworzony")
         else:
             messages.error(
-                self.request, "Nie udało się utworzyć prowadzącego. Spróbuj ponownie"
+                request, "Nie udało się utworzyć prowadzącego. Spróbuj ponownie"
             )
-            print(serializer.errors)
+
+        # storage = get_messages(request)
+
         return redirect("account_instructors")
         # return render(request, self.template_name, {"serializer": serializer})
