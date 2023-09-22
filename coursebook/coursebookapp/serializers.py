@@ -50,12 +50,6 @@ class InstructorSerializer(serializers.ModelSerializer):
         model = Instructor
         fields = "__all__"
 
-        # Jeśli mamy url do zdjęcia tzn ze nic z nim nie zrobiliśmy
-        # Jeśli nie mamy url ale mamy zdjecie to tworzymy nowe zdjecie
-        # Jeśli nie mamy url to patrzymy czy mamy zdjęcie jesli nie to jest puste
-
-        # Najpierw zobaczmy czy mamy url do zdjęcia potem czy mamy zdjecie
-
     def update(self, instance, validated_data):
         if not validated_data.get("photo_change"):
             if photo := validated_data.pop("photo", None):
@@ -132,15 +126,6 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = "__all__"
-
-    # Jeśli mamy url do zdjęć tzn ze nic z nim nie zrobiliśmy
-    # Jeśli nie mamy url ale mamy zdjecie to tworzymy nowe zdjecie
-    # Jeśli nie mamy url to patrzymy czy mamy zdjęcie jesli nie to jest puste
-
-    # Najpierw zobaczmy czy mamy url do zdjęcia potem czy mamy zdjecie
-
-    # zdjecia z bazy i wyodrębnic te ktorych niema w photo_change i je usunąć
-    # usuwam wszystkie z bazy chyba ze url jest w liscie photo change
 
     def update(self, instance, validated_data):
         try:

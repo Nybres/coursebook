@@ -9,6 +9,8 @@ from ..models.instructor import Instructor
 from ..serializers import InstructorSerializer
 from ..helpers import check_membership
 
+from django.http import JsonResponse
+
 
 @method_decorator(login_required(login_url="login"), name="dispatch")
 class AccountInstructorsView(generics.ListCreateAPIView):
@@ -32,12 +34,15 @@ class AccountInstructorsView(generics.ListCreateAPIView):
         if serializer.is_valid():
             self.perform_create(serializer)
             messages.success(request, "Prowadzący został utworzony")
+            return JsonResponse({"message": "Kurs został utworzony"}, status=200)
         else:
             messages.error(
                 request, "Nie udało się utworzyć prowadzącego. Spróbuj ponownie"
             )
+            errors = serializer.errors
+            return JsonResponse(errors, status=400)
 
         # storage = get_messages(request)
 
-        return redirect("account_instructors")
+        # return redirect("account_instructors")
         # return render(request, self.template_name, {"serializer": serializer})

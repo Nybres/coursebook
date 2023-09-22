@@ -44,7 +44,6 @@ class AccountCoursesView(generics.ListCreateAPIView):
         if serializer.is_valid():
             self.perform_create(serializer)
             messages.success(self.request, "Kurs został utworzony")
-            # return JsonResponse(status=200)
             return JsonResponse({"message": "Kurs został utworzony"}, status=200)
         else:
             messages.error(
