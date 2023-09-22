@@ -11,8 +11,8 @@ class CourseImage(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
     def get_upload_path(instance, filename):
-        course_slug = slugify(instance.course.title)
-        return f"course_images/{course_slug}/{filename}"
+        # course_slug = slugify(instance.course.title)
+        return f"course_images/{instance.course.id}/{filename}"
 
     image = models.ImageField(upload_to=get_upload_path)
     image_thumb = models.ImageField(upload_to=get_upload_path, blank=True)

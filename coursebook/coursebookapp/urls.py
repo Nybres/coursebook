@@ -42,6 +42,11 @@ urlpatterns = [
         views.EditInstructorView.as_view(),
         name="edit_instructor",
     ),
+    path(
+        "edit-course/<int:pk>",
+        views.EditCourseView.as_view(),
+        name="edit_course",
+    ),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -10,5 +10,6 @@ from .account_courses_delete import AccountCourseDelete
 from .course_detail_view import CourseDetailView
 from .course_category_view import CourseCategoryView
 from .edit_instructor_view import EditInstructorView
+from .edit_course_view import EditCourseView
 
 # from .account_courses_delete import delete_course

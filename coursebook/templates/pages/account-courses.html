@@ -108,20 +108,13 @@
           <p class="list__box-name">{{ course.date|date:"d.m.Y" }}</p>
         </div>
         <div class="list__item-controls">
-          <a class="list__item-edit" href="#">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 42 42"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M36.75 21.0004C36.2859 21.0004 35.8408 21.1848 35.5126 21.5129C35.1844 21.8411 35 22.2863 35 22.7504V33.2504C35 33.7145 34.8156 34.1596 34.4874 34.4878C34.1592 34.816 33.7141 35.0004 33.25 35.0004H8.75C8.28587 35.0004 7.84075 34.816 7.51256 34.4878C7.18437 34.1596 7 33.7145 7 33.2504V8.75038C7 8.28625 7.18437 7.84113 7.51256 7.51294C7.84075 7.18476 8.28587 7.00038 8.75 7.00038H19.25C19.7141 7.00038 20.1592 6.81601 20.4874 6.48782C20.8156 6.15963 21 5.71451 21 5.25038C21 4.78625 20.8156 4.34113 20.4874 4.01294C20.1592 3.68476 19.7141 3.50038 19.25 3.50038H8.75C7.35761 3.50038 6.02226 4.05351 5.03769 5.03807C4.05312 6.02264 3.5 7.35799 3.5 8.75038V33.2504C3.5 34.6428 4.05312 35.9781 5.03769 36.9627C6.02226 37.9473 7.35761 38.5004 8.75 38.5004H33.25C34.6424 38.5004 35.9777 37.9473 36.9623 36.9627C37.9469 35.9781 38.5 34.6428 38.5 33.2504V22.7504C38.5 22.2863 38.3156 21.8411 37.9874 21.5129C37.6592 21.1848 37.2141 21.0004 36.75 21.0004ZM10.5 22.3304V29.7504C10.5 30.2145 10.6844 30.6596 11.0126 30.9878C11.3408 31.316 11.7859 31.5004 12.25 31.5004H19.67C19.9003 31.5017 20.1286 31.4576 20.3418 31.3705C20.5551 31.2834 20.749 31.1551 20.9125 30.9929L33.0225 18.8654L37.9925 14.0004C38.1565 13.8377 38.2867 13.6441 38.3756 13.4309C38.4644 13.2176 38.5101 12.9889 38.5101 12.7579C38.5101 12.5269 38.4644 12.2981 38.3756 12.0849C38.2867 11.8716 38.1565 11.6781 37.9925 11.5154L30.5725 4.00788C30.4098 3.84386 30.2163 3.71367 30.003 3.62482C29.7898 3.53598 29.561 3.49023 29.33 3.49023C29.099 3.49023 28.8702 3.53598 28.657 3.62482C28.4437 3.71367 28.2502 3.84386 28.0875 4.00788L23.1525 8.96038L11.0075 21.0879C10.8453 21.2514 10.717 21.4453 10.6299 21.6585C10.5428 21.8718 10.4987 22.1001 10.5 22.3304ZM29.33 7.71788L34.2825 12.6704L31.7975 15.1554L26.845 10.2029L29.33 7.71788ZM14 23.0479L24.3775 12.6704L29.33 17.6229L18.9525 28.0004H14V23.0479Z"
-                fill="#A4243B"
-              />
-            </svg>
-          </a>
+          <button data-id="{{course.id}}" class="list__item-edit jsCourseEdit">
+						<svg width="24" height="24" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M36.75 21.0004C36.2859 21.0004 35.8408 21.1848 35.5126 21.5129C35.1844 21.8411 35 22.2863 35 22.7504V33.2504C35 33.7145 34.8156 34.1596 34.4874 34.4878C34.1592 34.816 33.7141 35.0004 33.25 35.0004H8.75C8.28587 35.0004 7.84075 34.816 7.51256 34.4878C7.18437 34.1596 7 33.7145 7 33.2504V8.75038C7 8.28625 7.18437 7.84113 7.51256 7.51294C7.84075 7.18476 8.28587 7.00038 8.75 7.00038H19.25C19.7141 7.00038 20.1592 6.81601 20.4874 6.48782C20.8156 6.15963 21 5.71451 21 5.25038C21 4.78625 20.8156 4.34113 20.4874 4.01294C20.1592 3.68476 19.7141 3.50038 19.25 3.50038H8.75C7.35761 3.50038 6.02226 4.05351 5.03769 5.03807C4.05312 6.02264 3.5 7.35799 3.5 8.75038V33.2504C3.5 34.6428 4.05312 35.9781 5.03769 36.9627C6.02226 37.9473 7.35761 38.5004 8.75 38.5004H33.25C34.6424 38.5004 35.9777 37.9473 36.9623 36.9627C37.9469 35.9781 38.5 34.6428 38.5 33.2504V22.7504C38.5 22.2863 38.3156 21.8411 37.9874 21.5129C37.6592 21.1848 37.2141 21.0004 36.75 21.0004ZM10.5 22.3304V29.7504C10.5 30.2145 10.6844 30.6596 11.0126 30.9878C11.3408 31.316 11.7859 31.5004 12.25 31.5004H19.67C19.9003 31.5017 20.1286 31.4576 20.3418 31.3705C20.5551 31.2834 20.749 31.1551 20.9125 30.9929L33.0225 18.8654L37.9925 14.0004C38.1565 13.8377 38.2867 13.6441 38.3756 13.4309C38.4644 13.2176 38.5101 12.9889 38.5101 12.7579C38.5101 12.5269 38.4644 12.2981 38.3756 12.0849C38.2867 11.8716 38.1565 11.6781 37.9925 11.5154L30.5725 4.00788C30.4098 3.84386 30.2163 3.71367 30.003 3.62482C29.7898 3.53598 29.561 3.49023 29.33 3.49023C29.099 3.49023 28.8702 3.53598 28.657 3.62482C28.4437 3.71367 28.2502 3.84386 28.0875 4.00788L23.1525 8.96038L11.0075 21.0879C10.8453 21.2514 10.717 21.4453 10.6299 21.6585C10.5428 21.8718 10.4987 22.1001 10.5 22.3304ZM29.33 7.71788L34.2825 12.6704L31.7975 15.1554L26.845 10.2029L29.33 7.71788ZM14 23.0479L24.3775 12.6704L29.33 17.6229L18.9525 28.0004H14V23.0479Z"
+								fill="#A4243B" />
+						</svg>
+					</button>
           <form
             method="POST"
             action="{% url 'delete_course' course.id %}"
@@ -261,7 +254,7 @@
           <select class="form__group-input js-niceselect" name="province">
             <option value="" disabled selected>Wybierz województwo</option>
             {% for province in provinces %}
-            <option value="{{province.0}}">{{province.1}}</option>
+            <option data-name="{{province.1 }}" value="{{province.0}}">{{province.1}}</option>
             {% endfor %}
           </select>
         </div>
@@ -269,7 +262,7 @@
           <select class="form__group-input js-niceselect" name="instructor">
             <option value="" disabled selected>Wybierz prowadzącego</option>
             {% for instructor in instructors %}
-            <option value="{{instructor.id}}">{{instructor.fullname}}</option>
+            <option data-name="{{instructor.fullname}}" value="{{instructor.id}}">{{instructor.fullname}}</option>
             {% endfor %}
           </select>
         </div>
@@ -314,46 +307,34 @@
           ></textarea>
         </div>
       </div>
-      <div class="form__row">
-        <div class="form__group jsImagesCourse">
-          <input
-            name="image"
-            placeholder="Dodaj zdjęcia"
-            class="form__group-input"
-            type="file"
-          />
-          <input
-            name="image"
-            placeholder="Dodaj zdjęcia"
-            class="form__group-input"
-            type="file"
-          />
-          <input
-            name="image"
-            placeholder="Dodaj zdjęcia"
-            class="form__group-input"
-            type="file"
-          />
-          <input
-            name="image"
-            placeholder="Dodaj zdjęcia"
-            class="form__group-input"
-            type="file"
-          />
-          <input
-            name="image"
-            placeholder="Dodaj zdjęcia"
-            class="form__group-input"
-            type="file"
-          />
-          <input
-            name="image"
-            placeholder="Dodaj zdjęcia"
-            class="form__group-input"
-            type="file"
-          />
-        </div>
-      </div>
+    	<div class="form__row">
+				<div class="form__images">
+					<label class="form__images-image">
+						<span>Wybierz zdjęcie</span>
+						<input name='image' type="file" />
+					</label>
+          <label class="form__images-image">
+						<span>Wybierz zdjęcie</span>
+						<input name='image' type="file" />
+					</label>
+          <label class="form__images-image">
+						<span>Wybierz zdjęcie</span>
+						<input name='image' type="file" />
+					</label>
+          <label class="form__images-image">
+						<span>Wybierz zdjęcie</span>
+						<input name='image' type="file" />
+					</label>
+          <label class="form__images-image">
+						<span>Wybierz zdjęcie</span>
+						<input name='image' type="file" />
+					</label>
+          <label class="form__images-image">
+						<span>Wybierz zdjęcie</span>
+						<input name='image' type="file" />
+					</label>
+				</div>
+			</div>
       <div class="form__submit-box">
         <button class="btn btn--primary">
           Dodaj
