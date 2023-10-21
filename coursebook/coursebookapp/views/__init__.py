@@ -11,5 +11,10 @@ from .course_detail_view import CourseDetailView
 from .course_category_view import CourseCategoryView
 from .edit_instructor_view import EditInstructorView
 from .edit_course_view import EditCourseView
+from .add_to_cart import AddToCartView
+from .remove_from_cart import RemoveFromCartView
+from .cart import CartView
+from .mini_cart import MiniCartView
+from .create_checkout_session import create_checkout_session
 
 # from .account_courses_delete import delete_course

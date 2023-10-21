@@ -1,0 +1,33 @@
+{% extends "layout/base.html" %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/global.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/login.min.css' %}" />
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %} {% block content %}
+<section>
+	<button id="checkout-button">Zapłać</button>
+</section>
+{% endblock %} {% block scripts %}
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+        var stripe = Stripe("pk_test_51O2IdAKiNvxN6rGZ2WJiJgSld6y86ePUmmhIHe3CjSSLTYYuJ7M16NFgByVzI5RhXJ1xdAjtQqeodyJ8NeFulAri00klwONrWu");
+		console.log(stripe)
+		document.getElementById('checkout-button').addEventListener('click', function () {
+			fetch('/create-checkout-session', {
+				method: 'POST',
+			})
+				.then(function (response) {
+					return response.json()
+				})
+				.then(function (session) {
+					return stripe.redirectToCheckout({ sessionId: session.id })
+				})
+				.then(function (result) {
+					if (result.error) {
+						console.error(result.error.message)
+					}
+				})
+		})
+	})
+</script>
+<script src="{% static 'js/main.min.js' %}"></script>
+{% endblock %}

@@ -2,11 +2,16 @@ from rest_framework import serializers
 from django.contrib.auth.models import Group
 from django.db import transaction
 
+from rest_framework.exceptions import ValidationError
+
 
 from .models.app_user import AppUser
 from .models.instructor import Instructor
 from .models.course import Course
 from .models.course_image import CourseImage
+from .models.cart import Cart
+from .models.cart_item import CartItem
+from .models.purchased_course import PurchasedCourse
 
 from .helpers import create_thumbnail
 
@@ -247,3 +252,90 @@ class CourseSerializer(serializers.ModelSerializer):
                 images_to_save.append(CourseImage(course=course, image=image))
         CourseImage.objects.bulk_create(images_to_save)
         return course
+
+
+# cart
+
+
+class CartItemSerializer(serializers.ModelSerializer):
+    # course_id = serializers.IntegerField()
+
+    class Meta:
+        model = CartItem
+        fields = [
+            "quantity",
+            "course",
+            # "course_id",
+        ]
+
+    def create(self, validate_data):
+        request = self.context.get("request")
+        course = validate_data.get("course")
+        quantity = validate_data.get("quantity")
+        # course_id = course_data.id
+        # course = Course.objects.get(id=course_id)
+
+        # request = self.context.get("request")
+        # course_id = validate_data.get("course_id")
+        # quantity = validate_data.get("quantity")
+        # course = Course.objects.get(id=course_id)
+
+        user = request.user
+        current_cart = Cart.objects.filter(user=user, is_completed=False).first()
+        if not current_cart:
+            current_cart = Cart.objects.create(user=user)
+
+        existing_cart_item = CartItem.objects.filter(
+            cart=current_cart, course=course
+        ).first()
+
+        if existing_cart_item:
+            existing_cart_item.quantity += quantity
+            existing_cart_item.save()
+        else:
+            CartItem.objects.create(cart=current_cart, course=course, quantity=quantity)
+
+        return current_cart
+
+
+class CartItemDetailSerializer(serializers.ModelSerializer):
+    instructor = InstructorSerializer()
+    image = ImageSerializer(source="courseimage_set.first", read_only=True)
+    cartItemId = serializers.IntegerField(
+        source="cartitem_set.first.id",
+        read_only=True
+    )
+
+    quantity = serializers.IntegerField(
+        source="cartitem_set.first.quantity", read_only=True
+    )
+
+    class Meta:
+        model = Course
+        fields = [
+            "id",
+            "title",
+            "price",
+            "city",
+            "date",
+            "instructor",
+            "image",
+            "quantity",
+            "cartItemId",
+        ]
+
+
+class CartSerializer(serializers.ModelSerializer):
+    items = CartItemDetailSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Cart
+        fields = "__all__"
+
+
+# class PurchaseHistorySerializer(serializers.ModelSerializer):
+#     cart_items = CartItemSerializer(many=True, read_only=True)
+
+#     class Meta:
+#         model = PurchasedCourse
+#         fields = "__all__"

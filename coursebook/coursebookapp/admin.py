@@ -4,6 +4,9 @@ from .models.instructor import Instructor
 from .models.course import Course
 
 from .models.course_image import CourseImage
+from .models.cart import Cart
+from .models.cart_item import CartItem
+from .models.purchased_course import PurchasedCourse
 
 
 class CourseAdmin(admin.ModelAdmin):
@@ -14,7 +17,14 @@ class AppUserAdmin(admin.ModelAdmin):
     list_display = ("email", "company_name", "first_name", "last_name")
 
 
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ('id',"cart", "course", "quantity")
+
+
 admin.site.register(AppUser, AppUserAdmin)
 admin.site.register(Instructor)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(CourseImage)
+admin.site.register(Cart)
+admin.site.register(CartItem, CartItemAdmin)
+admin.site.register(PurchasedCourse)

@@ -238,6 +238,7 @@
           </div>
           <div class="course__price">{{course.price}}&nbsp;zł</div>
           <form class="course__add" action="">
+            {% csrf_token %}
             <div class="">
               <input placeholder="1" class="course__add-qty" type="text" />
             </div>

@@ -5,6 +5,7 @@ from ..serializers import InstructorSerializer
 from django.contrib import messages
 from django.http import JsonResponse
 
+
 # sprawdzić komuniakty
 class EditInstructorView(RetrieveUpdateAPIView):
     serializer_class = InstructorSerializer
@@ -16,10 +17,13 @@ class EditInstructorView(RetrieveUpdateAPIView):
         if serializer.is_valid():
             serializer.save()
             messages.success(self.request, "Prowadzący został zaktualizowany")
-            return JsonResponse({"message": "Prowadzący został zaktualizowany"}, status=200)
+            return JsonResponse(
+                {"message": "Prowadzący został zaktualizowany"}, status=200
+            )
         else:
             messages.error(
-                self.request, "Nie udało się zaktualizować prowadzącego. Spróbuj ponownie"
+                self.request,
+                "Nie udało się zaktualizować prowadzącego. Spróbuj ponownie",
             )
             errors = serializer.errors
             return JsonResponse(errors, status=400)

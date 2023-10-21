@@ -47,6 +47,31 @@ urlpatterns = [
         views.EditCourseView.as_view(),
         name="edit_course",
     ),
+    path(
+        "cart",
+        views.CartView.as_view(),
+        name="cart",
+    ),
+    path(
+        "mini-cart",
+        views.MiniCartView.as_view(),
+        name="mini_cart",
+    ),
+    path(
+        "cart/add",
+        views.AddToCartView.as_view(),
+        name="add_to_cart",
+    ),
+    path(
+        "cart/remove/<int:pk>/",
+        views.RemoveFromCartView.as_view(),
+        name="remove_from_cart",
+    ),
+    path(
+        "create-checkout-session",
+        views.create_checkout_session,
+        name="create_checkout_session",
+    ),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
