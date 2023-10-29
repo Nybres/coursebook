@@ -237,12 +237,13 @@
             {%endif%}
           </div>
           <div class="course__price">{{course.price}}&nbsp;zł</div>
-          <form class="course__add" action="">
+          <form class="course__add" action="{% url 'add_to_cart' %}" method="POST">
             {% csrf_token %}
             <div class="">
-              <input placeholder="1" class="course__add-qty" type="text" />
+              <input placeholder="1" name="quantity" value="1" class="course__add-qty" type="text" />
+              <input name="course" type="hidden" value="{{course.id}}"/>
             </div>
-            <button class="btn btn--primary">
+            <button class="btn btn--primary js-add-to-cart">
               Dodaj do koszyka
               <span class="btn__arrow">
                 <svg
