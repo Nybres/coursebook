@@ -63,6 +63,11 @@ urlpatterns = [
         name="add_to_cart",
     ),
     path(
+        "cart/increase-quantity/<int:pk>",
+        views.IncreaseCartItemQuantityView.as_view(),
+        name="increase-cart-item-quantity",
+    ),
+    path(
         "cart/remove/<int:pk>/",
         views.RemoveFromCartView.as_view(),
         name="remove_from_cart",
