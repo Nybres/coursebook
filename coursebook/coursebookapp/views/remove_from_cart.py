@@ -19,7 +19,6 @@ class RemoveFromCartView(generics.DestroyAPIView):
             )
 
         cart = cart_item.cart
-        cart.items.remove(cart_item.course)
         cart_item.delete()
 
         serializer = CartSerializer(cart)

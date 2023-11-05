@@ -7,7 +7,6 @@ from .course import Course
 
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    items = models.ManyToManyField(Course, through="CartItem")
     is_completed = models.BooleanField(default=False)
     total_price = models.DecimalField(
         max_digits=12, decimal_places=2, null=True, blank=True

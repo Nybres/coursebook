@@ -117,6 +117,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class CourseSerializer(serializers.ModelSerializer):
+    # instructor = InstructorSerializer()
     images = ImageSerializer(many=True, read_only=True)
     uploaded_images = serializers.ListField(
         child=serializers.ImageField(allow_empty_file=True, use_url=False),
@@ -258,8 +259,6 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    # course_id = serializers.IntegerField()
-
     class Meta:
         model = CartItem
         fields = [
@@ -298,35 +297,48 @@ class CartItemSerializer(serializers.ModelSerializer):
         return current_cart
 
 
-class CartItemDetailSerializer(serializers.ModelSerializer):
-    instructor = InstructorSerializer()
-    image = ImageSerializer(source="courseimage_set.first", read_only=True)
-    cartItemId = serializers.IntegerField(
-        source="cartitem_set.first.id",
-        read_only=True
-    )
+# class CartItemDetailSerializer(serializers.ModelSerializer):
+#     instructor = InstructorSerializer()
+#     image = ImageSerializer(source="courseimage_set.first", read_only=True)
+#     cartItemId = serializers.IntegerField(
+#         source="cartitem_set.first.id",
+#         read_only=True
+#     )
 
-    quantity = serializers.IntegerField(
-        source="cartitem_set.first.quantity", read_only=True
+#     quantity = serializers.IntegerField(
+#         source="cartitem_set.first.quantity", read_only=True
+#     )
+
+#     class Meta:
+#         model = Course
+#         fields = [
+#             "id",
+#             "title",
+#             "price",
+#             "city",
+#             "date",
+#             "instructor",
+#             "image",
+#             "quantity",
+#             "cartItemId",
+#         ]
+
+
+class CartItemDetailSerializer(serializers.ModelSerializer):
+    course = CourseSerializer()
+    cartItemId = serializers.IntegerField(source="pk", read_only=True)
+    instructor = InstructorSerializer(source="course.instructor", read_only=True)
+    images = ImageSerializer(
+        source="course.courseimage_set.first", read_only=True
     )
 
     class Meta:
-        model = Course
-        fields = [
-            "id",
-            "title",
-            "price",
-            "city",
-            "date",
-            "instructor",
-            "image",
-            "quantity",
-            "cartItemId",
-        ]
+        model = CartItem
+        fields = "__all__"
 
 
 class CartSerializer(serializers.ModelSerializer):
-    items = CartItemDetailSerializer(many=True, read_only=True)
+    items = CartItemDetailSerializer(many=True, source="cartitem_set", read_only=True)
 
     class Meta:
         model = Cart
