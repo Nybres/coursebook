@@ -17,7 +17,7 @@ class BlogPost(models.Model):
     categories = models.ManyToManyField(BlogCategory, blank=True)
 
     def get_upload_path(instance, filename):
-        company_name_slug = slugify(instance.app_user.company_name)
+        company_name_slug = slugify(instance.user.company_name)
         post_title = slugify(instance.title)
         return f"blog/{company_name_slug}/{post_title}/{filename}"
 

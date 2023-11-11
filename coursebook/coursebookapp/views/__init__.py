@@ -17,5 +17,7 @@ from .remove_from_cart import RemoveFromCartView
 from .cart import CartView
 from .mini_cart import MiniCartView
 from .create_checkout_session import create_checkout_session
+from .account_blog_view import AccountBlogView
+from .account_blog_modify_view import BlogPostModify
 
 # from .account_courses_delete import delete_course

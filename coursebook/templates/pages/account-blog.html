@@ -52,25 +52,16 @@
 					{% if post.photo %}
 					<img loading="lazy" width="200" height="150" src="{{post.photo_thumb.url}}" alt="" />
 					{% else %}
-					<img
-						loading="lazy"
-						width="200"
-						height="150"
-						src=" https://placehold.co/200x150?text={{instructor.first_name}}\n{{instructor.last_name}}"
-						alt="" />
+					<img loading="lazy" width="200" height="150" src=" https://placehold.co/200x150?text={{post.title}}" alt="" />
 					{% endif %}
 				</div>
 				<div class="list__item-box">
 					<p class="list__box-title">Tytuł</p>
 					<p class="list__box-name">{{post.title}}</p>
 				</div>
-				{% comment %} <div class="list__item-box">
-					<p class="list__box-title">Kategorie</p>
-					<p class="list__box-name">{{post.categories}}</p>
-				</div> {% endcomment %}
 				<div class="list__item-box">
 					<p class="list__box-title">Data dodania</p>
-					<p class="list__box-name">{{post.pub_date}}</p>
+					<p class="list__box-name">{{post.pub_date|date:"d.m.Y"}}</p>
 				</div>
 				<div class="list__item-controls">
 					<button data-id="{{post.id}}" class="list__item-edit jsPostEdit">
@@ -80,9 +71,10 @@
 								fill="#A4243B" />
 						</svg>
 					</button>
-					{% comment %} <form method="POST" action="{% url 'delete_instructor' instructor.id %}" class="">
+
+					<form method="DELETE" action="{% url 'account_blog_modify' post.id %}" class="jsRemovePost">
 						{% csrf_token %}
-						<button class="list__item-edit" type="submit">
+						<button class="list__item-edit">
 							<svg width="24" height="24" viewBox="0 0 36 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path
 									d="M11.4375 14.4375C11.7856 14.4375 12.1194 14.5758 12.3656 14.8219C12.6117 15.0681 12.75 15.4019 12.75 15.75V31.5C12.75 31.8481 12.6117 32.1819 12.3656 32.4281C12.1194 32.6742 11.7856 32.8125 11.4375 32.8125C11.0894 32.8125 10.7556 32.6742 10.5094 32.4281C10.2633 32.1819 10.125 31.8481 10.125 31.5V15.75C10.125 15.4019 10.2633 15.0681 10.5094 14.8219C10.7556 14.5758 11.0894 14.4375 11.4375 14.4375ZM18 14.4375C18.3481 14.4375 18.6819 14.5758 18.9281 14.8219C19.1742 15.0681 19.3125 15.4019 19.3125 15.75V31.5C19.3125 31.8481 19.1742 32.1819 18.9281 32.4281C18.6819 32.6742 18.3481 32.8125 18 32.8125C17.6519 32.8125 17.3181 32.6742 17.0719 32.4281C16.8258 32.1819 16.6875 31.8481 16.6875 31.5V15.75C16.6875 15.4019 16.8258 15.0681 17.0719 14.8219C17.3181 14.5758 17.6519 14.4375 18 14.4375ZM25.875 15.75C25.875 15.4019 25.7367 15.0681 25.4906 14.8219C25.2444 14.5758 24.9106 14.4375 24.5625 14.4375C24.2144 14.4375 23.8806 14.5758 23.6344 14.8219C23.3883 15.0681 23.25 15.4019 23.25 15.75V31.5C23.25 31.8481 23.3883 32.1819 23.6344 32.4281C23.8806 32.6742 24.2144 32.8125 24.5625 32.8125C24.9106 32.8125 25.2444 32.6742 25.4906 32.4281C25.7367 32.1819 25.875 31.8481 25.875 31.5V15.75Z"
@@ -92,7 +84,7 @@
 									fill="#A4243B" />
 							</svg>
 						</button>
-					</form> {% endcomment %}
+					</form>
 				</div>
 			</div>
 			{% endfor %} {% else %}
@@ -130,8 +122,7 @@
 			Dodaj wpis
 		</div>
 		<form method="POST" action="" class="jsPostForm" enctype="multipart/form-data">
-			{% csrf_token %} 
-      {% comment %} <input type="hidden" name="photo_unchanged" value="false" /> {% endcomment %}
+			{% csrf_token %} {% comment %} <input type="hidden" name="photo_unchanged" value="false" /> {% endcomment %}
 			<div class="form__row">
 				<div class="form__group">
 					<input name="title" placeholder="Tytuł" class="form__group-input" type="text" />
@@ -142,21 +133,31 @@
 					<textarea placeholder="Krótki opis" class="form__group-textarea" rows="5" name="short_content"></textarea>
 				</div>
 			</div>
-            <div class="form__row">
+			<div class="form__row">
 				<div class="form__group">
 					<textarea placeholder="Treść" class="form__group-textarea" rows="10" name="content"></textarea>
 				</div>
 			</div>
 
+			{% if categories %}
+			<div class="form__row">
+				{% for category in categories %}
+				<div>
+					<input value="{{ category.id }}" type="checkbox" id="category_{{ category.id }}" name="categories_ids" />
+					<label for="category_{{ category.id }}">{{category.name}}</label>
+				</div>
+				{% endfor %}
+			</div>
+			{%endif%}
+
 			<div class="form__row">
 				<div class="form__images">
 					<label class="form__images-image">
 						<span>Wybierz zdjęcie</span>
-						<input name='photo' type="file" />
+						<input name="photo" type="file" />
 					</label>
 				</div>
 			</div>
-
 			<div class="form__submit-box">
 				<button class="btn btn--primary">
 					Dodaj

@@ -11,6 +11,8 @@ from .models.course import Course
 from .models.course_image import CourseImage
 from .models.cart import Cart
 from .models.cart_item import CartItem
+from .models.blog_post import BlogPost
+from .models.blog_category import BlogCategory
 from .models.purchased_course import PurchasedCourse
 
 from .helpers import create_thumbnail
@@ -100,6 +102,79 @@ class InstructorSerializer(serializers.ModelSerializer):
             **validated_data,
         )
         return instructor
+
+
+class BlogCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BlogCategory
+        fields = "__all__"
+
+
+class BlogPostSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(required=False)
+    photo = serializers.ImageField(required=False)
+    photo_thumb = serializers.ImageField(required=False)
+    photo_change = serializers.CharField(write_only=True, required=False, default=False)
+    categories = BlogCategorySerializer(many=True, read_only=True)
+    categories_ids = serializers.ListField(child=serializers.IntegerField(), write_only=True, required=False)
+
+    class Meta:
+        model = BlogPost
+        fields = "__all__"
+
+    def update(self, instance, validated_data):
+        if not validated_data.get("photo_change"):
+            if photo := validated_data.pop("photo", None):
+                if instance.photo:
+                    instance.photo.delete(save=False)
+                    instance.photo_thumb.delete(save=False)
+
+                converted_photo = create_thumbnail(
+                    photo, (400, 350), 80, thumb_name="orginal"
+                )
+                thumb = create_thumbnail(photo, (200, 150), 80, thumb_name="thumb")
+                instance.photo = converted_photo
+                instance.photo_thumb = thumb
+            else:
+                if instance.photo:
+                    instance.photo.delete(save=False)
+                    instance.photo_thumb.delete(save=False)
+        
+        categories_ids = validated_data.pop("categories_ids", [])
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        instance.save()
+        instance.categories.set(categories_ids)
+
+        return instance
+
+    def create(self, validated_data):
+        validated_data.pop("photo_change", None)
+        user_id = self.context.get("request").user.id
+        company_user = AppUser.objects.get(id=user_id)
+        photo = validated_data.pop("photo", None)
+        if photo:
+            converted_photo = create_thumbnail(
+                photo, (1440, 760), 80, thumb_name="orginal"
+            )
+            thumb = create_thumbnail(photo, (200, 150), 80, thumb_name="thumb")
+        else:
+            converted_photo = None
+            thumb = None
+
+        categories_ids = validated_data.pop("categories_ids", [])
+
+        blog_post = BlogPost.objects.create(
+            user=company_user,
+            photo=converted_photo,
+            photo_thumb=thumb,
+            **validated_data,
+        )
+
+        blog_post.categories.set(categories_ids)
+        return blog_post
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -328,9 +403,7 @@ class CartItemDetailSerializer(serializers.ModelSerializer):
     course = CourseSerializer()
     cartItemId = serializers.IntegerField(source="pk", read_only=True)
     instructor = InstructorSerializer(source="course.instructor", read_only=True)
-    images = ImageSerializer(
-        source="course.courseimage_set.first", read_only=True
-    )
+    images = ImageSerializer(source="course.courseimage_set.first", read_only=True)
 
     class Meta:
         model = CartItem

@@ -28,6 +28,16 @@ urlpatterns = [
         name="account_instructors",
     ),
     path(
+        "account-blog",
+        views.AccountBlogView.as_view(),
+        name="account_blog",
+    ),
+    path(
+        "account-blog/<int:pk>",
+        views.BlogPostModify.as_view(),
+        name="account_blog_modify",
+    ),
+    path(
         "course/<str:province_slug>/<str:slug>/",
         views.CourseDetailView.as_view(),
         name="course_detail",

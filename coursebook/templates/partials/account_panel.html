@@ -48,7 +48,7 @@
         </svg>
         Twoi prowadzący
       </a>
-      <a href="" class="control__box ">
+      <a href="{% url 'account_blog' %}" class="control__box {% if request.resolver_match.url_name == "account_blog" %}control__box--active{% endif %}">
         <svg
           width="32"
           height="32"

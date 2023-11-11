@@ -6,6 +6,7 @@ from rest_framework.parsers import MultiPartParser
 from django.contrib import messages
 
 from ..models.blog_post import BlogPost
+from ..models.blog_category import BlogCategory
 
 from ..serializers import BlogPostSerializer
 from ..helpers import check_membership
@@ -23,10 +24,13 @@ class AccountBlogView(generics.ListCreateAPIView):
         user = request.user
         isMember = check_membership(user)
         posts = BlogPost.objects.filter(user=user)
+        available_categories = BlogCategory.objects.all()
+
         context = {
             "user": user,
             "isMember": isMember,
             "posts": posts,
+            "categories": available_categories,
         }
         return render(request, self.template_name, context)
 
