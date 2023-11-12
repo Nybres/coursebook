@@ -19,6 +19,7 @@ class PostDetailView(generics.RetrieveAPIView):
             ("Coursebook", reverse("home")),
             ("Blog", reverse("blog")),
         ]
+        
 
         if instance.categories.exists():
             first_category = instance.categories.first()
