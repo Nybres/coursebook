@@ -16,18 +16,16 @@ class BlogCategoryView(generics.ListAPIView):
     default_page_size = 1
 
     def get(self, request, *args, **kwargs):
-        category_id = self.kwargs.get("category_id")
+        category_slug = self.kwargs.get("slug")
         categories = BlogCategory.objects.all()
         
-        
-        
-        if category_id:
-            category = get_object_or_404(BlogCategory, id=category_id)
+        if category_slug:
+            category = get_object_or_404(BlogCategory, slug=category_slug)
             posts = BlogPost.objects.filter(categories=category)
             breadcrumbs = [
             ("Coursebook", reverse("home")),
             ("Blog", reverse("blog")),
-            (category.name, reverse("blog_category", kwargs={"category_id": category_id})),
+            (category.name, reverse("blog_category", kwargs={"slug": category_slug})),
             ]
         else:
             posts = BlogPost.objects.all()     
