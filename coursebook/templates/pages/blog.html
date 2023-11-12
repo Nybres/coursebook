@@ -1,0 +1,20 @@
+{% extends "layout/base-nb.html" %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/global.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/category.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/nice-select2.css' %}" />
+{% endblock %} {% block content %}
+<div class="container">
+  {% include 'partials/breadcrumbs.html' with breadcrumbs=breadcrumbs %}
+</div>
+{%if categories%} {%for category in categories%}
+<h2 class="offert-card__body-title">{{category.name|title}}</h2>
+{%endfor%}{%endif%}
+<h1>Poniżej posty</h1>
+{%if posts%} {%for post in posts%}
+<h2 class="offert-card__body-title">{{post.title|title}}</h2>
+{%endfor%}{%endif%}
+{% include 'partials/pagination.html' with pagination=posts %}
+{% endblock %} {% block scripts %}
+<script src="{% static 'js/main.min.js' %}"></script>
+<script src="{% static 'js/nice-select2.js' %}"></script>
+{% endblock %}
