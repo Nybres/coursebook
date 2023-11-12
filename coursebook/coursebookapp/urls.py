@@ -33,7 +33,7 @@ urlpatterns = [
         name="account_blog",
     ),
     path(
-        "blog/post/<int:pk>",
+        "blog/post/<str:slug>",
         views.PostDetailView.as_view(),
         name="post",
     ),
@@ -43,7 +43,7 @@ urlpatterns = [
         name="blog",
     ),
       path(
-        "blog/category/<int:category_id>/",
+        "blog/category/<str:slug>/",
         views.BlogCategoryView.as_view(),
         name="blog_category",
     ),

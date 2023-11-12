@@ -9,6 +9,7 @@ from ..serializers import BlogPostSerializer
 
 class PostDetailView(generics.RetrieveAPIView):
     serializer_class = BlogPostSerializer
+    lookup_field = "slug"
     queryset = BlogPost.objects.all()
     template_name = "pages/post.html"
 
@@ -24,7 +25,7 @@ class PostDetailView(generics.RetrieveAPIView):
         if instance.categories.exists():
             first_category = instance.categories.first()
             breadcrumbs.append(
-                (first_category.name, reverse("blog_category", kwargs={"category_id": first_category.id}))
+                (first_category.name, reverse("blog_category", kwargs={"slug": first_category.slug}))
             )
 
         breadcrumbs.append(
@@ -33,7 +34,7 @@ class PostDetailView(generics.RetrieveAPIView):
                 reverse(
                     "post",
                     kwargs={
-                        "pk": instance.id,
+                        "slug": instance.slug,
                     },
                 ),
             )
