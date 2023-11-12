@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.urls import resolve
+from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from rest_framework import generics
 
@@ -15,25 +16,31 @@ class BlogCategoryView(generics.ListAPIView):
     default_page_size = 1
 
     def get(self, request, *args, **kwargs):
-        # province_slug = self.kwargs.get("province_slug")
-
-        # if province_slug:
-        #     courses = Course.objects.filter(province_slug=province_slug)
-        #     for course in courses:
-        #         image = course.courseimage_set.first()
-        #         course.image = image
-        # else:
-        #     courses = {}
-        posts = BlogPost.objects.all()
+        category_id = self.kwargs.get("category_id")
         categories = BlogCategory.objects.all()
+        
+        
+        
+        if category_id:
+            category = get_object_or_404(BlogCategory, id=category_id)
+            posts = BlogPost.objects.filter(categories=category)
+            breadcrumbs = [
+            ("Coursebook", reverse("home")),
+            ("Blog", reverse("blog")),
+            (category.name, reverse("blog_category", kwargs={"category_id": category_id})),
+            ]
+        else:
+            posts = BlogPost.objects.all()     
+            breadcrumbs = [
+            ("Coursebook", reverse("home")),
+            ("Blog", reverse("blog")),
+            ] 
+
 
         paginator = Paginator(posts, self.default_page_size)
         page_number = request.GET.get("page")
         paginated_posts = paginator.get_page(page_number)
-        breadcrumbs = [
-            ("Coursebook", reverse("home")),
-            ("Blog", reverse("blog")),
-        ]
+
 
         context = {
             "posts": paginated_posts,

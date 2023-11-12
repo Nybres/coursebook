@@ -42,6 +42,11 @@ urlpatterns = [
         views.BlogCategoryView.as_view(),
         name="blog",
     ),
+      path(
+        "blog/category/<int:category_id>/",
+        views.BlogCategoryView.as_view(),
+        name="blog_category",
+    ),
     path(
         "account-blog/<int:pk>",
         views.BlogPostModify.as_view(),
