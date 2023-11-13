@@ -27,7 +27,6 @@ class CourseCategoryView(generics.ListAPIView):
         paginator = Paginator(courses, self.default_page_size)
         page_number = request.GET.get("page")
         paginated_courses = paginator.get_page(page_number)
-        # print(resolve(request.path_info).url_name)
         breadcrumbs = [
             ("Coursebook", reverse("home")),
             (

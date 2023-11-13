@@ -15,6 +15,7 @@ class BlogPost(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     categories = models.ManyToManyField(BlogCategory, blank=True)
+    slug = models.SlugField(max_length=200, unique=True, blank=True)
 
     def get_upload_path(instance, filename):
         company_name_slug = slugify(instance.user.company_name)
@@ -23,6 +24,11 @@ class BlogPost(models.Model):
 
     photo = models.ImageField(upload_to=get_upload_path, blank=True)
     photo_thumb = models.ImageField(upload_to=get_upload_path, blank=True)
+
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
