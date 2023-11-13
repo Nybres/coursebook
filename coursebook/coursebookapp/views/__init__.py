@@ -21,5 +21,8 @@ from .account_blog_view import AccountBlogView
 from .account_blog_modify_view import BlogPostModify
 from .post_view import PostDetailView
 from .blog_view import BlogCategoryView
+from .course_api_view import ActiveCoursesListView
+from .course_api_view import ActiveProvincesListView
+from .course_api_view import CoursesByProvinceSlugView
 
 # from .account_courses_delete import delete_course
