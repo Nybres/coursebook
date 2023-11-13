@@ -1,35 +1,27 @@
-{% extends "layout/base.html" %} {% block styles %}
-<link rel="stylesheet" href="{% static 'css/global.min.css' %}" />
-<link rel="stylesheet" href="{% static 'css/login.min.css' %}" />
-<link rel="stylesheet" href="{% static 'css/cart.min.css' %}" />
-<script src="https://js.stripe.com/v3/"></script>
-{% endblock %} {% block content %}
-<section>
+<!DOCTYPE html>
+<html lang="pl">
 
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Coursebook</title>
+   <!-- @include 'font_style.kit' -->
+   <link rel="stylesheet" href="./dist/css/global.min.css">
+   <link rel="stylesheet" href="./dist/css/cart.min.css">
+</head>
 
-	<!-- <div>Koszyk cena:{{cart.total_price}}<br /></div>
-	{% for cart_item in cart_items %}
-	<div>
-		Produkt: {{ cart_item.course.title }}<br />
-		Ilość: {{ cart_item.quantity }}<br />
-		Cena: {{ cart_item.course.price }}<br />
-		Średni obraz: <img src="{{ cart_item.course.courseimage_set.first.image_thumb.url }}" alt="{{ cart_item.course.title }}" /><br />
+<body>
 
+   <!-- <head>
+      <div class="container cart-bgc">
+         <div class="mainCart__logo">
+            <a href="/" class="nav__left-logo">CourseBook</a>
+         </div>
+      </div>
+   </head> -->
 
-	</div>
-	{% endfor %}
-	<button id="checkout-button">Zapłać</button> -->
-
-	<!-- <head>
-		<div class="container cart-bgc">
-			<div class="mainCart__logo">
-				<a href="/" class="nav__left-logo">CourseBook</a>
-			</div>
-		</div>
-	</head> -->
-
-	<main class="main">
-
+   <main class="main">
 
       <div class="container">
          <div class="mainCartHead">
@@ -368,34 +360,9 @@
 
 
    </main>
-	</main>
-	<div class="overlay"></div>
-	<!-- @include 'footer.kit' -->
-</section>
-{% endblock %} {% block scripts %}
-<script>
-	document.addEventListener('DOMContentLoaded', function () {
-		var stripe = Stripe(
-			'pk_test_51O2IdAKiNvxN6rGZ2WJiJgSld6y86ePUmmhIHe3CjSSLTYYuJ7M16NFgByVzI5RhXJ1xdAjtQqeodyJ8NeFulAri00klwONrWu'
-		)
-		console.log(stripe)
-		document.getElementById('checkout-button').addEventListener('click', function () {
-			fetch('/create-checkout-session', {
-				method: 'POST',
-			})
-				.then(function (response) {
-					return response.json()
-				})
-				.then(function (session) {
-					return stripe.redirectToCheckout({ sessionId: session.id })
-				})
-				.then(function (result) {
-					if (result.error) {
-						console.error(result.error.message)
-					}
-				})
-		})
-	})
-</script>
-<script src="{% static 'js/main.min.js' %}"></script>
-{% endblock %}
+   <!-- @include 'footer.kit' -->
+   <script src="./dist/js/main.min.js"></script>
+   <div class="overlay"></div>
+</body>
+
+</html>
