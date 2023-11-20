@@ -141,10 +141,10 @@
 
 			{% if categories %}
 			<div class="form__row">
-				{% for category in categories %}
-				<div>
-					<input value="{{ category.id }}" type="checkbox" id="category_{{ category.id }}" name="categories_ids" />
-					<label for="category_{{ category.id }}">{{category.name}}</label>
+				{% for category in categories %} 
+				<div class="form__row__category">
+					<input class="form__row__category__checkbox" value="{{ category.id }}" type="checkbox" id="category_{{ category.id }}" name="categories_ids" />
+					<label class="form__row__category__txt" for="category_{{ category.id }}">{{category.name}}</label>
 				</div>
 				{% endfor %}
 			</div>
