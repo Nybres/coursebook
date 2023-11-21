@@ -68,21 +68,21 @@
       <div class="blog-content">
 
 
-        {%if posts%} {%for post in posts%}
+        {%if posts%} 
+        {%for post in posts%}
          <div class="blog-content__item">
             <div class="blog-content__item__picture">
                <img class="blog-content__item__picture__img" src="/static/images/blog-head.jpg" alt="Kreatywne gotowanie">
             </div>
-
             <div class="blog-content__item__labels">
-               <p class="blog-content__item__labels__item">Kuchnia</p><p class="blog-content__item__labels__item">Przyprawy</p><p class="blog-content__item__labels__item">Aromat</p>
+              {% for category in post.category %}
+               <p class="blog-content__item__labels__item">{{ category }}</p>
+              {% endfor %}
             </div>
-
             <h2 class="blog-content__item__title">{{post.title|title}}</h2>
-
-            <div class="blog-content__item__text">Odkryj pięć niezwykłych przypraw, które nadadzą Twoim potrawom wyjątkowy smak i aromat. Dowiedz się, jak używać ich w kuchni i jakie są ich korzyści zdrowotne. Od teraz Twoje dania będą zawsze pełne magii kulinarnych doznań!
+            <div class="blog-content__item__text">
+              <p>{{ post.content }}</p>
             </div>
-
             <form action="">
                <button title="Czytaj więcej" href="#" class="btn btn--primary">
                   Czytaj więcej
@@ -97,7 +97,8 @@
             </button>
             </form>
          </div>
-         {%endfor%}{%endif%}
+         {%endfor%}
+         {%endif%}
          
 
          
