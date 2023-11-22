@@ -68,20 +68,24 @@
       <div class="blog-content">
 
 
-        {%if posts%} 
+        {%if posts%}
         {%for post in posts%}
          <div class="blog-content__item">
             <div class="blog-content__item__picture">
-               <img class="blog-content__item__picture__img" src="/static/images/blog-head.jpg" alt="Kreatywne gotowanie">
+              {% if post.photo %}
+               <img class="blog-content__item__picture__img" src="{{post.photo_thumb.url}}" alt="Kreatywne gotowanie">
+               {% endif %}
             </div>
             <div class="blog-content__item__labels">
-              {% for category in post.category %}
-               <p class="blog-content__item__labels__item">{{ category }}</p>
+              {%if post.categories%}
+              {%for postCategory in post.categories.all%}
+               <p class="blog-content__item__labels__item">{{ postCategory.name }}</p>
               {% endfor %}
+              {% endif %}
             </div>
-            <h2 class="blog-content__item__title">{{post.title|title}}</h2>
+            <h2 class="blog-content__item__title">{{ post.title|title }}</h2>
             <div class="blog-content__item__text">
-              <p>{{ post.content }}</p>
+              <p>{{ post.short_content }}</p>
             </div>
             <form action="">
                <button title="Czytaj więcej" href="#" class="btn btn--primary">

@@ -1,0 +1,14 @@
+{% extends "layout/base-nb.html" %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/global.min.css' %}" />
+{% endblock %} {% block content %}
+<div class="container">
+  {% include 'partials/breadcrumbs.html' with breadcrumbs=breadcrumbs %}
+</div>
+
+   
+
+
+
+
+<script src="{% static 'js/main.min.js' %}"></script>
+{% endblock %}
