@@ -130,7 +130,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
                     instance.photo_thumb.delete(save=False)
 
                 converted_photo = create_thumbnail(
-                    photo, (400, 350), 80, thumb_name="orginal"
+                    photo, (1440, 540), 80, thumb_name="orginal"
                 )
                 thumb = create_thumbnail(photo, (200, 150), 80, thumb_name="thumb")
                 instance.photo = converted_photo
@@ -157,7 +157,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
         photo = validated_data.pop("photo", None)
         if photo:
             converted_photo = create_thumbnail(
-                photo, (1440, 760), 80, thumb_name="orginal"
+                photo, (1440, 540), 80, thumb_name="orginal"
             )
             thumb = create_thumbnail(photo, (200, 150), 80, thumb_name="thumb")
         else:

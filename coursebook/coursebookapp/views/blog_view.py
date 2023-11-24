@@ -13,7 +13,7 @@ from ..serializers import BlogPostSerializer
 class BlogCategoryView(generics.ListAPIView):
     serializer_class = BlogPostSerializer
     template_name = "pages/blog.html"
-    default_page_size = 1
+    default_page_size = 6
 
     def get(self, request, *args, **kwargs):
         category_slug = self.kwargs.get("slug")
