@@ -37,12 +37,12 @@ urlpatterns = [
         views.PostDetailView.as_view(),
         name="post",
     ),
-     path(
+    path(
         "blog",
         views.BlogCategoryView.as_view(),
         name="blog",
     ),
-      path(
+    path(
         "blog/category/<str:slug>/",
         views.BlogCategoryView.as_view(),
         name="blog_category",
@@ -101,6 +101,19 @@ urlpatterns = [
         "create-checkout-session",
         views.create_checkout_session,
         name="create_checkout_session",
+    ),
+    path(
+        "active-courses/", views.ActiveCoursesListView.as_view(), name="active_courses"
+    ),
+    path(
+        "courses-by-province/<str:province_slug>/",
+        views.CoursesByProvinceSlugView.as_view(),
+        name="courses_by_province",
+    ),
+    path(
+        "active-provinces/",
+        views.ActiveProvincesListView.as_view(),
+        name="active_provinces",
     ),
 ]
 if settings.DEBUG:

@@ -190,6 +190,9 @@ class ImageSerializer(serializers.ModelSerializer):
             # return self.context['request'].build_absolute_uri(obj.image.url)
         # return None
 
+class ActiveProvincesSerializer(serializers.Serializer):
+    province_name = serializers.CharField(source="province_slug", read_only=True)
+
 
 class CourseSerializer(serializers.ModelSerializer):
     # instructor = InstructorSerializer()
