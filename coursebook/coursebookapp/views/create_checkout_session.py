@@ -40,8 +40,10 @@ class CreateCheckoutSession(generics.ListCreateAPIView):
             )
 
         session = stripe.checkout.Session.create(
-            success_url="http://127.0.0.1:8000/payment/success/{CHECKOUT_SESSION_ID}",
-            cancel_url="http://127.0.0.1:8000/payment/failed/{CHECKOUT_SESSION_ID}",
+            # success_url="http://127.0.0.1:8000/payment/success/{CHECKOUT_SESSION_ID}",
+            # cancel_url="http://127.0.0.1:8000/payment/failed/{CHECKOUT_SESSION_ID}",
+            success_url=f"{settings.WEB_URL}payment/success/{{CHECKOUT_SESSION_ID}}",
+            cancel_url=f"{settings.WEB_URL}payment/failed/{{CHECKOUT_SESSION_ID}}",
             payment_method_types=["card", "blik"],
             line_items=cart_items_data,
             mode="payment",
