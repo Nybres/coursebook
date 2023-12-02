@@ -14,6 +14,8 @@ from .models.cart_item import CartItem
 from .models.blog_post import BlogPost
 from .models.blog_category import BlogCategory
 from .models.purchased_course import PurchasedCourse
+from .models.participant import Participant
+from .models.order_history import OrderHistory
 
 from .helpers import create_thumbnail
 
@@ -116,7 +118,9 @@ class BlogPostSerializer(serializers.ModelSerializer):
     photo_thumb = serializers.ImageField(required=False)
     photo_change = serializers.CharField(write_only=True, required=False, default=False)
     categories = BlogCategorySerializer(many=True, read_only=True)
-    categories_ids = serializers.ListField(child=serializers.IntegerField(), write_only=True, required=False)
+    categories_ids = serializers.ListField(
+        child=serializers.IntegerField(), write_only=True, required=False
+    )
 
     class Meta:
         model = BlogPost
@@ -139,7 +143,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
                 if instance.photo:
                     instance.photo.delete(save=False)
                     instance.photo_thumb.delete(save=False)
-        
+
         categories_ids = validated_data.pop("categories_ids", [])
 
         for attr, value in validated_data.items():
@@ -189,6 +193,7 @@ class ImageSerializer(serializers.ModelSerializer):
             return obj.image.url
             # return self.context['request'].build_absolute_uri(obj.image.url)
         # return None
+
 
 class ActiveProvincesSerializer(serializers.Serializer):
     province_name = serializers.CharField(source="province_slug", read_only=True)
@@ -349,13 +354,6 @@ class CartItemSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         course = validate_data.get("course")
         quantity = validate_data.get("quantity")
-        # course_id = course_data.id
-        # course = Course.objects.get(id=course_id)
-
-        # request = self.context.get("request")
-        # course_id = validate_data.get("course_id")
-        # quantity = validate_data.get("quantity")
-        # course = Course.objects.get(id=course_id)
 
         user = request.user
         current_cart = Cart.objects.filter(user=user, is_completed=False).first()
@@ -367,40 +365,27 @@ class CartItemSerializer(serializers.ModelSerializer):
         ).first()
 
         if existing_cart_item:
-            existing_cart_item.quantity += quantity
-            existing_cart_item.save()
+            new_quantity = existing_cart_item.quantity + quantity
+            if new_quantity <= course.seats:
+                existing_cart_item.quantity = new_quantity
+                existing_cart_item.save()
+            else:
+                raise serializers.ValidationError("Niedostępna ilość miejsc w kursie")
         else:
-            CartItem.objects.create(cart=current_cart, course=course, quantity=quantity)
+            if quantity <= course.seats:
+                CartItem.objects.create(
+                    cart=current_cart, course=course, quantity=quantity
+                )
+            else:
+                raise serializers.ValidationError("Niedostępna ilość miejsc w kursie")
+
+        # if existing_cart_item:
+        #     existing_cart_item.quantity += quantity
+        #     existing_cart_item.save()
+        # else:
+        #     CartItem.objects.create(cart=current_cart, course=course, quantity=quantity)
 
         return current_cart
-
-
-# class CartItemDetailSerializer(serializers.ModelSerializer):
-#     instructor = InstructorSerializer()
-#     image = ImageSerializer(source="courseimage_set.first", read_only=True)
-#     cartItemId = serializers.IntegerField(
-#         source="cartitem_set.first.id",
-#         read_only=True
-#     )
-
-#     quantity = serializers.IntegerField(
-#         source="cartitem_set.first.quantity", read_only=True
-#     )
-
-#     class Meta:
-#         model = Course
-#         fields = [
-#             "id",
-#             "title",
-#             "price",
-#             "city",
-#             "date",
-#             "instructor",
-#             "image",
-#             "quantity",
-#             "cartItemId",
-#         ]
-
 
 class CartItemDetailSerializer(serializers.ModelSerializer):
     course = CourseSerializer()
@@ -421,9 +406,50 @@ class CartSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-# class PurchaseHistorySerializer(serializers.ModelSerializer):
-#     cart_items = CartItemSerializer(many=True, read_only=True)
+class ParticipantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Participant
+        fields = ("name", "surname", "email", "phone")
 
-#     class Meta:
-#         model = PurchasedCourse
-#         fields = "__all__"
+
+class PurchasedCourseSerializer(serializers.ModelSerializer):
+    participants = ParticipantSerializer(many=True)
+
+    class Meta:
+        model = PurchasedCourse
+        fields = ("course", "quantity", "participants")
+
+    def create(self, validated_data):
+        return PurchasedCourse.objects.create(**validated_data)
+
+
+class OrderHistorySerializer(serializers.ModelSerializer):
+    purchased_courses = PurchasedCourseSerializer(many=True)
+    user = serializers.CharField(required=False)
+    order_date = serializers.DateTimeField(required=False)
+
+    class Meta:
+        model = OrderHistory
+        fields = "__all__"
+
+    def create(self, validated_data):
+        user = self.context.get("request").user
+        purchased_courses_data = validated_data.pop("purchased_courses")
+        order_history = OrderHistory.objects.create(user=user, **validated_data)
+
+        for purchased_course_data in purchased_courses_data:
+            course = purchased_course_data.get("course")
+            quantity = purchased_course_data.get("quantity")
+
+            purchased_course = PurchasedCourse.objects.create(
+                course=course, quantity=quantity
+            )
+
+            if "participants" in purchased_course_data:
+                participants_data = purchased_course_data.get("participants")
+                for participant_data in participants_data:
+                    Participant.objects.create(
+                        purchased_course=purchased_course, **participant_data
+                    )
+
+        return order_history

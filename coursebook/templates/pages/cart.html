@@ -5,29 +5,14 @@
 <script src="https://js.stripe.com/v3/"></script>
 {% endblock %} {% block content %}
 <section>
-
-
-
-
-
 		<div class="container">
 			<div class="mainCartHead">
 				<div class="mainCartHead__container">
 					<p class="mainCartHead__container-text">Twoje zamówienie</p>
-
 					<div class="mainCartHead__container__boxes">
-
-
 						<div class="mainCartHead__container__boxes__box-left">
-
-
-
-
-
-							
-							<form class="jsInstructorForm" action="" method="">
-
-
+							<form class="jsCreateCheckout" action="" method="POST">
+								{% csrf_token %}
 								<div class="mainCartHead__container__boxes__box-left-item">
 									<div class="mainCartHead__container__boxes__box-left-item-head">
 										<div class="mainCartHead__container__boxes__box-left-item-head-number">
@@ -40,28 +25,24 @@
 										</div>
 									</div>
 									<div class="mainCartHead__container__boxes__box-left-item-body">
-
 										<div class="mainCartHead__container__boxes__box-left-item-body-form">
-											<input type="hidden" name="csrfmiddlewaretoken"
-												value="3fe1d6iCk3CBHf1nRmuGIadN7GueZo3ilfrqXDEZAn10CszrViuGp5fkpBeFNiVz">
-
 											<div class="form__row">
 												<div class="form__group">
-													<input name="first_name" placeholder="Imię" class="form__group-input"
+													<input name="" placeholder="Imię" class="form__group-input"
 														type="text">
 												</div>
 												<div class="form__group">
-													<input name="last_name" placeholder="Nazwisko" class="form__group-input"
+													<input name="" placeholder="Nazwisko" class="form__group-input"
 														type="text">
 												</div>
 											</div>
 											<div class="mainCartHead__container__boxes__box-left-item-body-form-formColumn">
 												<div class="form__group">
-													<input name="email" placeholder="Adres e-mail"
+													<input name="" placeholder="Adres e-mail"
 														class="form__group-input form__group-input-first" type="email">
 												</div>
 												<div class="form__group">
-													<input name="tel" placeholder="Numer telefonu"
+													<input name="" placeholder="Numer telefonu"
 														class="form__group-input form__group-input-second" type="tel">
 												</div>
 											</div>
@@ -72,7 +53,6 @@
 
 
 							{% for cart_item in cart_items %}
-
 								<div class="mainCartHead__container__boxes__box-left-item">
 									<div class="mainCartHead__container__boxes__box-left-item-head">
 										<div class="mainCartHead__container__boxes__box-left-item-head-number">
@@ -84,55 +64,36 @@
 										</div>
 									</div>
 									<div class="mainCartHead__container__boxes__box-left-item-body">
-
 										{% for i in "x"|ljust:cart_item.quantity %}
-         
-
 										<p class="mainCartHead__container__boxes__box-left-item-body-member">Uczestnik</p>
-
 										<div class="mainCartHead__container__boxes__box-left-item-body-form">
-											<input type="hidden" name="csrfmiddlewaretoken"
-												value="3fe1d6iCk3CBHf1nRmuGIadN7GueZo3ilfrqXDEZAn10CszrViuGp5fkpBeFNiVz">
-
 											<div class="form__row">
 												<div class="form__group">
-													<input name="first_name" placeholder="Imię" class="form__group-input"
+													<input name="" placeholder="Imię" class="form__group-input"
 														type="text">
 												</div>
 												<div class="form__group">
-													<input name="last_name" placeholder="Nazwisko" class="form__group-input"
+													<input name="" placeholder="Nazwisko" class="form__group-input"
 														type="text">
 												</div>
 											</div>
 											<div class="mainCartHead__container__boxes__box-left-item-body-form-formColumn">
 												<div class="form__group">
-													<input name="email" placeholder="Adres e-mail"
+													<input name="" placeholder="Adres e-mail"
 														class="form__group-input form__group-input-first" type="email">
 												</div>
 												<div class="form__group">
-													<input name="tel" placeholder="Numer telefonu"
+													<input name="" placeholder="Numer telefonu"
 														class="form__group-input form__group-input-second" type="tel">
 												</div>
 											</div>
 										</div>
-
 										{% endfor %}
-
 									</div>
 								</div>
 							{% endfor %}
-
-							</form>
-
-
-
-
-
 							<div class="mainCartHead__container__boxes__box-left-btns-form">
-
-								<form class="mainCartHead__container__boxes__box-left-btns-form" action="/cart/add"
-									method="POST">
-
+								<div class="mainCartHead__container__boxes__box-left-btns-form">
 									<button class="btn btn--secondary mainCartHead__container__boxes__box-left-btns-back">
 										<span class="btn__backText">Powrót</span>
 										<span class="btn__arrowBack">
@@ -144,8 +105,7 @@
 											</svg>
 										</span>
 									</button>
-
-									<button class="btn btn--primary" id="checkout-button">
+									<button type='submit' class="btn btn--primary" id="checkout-button">
 										Kupuję i płacę
 										<span class="btn__arrow">
 											<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -155,25 +115,12 @@
 											</svg>
 										</span>
 									</button>
-
 								</form>
-
-
 							</div>
-
-
-
-
 						</div>
-
-
-
-
+					</div>
 						<div class="mainCartHead__container__boxes__box-right">
-
-
 							<div class="mainCartHead__container__boxes__box-right__sticky">
-
 								<div class="mainCartHead__container__boxes__box-right-item">
 									<div class="mainCartHead__container__boxes__box-right-item-head">
 										<div class="mainCartHead__container__boxes__box-right-item-head-number">
@@ -182,16 +129,7 @@
 												koszyk</p>
 										</div>
 									</div>
-
-
-
 									{% for cart_item in cart_items %}
-
-
-
-
-
-
 									<div class="mainCartHead__container__boxes__box-right-item-body">
 										<div class="nav__cart-container-boxes-box">
 											<img class="nav__cart-container-boxes-box-img"
@@ -242,17 +180,8 @@
 											</div>
 										</div>
 									</div>
-
-
 									{% endfor %}
-
-
-
-
 								</div>
-
-
-
 								<div class="mainCartHead__container__boxes__box-right-item">
 									<div class="mainCartHead__container__boxes__box-right-item-head">
 										<div class="mainCartHead__container__boxes__box-right-item-head-number">
@@ -260,54 +189,31 @@
 												Podsumowanie</p>
 										</div>
 									</div>
-
-
 									<div class="mainCartHead__container__boxes__box-right-item-worth">
 										<p>Wartość produktów:</p>
 										<p>{{cart.total_price}}zł</p>
 									</div>
-
 									<div class="mainCartHead__container__boxes__box-right-item-sum">
 										<p class="mainCartHead__container__boxes__box-right-item-sum-text">Do zapłaty</p>
 										<p class="mainCartHead__container__boxes__box-right-item-sum-text">{{cart.total_price}}zł
 										</p>
 									</div>
-
-
-
-
-
-
-
 								</div>
-
 							</div>
-
-
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
 </section>
-
-
-
-
-
-
-
 <div class="overlay"></div>
-<!-- @include 'footer.kit' -->
 </section>
 {% endblock %} {% block scripts %}
-<script>
+{% comment %} <script>
 	document.addEventListener('DOMContentLoaded', function () {
 		var stripe = Stripe(
 			'pk_test_51O2IdAKiNvxN6rGZ2WJiJgSld6y86ePUmmhIHe3CjSSLTYYuJ7M16NFgByVzI5RhXJ1xdAjtQqeodyJ8NeFulAri00klwONrWu'
 		)
-		console.log(stripe)
 		document.getElementById('checkout-button').addEventListener('click', function () {
 			fetch('/create-checkout-session', {
 				method: 'POST',
@@ -325,6 +231,6 @@
 				})
 		})
 	})
-</script>
+</script> {% endcomment %}
 <script src="{% static 'js/main.min.js' %}"></script>
 {% endblock %}

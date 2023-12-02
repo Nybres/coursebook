@@ -12,6 +12,18 @@ urlpatterns = [
     path("register-company", views.RegisterView.as_view(), name="register_company"),
     path("account", views.AccountView, name="account"),
     path("account-courses", views.AccountCoursesView.as_view(), name="account_courses"),
+    # path("payment/failed", views.CancelView.as_view(), name="payment_fail"),
+    # path("payment/success", views.SuccessView.as_view(), name="payment_success"),
+    path(
+        "payment/failed/<str:transaction_id>/",
+        views.CancelView.as_view(),
+        name="payment_fail",
+    ),
+    path(
+        "payment/success/<str:transaction_id>/",
+        views.SuccessView.as_view(),
+        name="payment_success",
+    ),
     path(
         "delete-course/<int:pk>/",
         views.AccountCourseDelete.as_view(),
@@ -99,7 +111,7 @@ urlpatterns = [
     ),
     path(
         "create-checkout-session",
-        views.create_checkout_session,
+        views.CreateCheckoutSession.as_view(),
         name="create_checkout_session",
     ),
     path(
@@ -115,6 +127,7 @@ urlpatterns = [
         views.ActiveProvincesListView.as_view(),
         name="active_provinces",
     ),
+    path("stripe/webhook/", views.stripe_webhook, name="stripe_webhook"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

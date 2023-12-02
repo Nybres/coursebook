@@ -1,4 +1,6 @@
 from .home_view import HomeView
+from .success_view import SuccessView
+from .cancel_view import CancelView
 from .user_login_view import UserLoginView
 from .user_logout_view import UserLogoutView
 from .register_view import RegisterView
@@ -16,7 +18,7 @@ from .add_to_cart import IncreaseCartItemQuantityView
 from .remove_from_cart import RemoveFromCartView
 from .cart import CartView
 from .mini_cart import MiniCartView
-from .create_checkout_session import create_checkout_session
+from .create_checkout_session import CreateCheckoutSession
 from .account_blog_view import AccountBlogView
 from .account_blog_modify_view import BlogPostModify
 from .post_view import PostDetailView
@@ -24,5 +26,6 @@ from .blog_view import BlogCategoryView
 from .course_api_view import ActiveCoursesListView
 from .course_api_view import ActiveProvincesListView
 from .course_api_view import CoursesByProvinceSlugView
+from .webhook import stripe_webhook
 
 # from .account_courses_delete import delete_course

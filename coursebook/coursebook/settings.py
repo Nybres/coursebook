@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
 import os
 
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,14 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-@*p6)oed%ub*ur8od!^rio5ipp-ymp!6$pj@3gk7@m!e9v*42z"
-STRIPE_PUBLIC_KEY = "pk_test_51O2IdAKiNvxN6rGZ2WJiJgSld6y86ePUmmhIHe3CjSSLTYYuJ7M16NFgByVzI5RhXJ1xdAjtQqeodyJ8NeFulAri00klwONrWu"
-STRIPE_SECRET_KEY = "sk_test_51O2IdAKiNvxN6rGZNuFO2ciKyRuqIXEx68zfQHu639NFuQmTaje6pueyWN1K24SrBx6hyajued5w0WfZP7MfemBN00KC8PDQ4S"
+SECRET_KEY = os.getenv("SECRET_KEY")
+STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+STRIPE_WEBHOOK_KEY = os.getenv("STRIPE_WEBHOOK_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["azarog.pythonanywhere.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["azarog.pythonanywhere.com", "127.0.0.1", "9a3c-86-63-96-131.ngrok.io"]
 
 
 # Application definition
