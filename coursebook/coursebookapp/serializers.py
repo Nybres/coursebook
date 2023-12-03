@@ -387,6 +387,7 @@ class CartItemSerializer(serializers.ModelSerializer):
 
         return current_cart
 
+
 class CartItemDetailSerializer(serializers.ModelSerializer):
     course = CourseSerializer()
     cartItemId = serializers.IntegerField(source="pk", read_only=True)
@@ -414,6 +415,7 @@ class ParticipantSerializer(serializers.ModelSerializer):
 
 class PurchasedCourseSerializer(serializers.ModelSerializer):
     participants = ParticipantSerializer(many=True)
+    # course = CourseSerializer(read_only=True)
 
     class Meta:
         model = PurchasedCourse
@@ -451,5 +453,6 @@ class OrderHistorySerializer(serializers.ModelSerializer):
                     Participant.objects.create(
                         purchased_course=purchased_course, **participant_data
                     )
+            order_history.purchased_courses.add(purchased_course)
 
         return order_history

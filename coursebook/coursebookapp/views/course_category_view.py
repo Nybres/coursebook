@@ -11,13 +11,13 @@ from ..serializers import CourseSerializer
 class CourseCategoryView(generics.ListAPIView):
     serializer_class = CourseSerializer
     template_name = "pages/course-category.html"
-    default_page_size = 1
+    default_page_size = 9
 
     def get(self, request, *args, **kwargs):
         province_slug = self.kwargs.get("province_slug")
 
         if province_slug:
-            courses = Course.objects.filter(province_slug=province_slug)
+            courses = Course.objects.filter(province_slug=province_slug, available=True)
             for course in courses:
                 image = course.courseimage_set.first()
                 course.image = image
