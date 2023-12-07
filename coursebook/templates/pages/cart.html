@@ -52,7 +52,7 @@
 								</div>
 
 
-							{% for cart_item in cart_items %}
+								{% for cart_item in cart_items %}
 								<div class="mainCartHead__container__boxes__box-left-item">
 									<div class="mainCartHead__container__boxes__box-left-item-head">
 										<div class="mainCartHead__container__boxes__box-left-item-head-number">
@@ -91,20 +91,22 @@
 										{% endfor %}
 									</div>
 								</div>
-							{% endfor %}
-							<div class="mainCartHead__container__boxes__box-left-btns-form">
+								{% endfor %}
 								<div class="mainCartHead__container__boxes__box-left-btns-form">
-									<button class="btn btn--secondary mainCartHead__container__boxes__box-left-btns-back">
-										<span class="btn__backText">Powrót</span>
-										<span class="btn__arrowBack">
-											<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24"
-												fill="none">
-												<path
-													d="M12.5 4L13.925 5.4L8.325 11L20.5 11L20.5 13L8.325 13L13.925 18.6L12.5 20L4.5 12L12.5 4Z"
-													fill="#A4243B" />
-											</svg>
-										</span>
-									</button>
+								<div class="mainCartHead__container__boxes__box-left-btns-form">
+									<a href="/">
+										<div class="btn btn--secondary mainCartHead__container__boxes__box-left-btns-back">
+											<span class="btn__arrowBack">
+												<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24"
+													fill="none">
+													<path
+														d="M12.5 4L13.925 5.4L8.325 11L20.5 11L20.5 13L8.325 13L13.925 18.6L12.5 20L4.5 12L12.5 4Z"
+														fill="#A4243B" />
+												</svg>
+											</span>
+											<span class="btn__backText">Powrót</span>
+										</div>
+									</a>
 									<button type='submit' class="btn btn--primary" id="checkout-button">
 										Kupuję i płacę
 										<span class="btn__arrow">
