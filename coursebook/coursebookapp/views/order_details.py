@@ -43,7 +43,7 @@ class OrderDetailsView(generics.RetrieveAPIView):
                     "participants": participants,
                 }
             )
-
+        print(purchased_courses_with_data )
         context = {
             "order": instance,
             "purchased_courses": purchased_courses_with_data,

@@ -21,45 +21,49 @@
 
 
 <div class="container">
-<h2>Order Information</h2>
-<p>Order ID: {{ order.id }}</p>
-<p>Imie {{ order.name }}</p>
-<p>nazwisko {{ order.surname }}</p>
-<p>email{{ order.email }}</p>
-<p>telefon{{ order.phone }}</p>
+    <h2>Order Information</h2>
+    <p>Order ID: {{ order.id }}</p>
+    <p>Imie {{ order.name }}</p>
+    <p>nazwisko {{ order.surname }}</p>
+    <p>email{{ order.email }}</p>
+    <p>telefon{{ order.phone }}</p>
 
-{% if purchased_courses %}
-    <h2>Purchased Courses</h2>
-    {% for purchased_course in purchased_courses %}
-        <div>
-            <h3>{{ purchased_course.purchased_course.course.title }}</h3>
-            <h3>{{ purchased_course.purchased_course.quantity }}</h3>
-            <h3>{{ purchased_course.purchased_course.course.price }}</h3>
-            {% if purchased_course.course_image %}
-                <img src="{{ purchased_course.course_image }}" alt="Course Image">
-            {% endif %}
+    {% if purchased_courses %}
+        <h2>Purchased Courses</h2>
+        </br>
+        </br>
+        {% for course_detail in purchased_courses %}
+            <div>
+                <h3>Tytuł: {{ course_detail.purchased_course.course.title }}</h3>
+                <h3>Ilość sztuk: {{ course_detail.purchased_course.quantity }}</h3>
+                <h3>Cena kursu: {{ course_detail.purchased_course.course.price }}</h3>
+                {% if course_detail.course_image %}
+                    <img src="{{ course_detail.course_image }}" alt="Course Image">
+                {% endif %}
 
-            {% if purchased_course.participants %}
-                <h4>Uczestnicy:</h4>
-                <ul>
-                    {% for participant in purchased_course.participants %}
-                        <li>{{ participant.name }} {{ participant.surname }} - {{ participant.email }} {{ participant.phone }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>Brak uczestników</p>
-            {% endif %}
-        </div>
-    {% endfor %}
-{% else %}
-    <p>Brak kursów zakupionych</p>
-{% endif %}
+                {% if course_detail.participants %}
+                    <h4>Uczestnicy:</h4>
+                    <ul>
+                        {% for participant in course_detail.participants %}
+                            <li>{{ participant.name }} {{ participant.surname }} - {{ participant.email }} {{ participant.phone }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Brak uczestników</p>
+                {% endif %}
+            </div>
+        </br>
+        </br>
+        {% endfor %}
+    {% else %}
+        <p>Brak kursów zakupionych</p>
+    {% endif %}
 
-{% if total_amount is not None %}
-    <p>Suma całkowita: {{ total_amount }}</p>
-{% else %}
-    <p>Brak danych</p>
-{% endif %}
+    {% if total_amount is not None %}
+        <p>Suma całkowita: {{ total_amount }}</p>
+    {% else %}
+        <p>Brak danych</p>
+    {% endif %}
 </div>
 
 <script src="{% static 'js/main.min.js' %}"></script>
