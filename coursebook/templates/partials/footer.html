@@ -38,13 +38,13 @@
 				<div class="footer__column-body">
 					<ul class="footer__column-list">
 						<li class="footer__column-item">
-							<a class="footer__column-link" href="#">O nas</a>
+							<a class="footer__column-link" href="{% url 'about_us'%}">O nas</a>
 						</li>
 						<li class="footer__column-item">
-							<a class="footer__column-link" href="/contact">Kontakt</a>
+							<a class="footer__column-link" href="{% url 'contact'%}">Kontakt</a>
 						</li>
 						<li class="footer__column-item">
-							<a class="footer__column-link" href="#">Pytania</a>
+							<a class="footer__column-link" href="{% url 'faq'%}">Pytania</a>
 						</li>
 						{% comment %}
 						<li class="footer__column-item">
@@ -77,7 +77,7 @@
 							<a class="footer__column-link" href="{% url 'blog' %}">Blog</a>
 						</li>
 						<li class="footer__column-item">
-							<a class="footer__column-link" href="#">Galeria</a>
+							<a class="footer__column-link" href="{% url 'gallery' %}">Galeria</a>
 						</li>
 						<li class="footer__column-item">
 							<a class="footer__column-link" href="{% url 'login' %}">Zaloguj się</a>
