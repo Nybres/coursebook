@@ -27,5 +27,11 @@ from .course_api_view import ActiveCoursesListView
 from .course_api_view import ActiveProvincesListView
 from .course_api_view import CoursesByProvinceSlugView
 from .webhook import stripe_webhook
+from .contact import ContactView
+from .about_us import AboutUsView
+from .faq import FaqView
+from .gallery import GalleryView
+from .newest_view import NewestView
+from .order_details import OrderDetailsView
 
 # from .account_courses_delete import delete_course

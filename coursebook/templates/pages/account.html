@@ -22,30 +22,13 @@
 	<div class="container">
 		<div class="list__inner">
 			{% if orders %} {% for order in orders %}
+			<p>{{order.name}}</p>
+			<p>{{order.surname}}</p>
+			<p>{{order.email}}</p>
+			<p>Id:{{order.id}}</p>
+			<p>Total value: {{ order.total_value }}</p>
 			<p>Data zamówienia: {{ order.order_date|date }}</p>
-			{% if order.purchased_courses %}
-			<ul>
-				{% for purchased_course in order.purchased_courses %}
-				<li>Tytuł kursu: {{ purchased_course.course_title }}</li>
-				{% if purchased_course.course_image_url %}
-				<img src="{{ purchased_course.course_image_url }}" alt="Zdjęcie kursu" />
-				{% else %}
-				<p>Brak zdjęcia</p>
-				{% endif %} {% if purchased_course.participants %}
-				<ul>
-					{% for participant in purchased_course.participants %}
-					<li>
-						Uczestnik: {{ participant.name }} {{ participant.surname }} - {{ participant.email }} - {{ participant.phone }}
-					</li>
-					{% endfor %}
-				</ul>
-				{% else %}
-				<p>Brak uczestników</p>
-				{% endif %} {% endfor %}
-			</ul>
-			{% else %}
-			<p>Brak zakupionych kursów</p>
-			{% endif %} {% endfor %} {% else %}
+			{% endfor %} {% else %}
 			<h1>Brak zamówień</h1>
 			{% endif %}
 		</div>
@@ -63,9 +46,8 @@
 				<p>Cena: {{ order.course_price }}</p>
 				<p>Sztuki: {{ order.quantity }}</p>
 				{% if order.course_image %}
-				<img src="{{ order.course_image }}" alt="Zdjęcie instruktora" />
+				<img src="{{ order.course_image }}" alt="Zdjęcie kursu" />
 				{% endif %}
-				<!-- Dodaj inne informacje o kursie, które chcesz wyświetlić -->
 			</div>
 			{% endfor %}
 		</div>
