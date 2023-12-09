@@ -443,84 +443,130 @@
 			</div>
 			<div class="blog__grid">
 				<div class="blog__left">
+					{%if posts%}
+					{%for post in posts %}
+					{% if forloop.first %}
 					<div class="blog__card">
 						<div class="blog__picture">
 							<picture>
-								<img
+								<img class="blog__picture__img"
 									width="570"
 									height="313"
 									loading="lazy"
-									src="{% static 'images/blog_big.jpg' %}"
+									src="{{post.photo_thumb.url}}"
 									alt="5 Przypraw, które Dodadzą Magii Twoim Potrawom" />
 							</picture>
 						</div>
 						<div class="blog__body">
 							<div class="blog__body-tags">
-								<div class="blog__tag">Kuchnia</div>
-								<div class="blog__tag">Przyprawy</div>
-								<div class="blog__tag">Aromat</div>
+								{%if post.categories%}
+          					{%for postCategory in post.categories.all%}
+								<div class="blog__tag"> {{ postCategory.name }} </div>
+								{% endfor %}
+								{% endif %}
 							</div>
-							<h3 class="blog__body-title">5 Przypraw, które Dodadzą Magii Twoim Potrawom</h3>
+							<h3 class="blog__body-title">{{ post.title }}</h3>
 							<p class="blog__body-desc">
-								Odkryj pięć niezwykłych przypraw, które nadadzą Twoim potrawom wyjątkowy smak i aromat. Dowiedz się, jak
-								używać ich w kuchni i jakie są ich korzyści zdrowotne. Od teraz Twoje dania będą zawsze pełne magii
-								kulinarnych doznań!
+								{{post.short_content|slice:":350"}}...
 							</p>
-							<a title="czytaj więcej" href="#" class="blog__read-more">Czytaj więcej</a>
+							<a title="czytaj więcej" href="{% url 'post' post.slug %}" class="blog__read-more">Czytaj więcej</a>
 						</div>
 					</div>
+					{%endif%}
+					{%endfor%}
+					{%endif%}
 				</div>
 				<div class="blog__right">
+					{%if posts%}
+					{%for post in posts %}
+					{% if forloop.counter == 2 %}
 					<div class="blog__card blog__card--small">
 						<div class="blog__picture">
-							<div class="blog__tag blog__tag--abs">Kuchnia</div>
+							{%if post.categories%}
+							{%for postCategory in post.categories.all%}
+							{% if forloop.first %}
+							<div class="blog__tag blog__tag--abs"> {{ postCategory.name }} </div>
+							{% endif %}
+							{% endfor %}
+							{% endif %}
 							<picture>
-								<img width="280" height="200" loading="lazy" src="{% static 'images/blog_small.jpg' %}" alt="" />
+								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="{{post.photo_thumb.url}}" alt="Blog - CourseBook" />
 							</picture>
 						</div>
 						<div class="blog__body">
-							<h3 class="blog__body-title">Jak Stworzyć Efektowne Wizualnie Danie</h3>
+
+							<h3 class="blog__body-title"> {{ post.title }} </h3>
+
 							<p class="blog__body-desc">
-								Opanuj sztukę dekoracji talerza i zaskocz swoich gości wizualnymi kompozycjami dań. Poznaj proste
-								techniki i triki, które pom...
+								{{post.short_content|slice:":200"}}...
 							</p>
-							<a title="czytaj więcej" href="#" class="blog__read-more">Czytaj więcej</a>
+							<a title="czytaj więcej" href="{% url 'post' post.slug %}" class="blog__read-more">Czytaj więcej</a>
 						</div>
 					</div>
+					{%endif%}
+					{%endfor%}
+					{%endif%}
 					<!--  -->
+					{%if posts%}
+					{%for post in posts %}
+					{% if forloop.counter == 3 %}
 					<div class="blog__card blog__card--small">
 						<div class="blog__picture">
-							<div class="blog__tag blog__tag--abs">Kuchnia</div>
+							{%if post.categories%}
+							{%for postCategory in post.categories.all%}
+							{% if forloop.first %}
+							<div class="blog__tag blog__tag--abs"> {{ postCategory.name }} </div>
+							{% endif %}
+							{% endfor %}
+							{% endif %}
 							<picture>
-								<img width="280" height="200" loading="lazy" src="{% static 'images/blog_small.jpg' %}" alt="" />
+								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="{{post.photo_thumb.url}}" alt="Blog - CourseBook" />
 							</picture>
 						</div>
 						<div class="blog__body">
-							<h3 class="blog__body-title">Jak Stworzyć Efektowne Wizualnie Danie</h3>
+
+							<h3 class="blog__body-title"> {{ post.title }} </h3>
+
 							<p class="blog__body-desc">
-								Opanuj sztukę dekoracji talerza i zaskocz swoich gości wizualnymi kompozycjami dań. Poznaj proste
-								techniki i triki, które pom...
+								{{post.short_content|slice:":200"}}...
 							</p>
-							<a title="czytaj więcej" href="#" class="blog__read-more">Czytaj więcej</a>
+							<a title="czytaj więcej" href="{% url 'post' post.slug %}" class="blog__read-more">Czytaj więcej</a>
 						</div>
 					</div>
+					{%endif%}
+					{%endfor%}
+					{%endif%}
 					<!--  -->
+					{%if posts%}
+					{%for post in posts %}
+					{% if forloop.counter == 4 %}
 					<div class="blog__card blog__card--small">
 						<div class="blog__picture">
-							<div class="blog__tag blog__tag--abs">Kuchnia</div>
+							{% if post.categories %}
+							{% for postCategory in post.categories.all %}
+							{% if forloop.first %}
+							<div class="blog__tag blog__tag--abs"> {{ postCategory.name }} </div>
+							{% endif %}
+							{% endfor %}
+							{% endif %}
 							<picture>
-								<img width="280" height="200" loading="lazy" src="{% static 'images/blog_small.jpg' %}" alt="" />
+								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="{{post.photo_thumb.url}}" alt="Blog - CourseBook" />
 							</picture>
 						</div>
 						<div class="blog__body">
-							<h3 class="blog__body-title">Jak Stworzyć Efektowne Wizualnie Danie</h3>
+
+							<h3 class="blog__body-title"> {{ post.title }} </h3>
+
 							<p class="blog__body-desc">
-								Opanuj sztukę dekoracji talerza i zaskocz swoich gości wizualnymi kompozycjami dań. Poznaj proste
-								techniki i triki, które pom...
+								{{post.short_content|slice:":200"}}...
 							</p>
-							<a title="czytaj więcej" href="#" class="blog__read-more">Czytaj więcej</a>
+							<a title="czytaj więcej" href="{% url 'post' post.slug %}" class="blog__read-more">Czytaj więcej</a>
 						</div>
 					</div>
+					{%endif%}
+					{%endfor%}
+					{%endif%}
+
 				</div>
 			</div>
 		</div>
@@ -669,7 +715,7 @@
 					</div>
 			  </div>
 			  <div class="testimonials__image">
-					<img loading="lazy" width="400" height="350" src="../../static/images/opinion.png"
+					<img loading="lazy" width="400" height="350" src="static/images/opinion.png"
 						 alt="Opinia klienta" />
 			  </div>
 		 </div>
