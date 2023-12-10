@@ -20,6 +20,7 @@
 {% include 'partials/account_panel.html' %} {%if isMember%}
 <section class="list">
 	<div class="container">
+
 		<div class="list__inner">
 			{% if orders %} {% for order in orders %}
 			<p>{{order.name}}</p>
@@ -32,26 +33,63 @@
 			<h1>Brak zamówień</h1>
 			{% endif %}
 		</div>
+
+
+
 	</div>
 </section>
 {%else%}
 <section class="list">
 	<div class="container">
 		<div class="list__inner">
-			{% for order in sold_orders %}
-			<div class="order">
-				<h2>{{ order.course_title }}</h2>
-				<p>{{ order.course_description }}</p>
-				<p>Instruktor: {{ order.instructor_name }}</p>
-				<p>Cena: {{ order.course_price }}</p>
-				<p>Sztuki: {{ order.quantity }}</p>
-				{% if order.course_image %}
-				<img src="{{ order.course_image }}" alt="Zdjęcie kursu" />
-				{% endif %}
+
+
+			<!-- <p>{{ order.course_description }}</p> -->
+
+			<div class="sales-history-title">
+				<p class="sales-history-title__title">Historia sprzedaży</p>
+				<a class="sales-history-title__link" href="#">
+					<p>Zobacz statystyki</p>
+				</a>
 			</div>
-			{% endfor %}
+			<div class="sales-history">
+				{% for order in sold_orders %}
+				<div class="list__item list__item2">
+					<div class="list__item-image">
+						{% if order.course_image %}
+						<img class="list__img2" loading="lazy"
+							src="{{ order.course_image }}"
+							alt="Kołobrzeskie przysmaki">
+						{% endif %}
+					</div>
+					<div class="list__item-box">
+						<p class="list__box-title">Nazwa</p>
+						<p class="list__box-name">{{ order.course_title }}</p>
+					</div>
+					<div class="list__item-box">
+						<p class="list__box-title">Prowadzący</p>
+						<p class="list__box-name">{{ order.instructor_name }}</p>
+					</div>
+
+					<div class="list__item-box">
+						<p class="sales-history__name">Ilość</p>
+						<p class="list__box-name">{{ order.quantity }} szt.</p>
+					</div>
+
+					<div class="list__item-box list__item-box2">
+						<div>
+							<p class="list__box-title">Cena</p>
+							<p class="list__box-name">{{ order.course_price }}zł</p>
+						</div>
+						<div class="list__item-box2-date">
+							<p class="list__box-title">Data sprzedaży</p>
+							<p class="list__box-name">{{ order.order_date|date:"d-m-Y" }}</p>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
 		</div>
-	</div>
 </section>
 {%endif%} {% endblock %} {% block scripts %}
 <script src="{% static 'js/main.min.js' %}"></script>

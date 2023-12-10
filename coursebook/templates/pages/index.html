@@ -508,10 +508,10 @@
 						</div>
 						<div class="blog__body">
 
-							<h3 class="blog__body-title"> {{ post.title }} </h3>
+							<h3 class="blog__body-title"> {{ post.title|slice:":67" }}... </h3>
 
 							<p class="blog__body-desc">
-								{{post.short_content|slice:":200"}}...
+								{{post.short_content|slice:":90"}}...
 							</p>
 							<a title="czytaj więcej" href="{% url 'post' post.slug %}" class="blog__read-more">Czytaj więcej</a>
 						</div>
@@ -542,10 +542,10 @@
 						</div>
 						<div class="blog__body">
 
-							<h3 class="blog__body-title"> {{ post.title }} </h3>
+							<h3 class="blog__body-title"> {{ post.title|slice:":67" }}... </h3>
 
 							<p class="blog__body-desc">
-								{{post.short_content|slice:":200"}}...
+								{{post.short_content|slice:":90"}}...
 							</p>
 							<a title="czytaj więcej" href="{% url 'post' post.slug %}" class="blog__read-more">Czytaj więcej</a>
 						</div>
@@ -576,10 +576,10 @@
 						</div>
 						<div class="blog__body">
 
-							<h3 class="blog__body-title"> {{ post.title }} </h3>
+							<h3 class="blog__body-title"> {{ post.title|slice:":67" }}... </h3>
 
 							<p class="blog__body-desc">
-								{{post.short_content|slice:":200"}}...
+								{{post.short_content|slice:":90"}}...
 							</p>
 							<a title="czytaj więcej" href="{% url 'post' post.slug %}" class="blog__read-more">Czytaj więcej</a>
 						</div>
