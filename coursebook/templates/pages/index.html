@@ -449,22 +449,22 @@
 					<div class="blog__card">
 						<div class="blog__picture">
 							<picture>
-								{% if post.photo_thumb.url %}
+								{% if post.photo_thumb %}
 								<img class="blog__picture__img"
 									width="570"
 									height="313"
 									loading="lazy"
 									src="{{post.photo_thumb.url}}"
 									alt="5 Przypraw, które Dodadzą Magii Twoim Potrawom" />
-									{% else %}
+							</picture>
+							{% else %}
 									<img class="blog__picture__img"
 									width="570"
 									height="313"
 									loading="lazy"
-									src="https://placehold.co/400x200?text={{recommended.title}}"
+									src="https://placehold.co/400x200?text={{post.title}}"
 									alt="5 Przypraw, które Dodadzą Magii Twoim Potrawom" />
 									{% endif %}
-							</picture>
 						</div>
 						<div class="blog__body">
 							<div class="blog__body-tags">
@@ -498,13 +498,13 @@
 							{% endif %}
 							{% endfor %}
 							{% endif %}
+							{% if post.photo_thumb %}
 							<picture>
-								{% if post.photo_thumb.url %}
 								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="{{post.photo_thumb.url}}" alt="Blog - CourseBook" />
-								{% else %}
-								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="https://placehold.co/400x200?text={{recommended.title}}" alt="Blog - CourseBook" />
-								{% endif %}
 							</picture>
+							{% else %}
+							<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="https://placehold.co/400x200?text={{post.title}}" alt="Blog - CourseBook" />
+							{% endif %}
 						</div>
 						<div class="blog__body">
 
@@ -533,7 +533,7 @@
 							{% endfor %}
 							{% endif %}
 							<picture>
-								{% if post.photo_thumb.url %}
+								{% if post.photo_thumb %}
 								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="{{post.photo_thumb.url}}" alt="Blog - CourseBook" />
 								{% else %}
 								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="https://placehold.co/400x200?text={{recommended.title}}" alt="Blog - CourseBook" />
@@ -567,7 +567,7 @@
 							{% endfor %}
 							{% endif %}
 							<picture>
-								{% if post.photo_thumb.url %}
+								{% if post.photo_thumb %}
 								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="{{post.photo_thumb.url}}" alt="Blog - CourseBook" />
 								{% else %}
 								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="https://placehold.co/400x200?text={{recommended.title}}" alt="Blog - CourseBook" />
@@ -587,7 +587,6 @@
 					{%endif%}
 					{%endfor%}
 					{%endif%}
-
 				</div>
 			</div>
 		</div>
