@@ -456,6 +456,13 @@
 									loading="lazy"
 									src="{{post.photo_thumb.url}}"
 									alt="5 Przypraw, które Dodadzą Magii Twoim Potrawom" />
+									{% else %}
+									<img class="blog__picture__img"
+									width="570"
+									height="313"
+									loading="lazy"
+									src="https://placehold.co/400x200?text={{recommended.title}}"
+									alt="5 Przypraw, które Dodadzą Magii Twoim Potrawom" />
 									{% endif %}
 							</picture>
 						</div>
@@ -494,6 +501,8 @@
 							<picture>
 								{% if post.photo_thumb.url %}
 								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="{{post.photo_thumb.url}}" alt="Blog - CourseBook" />
+								{% else %}
+								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="https://placehold.co/400x200?text={{recommended.title}}" alt="Blog - CourseBook" />
 								{% endif %}
 							</picture>
 						</div>
@@ -526,6 +535,8 @@
 							<picture>
 								{% if post.photo_thumb.url %}
 								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="{{post.photo_thumb.url}}" alt="Blog - CourseBook" />
+								{% else %}
+								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="https://placehold.co/400x200?text={{recommended.title}}" alt="Blog - CourseBook" />
 								{% endif %}
 							</picture>
 						</div>
@@ -558,6 +569,8 @@
 							<picture>
 								{% if post.photo_thumb.url %}
 								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="{{post.photo_thumb.url}}" alt="Blog - CourseBook" />
+								{% else %}
+								<img class="blog__picture__imgSmall" width="280" height="200" loading="lazy" src="https://placehold.co/400x200?text={{recommended.title}}" alt="Blog - CourseBook" />
 								{% endif %}
 							</picture>
 						</div>
