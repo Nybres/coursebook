@@ -4,8 +4,8 @@
       {%if isMember%}
       <a href="#" class="control__box">
         <svg
-          width="42"
-          height="42"
+          width="32"
+          height="32"
           viewBox="0 0 42 42"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -15,9 +15,13 @@
             fill="#FF7700"
           />
         </svg>
-        Zakupione kursy
+        Historia zamówień
       </a>
       {%else%}
+      <a href="/account" class="control__box {% if request.resolver_match.url_name == "account_courses" %}control__box--active{% endif %}">
+        <svg clip-rule="evenodd" width="36" height="36" fill="#ff7700" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m11.6 11c0-.552-.448-1-1-1-1.655 0-4.945 0-6.6 0-.552 0-1 .448-1 1v9c0 .552.448 1 1 1h6.6c.552 0 1-.448 1-1 0-2.092 0-6.908 0-9zm9.4 6c0-.552-.448-1-1-1h-6c-.538 0-1 .477-1 1v3c0 .552.448 1 1 1h6c.552 0 1-.448 1-1zm0-13c0-.552-.448-1-1-1-1.537 0-4.463 0-6 0-.552 0-1 .448-1 1v9.6c0 .552.448 1 1 1h6c.552 0 1-.448 1-1 0-2.194 0-7.406 0-9.6zm-9.4 0c0-.552-.448-1-1-1-1.655 0-4.945 0-6.6 0-.552 0-1 .448-1 1v3.6c0 .552.448 1 1 1h6.6c.552 0 1-.448 1-1 0-1.017 0-2.583 0-3.6z" fill-rule="nonzero"/></svg>
+        Panel główny
+      </a>
       <a href="{% url 'account_courses' %}" class="control__box {% if request.resolver_match.url_name == "account_courses" %}control__box--active{% endif %}">
         <svg
           width="42"
@@ -31,7 +35,7 @@
             fill="#FF7700"
           />
         </svg>
-        Twoje kursy
+        Kursy
       </a>
       <a href="{% url 'account_instructors' %}" class="control__box {% if request.resolver_match.url_name == "account_instructors" %}control__box--active{% endif %}">
         <svg
@@ -46,7 +50,7 @@
             fill="#FF7700"
           />
         </svg>
-        Twoi prowadzący
+        Prowadzący
       </a>
       <a href="{% url 'account_blog' %}" class="control__box {% if request.resolver_match.url_name == "account_blog" %}control__box--active{% endif %}">
         <svg
@@ -61,7 +65,7 @@
             fill="#FF7700"
           />
         </svg>
-        Twoje wipsy
+        Wpisy
       </a>
       {% endif%}
     </div>

@@ -22,16 +22,53 @@
 	<div class="container">
 
 		<div class="list__inner">
+
+			<div class="sales-history-title">
+				<p class="sales-history-title__title">Historia zamówień</p>
+			</div>
+
 			{% if orders %} {% for order in orders %}
-			<p>{{order.name}}</p>
-			<p>{{order.surname}}</p>
-			<p>{{order.email}}</p>
-			<p>Id:{{order.id}}</p>
-			<p>Total value: {{ order.total_value }}</p>
-			<p>Data zamówienia: {{ order.order_date|date }}</p>
+			<div class="sales-history orders-history">
+
+				<div class="list__item list__orders">
+					<div class="list__item-box orders-history__inner">
+						<p class="list__box-title">Numer zamówienia</p>
+						<p class="list__box-name">{{order.id}}</p>
+					</div>
+					<div class="list__item-box">
+						<p class="list__box-title">Imię i nazwisko</p>
+						<p class="list__box-name">{{order.name}} {{order.surname}}</p>
+					</div>
+					<div class="list__item-box">
+						<p class="list__box-title">e-mail</p>
+						<p class="list__box-name">{{order.email}}</p>
+					</div>
+
+					<div class="list__item-box">
+						<p class="sales-history__name">Suma</p>
+						<p class="list__box-name">{{ order.total_value }}zł</p>
+					</div>
+
+					<div class="list__item-box orders-history__details">
+						<a class="list__box-title orders-history__link" href="/order-details">Szczegóły</a>
+					</div>
+				</div>
+
+			</div>
 			{% endfor %} {% else %}
-			<h1>Brak zamówień</h1>
+			<p class="orders-history__empty">Brak zamówień</p>
 			{% endif %}
+
+
+			
+
+
+
+
+			
+			
+
+
 		</div>
 
 
@@ -57,9 +94,12 @@
 				<div class="list__item list__item2">
 					<div class="list__item-image">
 						{% if order.course_image %}
+						<img class="list__img2" loading="lazy" src="{{ order.course_image }}"
+							alt="CourseBook - zdjęcie kursu gotowania">
+						{% else %}
 						<img class="list__img2" loading="lazy"
-							src="{{ order.course_image }}"
-							alt="Kołobrzeskie przysmaki">
+							src="https://placehold.co/200x100?text={{ order.course_title }}"
+							alt="CourseBook - zdjęcie kursu gotowania">
 						{% endif %}
 					</div>
 					<div class="list__item-box">
@@ -83,7 +123,7 @@
 						</div>
 						<div class="list__item-box2-date">
 							<p class="list__box-title">Data sprzedaży</p>
-							<p class="list__box-name">{{ order.order_date|date:"d-m-Y" }}</p>
+							<p class="list__box-name">{{ order.order_date|date }}</p>
 						</div>
 					</div>
 				</div>
@@ -91,6 +131,8 @@
 			</div>
 		</div>
 </section>
-{%endif%} {% endblock %} {% block scripts %}
+{%endif%}
+{% include 'partials/pagination.html' with pagination=account %}
+{% endblock %} {% block scripts %}
 <script src="{% static 'js/main.min.js' %}"></script>
 {% endblock %}
