@@ -20,50 +20,85 @@
 </section>
 
 
-<div class="container">
-    <h2>Order Information</h2>
-    <p>Order ID: {{ order.id }}</p>
-    <p>Imie {{ order.name }}</p>
-    <p>nazwisko {{ order.surname }}</p>
-    <p>email{{ order.email }}</p>
-    <p>telefon{{ order.phone }}</p>
+<div class="container orders">
 
-    {% if purchased_courses %}
-        <h2>Purchased Courses</h2>
-        </br>
-        </br>
-        {% for course_detail in purchased_courses %}
-            <div>
-                <h3>Tytuł: {{ course_detail.purchased_course.course.title }}</h3>
-                <h3>Ilość sztuk: {{ course_detail.purchased_course.quantity }}</h3>
-                <h3>Cena kursu: {{ course_detail.purchased_course.course.price }}</h3>
-                {% if course_detail.course_image %}
-                    <img src="{{ course_detail.course_image }}" alt="Course Image">
-                {% endif %}
 
-                {% if course_detail.participants %}
-                    <h4>Uczestnicy:</h4>
-                    <ul>
-                        {% for participant in course_detail.participants %}
-                            <li>{{ participant.name }} {{ participant.surname }} - {{ participant.email }} {{ participant.phone }}</li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>Brak uczestników</p>
-                {% endif %}
+    <p class="order-details__title">Zamówienie numer: {{ order.id }}</p>
+
+    <div class="order-details">
+
+       <div class="order-details__box">
+
+          <p class="order-details__buyer">Dane kupującego</p>
+          <p class="order-details__title-style">Imię i nazwisko</p>
+          <p class="order-details__data">{{ order.name }} {{ order.surname }}</p>
+          <p class="order-details__title-style">E-mail</p>
+          <p class="order-details__data">{{ order.email }}</p>
+          <p class="order-details__title-style">Numer telefonu</p>
+          <p class="order-details__data">{{ order.phone }}</p>
+
+
+          {% if purchased_courses %}
+          <p class="order-details__bought-courses-title">Zakupione kursy</p>
+
+          
+          {% for course_detail in purchased_courses %}
+          <div class="order">
+            {% if course_detail.course_image %}
+             <img class="order__img" src="{{ course_detail.course_image }}" alt="CourseBook zakupione kursy">
+            {% endif %}
+             <div class="order__box">
+                <p class="order-details__title-style">Nazwa kursu</p>
+                <p class="order-details__data order-details__data-line">{{ course_detail.purchased_course.course.title }}</p>
+                <p class="order-details__title-style">Ilość sztuk</p>
+                <p class="order-details__data order-details__data-line">{{ course_detail.purchased_course.quantity }}</p>
+                <p class="order-details__title-style">Cena</p>
+                <p class="order-details__data">{{ course_detail.purchased_course.course.price }} /szt.</p>
+             </div>
+
+          </div>
+
+          {% if course_detail.participants %}
+          <p class="participants__title">Dane uczestników</p>
+
+            {% for participant in course_detail.participants %}
+            <div class="participants__box">
+                <p class="participants__box-title">Imie i nazwisko</p>
+                <p class="participants__box-data">{{ participant.name }} {{ participant.surname }}</p>
             </div>
-        </br>
-        </br>
+            <div class="participants__box">
+                <p class="participants__box-title">E-mail</p>
+                <p class="participants__box-data">{{ participant.email }}</p>
+            </div>
+            <div class="participants__box participants__box-line">
+                <p class="participants__box-title">Numer telefonu</p>
+                <p class="participants__box-data">{{ participant.phone }}</p>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="participants__box-title">Brak uczestników</p>
+            {% endif %}
         {% endfor %}
-    {% else %}
-        <p>Brak kursów zakupionych</p>
-    {% endif %}
+        {% else %}
+        <p class="participants__box-title">Brak kursów zakupionych</p>
+        {% endif %}
+          <p class="participants__sum">Podsumowanie</p>
 
-    {% if total_amount is not None %}
-        <p>Suma całkowita: {{ total_amount }}</p>
-    {% else %}
-        <p>Brak danych</p>
+          <div class="price-sum">
+            {% if total_amount is not None %}
+             <p class="price-sum__title">Cena całkowita</p>
+             <p class="price-sum__sum">{{ total_amount }}zł</p>
+             {% else %}
+             <p class="price-sum__sum ">Brak danych</p>
     {% endif %}
+          </div>
+            
+       </div>
+
+    </div>
+
+
+    
 </div>
 
 <script src="{% static 'js/main.min.js' %}"></script>
