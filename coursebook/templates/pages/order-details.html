@@ -62,17 +62,19 @@
           <p class="participants__title">Dane uczestników</p>
 
             {% for participant in course_detail.participants %}
-            <div class="participants__box">
-                <p class="participants__box-title">Imie i nazwisko</p>
-                <p class="participants__box-data">{{ participant.name }} {{ participant.surname }}</p>
-            </div>
-            <div class="participants__box">
-                <p class="participants__box-title">E-mail</p>
-                <p class="participants__box-data">{{ participant.email }}</p>
-            </div>
-            <div class="participants__box participants__box-line">
-                <p class="participants__box-title">Numer telefonu</p>
-                <p class="participants__box-data">{{ participant.phone }}</p>
+            <div class="participants__line">
+                <div class="participants__box">
+                    <p class="participants__box-title">Imie i nazwisko</p>
+                    <p class="participants__box-data">{{ participant.name }} {{ participant.surname }}</p>
+                </div>
+                <div class="participants__box">
+                    <p class="participants__box-title">E-mail</p>
+                    <p class="participants__box-data">{{ participant.email }}</p>
+                </div>
+                <div class="participants__box participants__box-line">
+                    <p class="participants__box-title">Numer telefonu</p>
+                    <p class="participants__box-data">{{ participant.phone }}</p>
+                </div>
             </div>
             {% endfor %}
             {% else %}
