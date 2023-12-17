@@ -15,16 +15,24 @@ class CourseCategoryView(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
         province_slug = self.kwargs.get("province_slug")
+        sort_by = self.request.GET.get("sort", "default")
 
-        if province_slug:
-            courses = Course.objects.filter(province_slug=province_slug, available=True)
-            for course in courses:
-                image = course.courseimage_set.first()
-                course.image = image
+        queryset = Course.objects.filter(province_slug=province_slug, available=True)
+
+        if sort_by == "price_asc":
+            queryset = queryset.order_by("price")
+        elif sort_by == "price_desc":
+            queryset = queryset.order_by("-price")
+        elif sort_by == "name":
+            queryset = queryset.order_by("title")
         else:
-            courses = {}
+            queryset = queryset.order_by("id")
 
-        paginator = Paginator(courses, self.default_page_size)
+        for course in queryset:
+            image = course.courseimage_set.first()
+            course.image = image
+
+        paginator = Paginator(queryset, self.default_page_size)
         page_number = request.GET.get("page")
         paginated_courses = paginator.get_page(page_number)
         breadcrumbs = [

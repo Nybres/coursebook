@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from ..helpers import check_membership
 from rest_framework import generics
+from django.core.paginator import Paginator
 
 from ..models import OrderHistory
 from ..models import PurchasedCourse
@@ -11,6 +12,7 @@ from ..models import PurchasedCourse
 @method_decorator(login_required(login_url="login"), name="dispatch")
 class AccountView(generics.ListAPIView):
     template_name = "pages/account.html"
+    default_pagination_size = 12
 
     def get(self, request, *args, **kwargs):
         user = request.user
@@ -28,22 +30,26 @@ class AccountView(generics.ListAPIView):
             order.total_value = total_value
 
         # COMPANY
-        sold_orders = get_last_8_purchased_courses_with_details(user)
+        # sold_orders = get_last_8_purchased_courses_with_details(user)
+        sold_orders = get_purchased_courses(user)
+        if sold_orders:
+            paginator = Paginator(sold_orders, self.default_pagination_size)
+            page_number = request.GET.get("page")
+            paginated_sold_orders = paginator.get_page(page_number)
+            
 
         context = {
             "user": user,
             "isMember": isMember,
             "orders": last_5_orders,
-            "sold_orders": sold_orders,
+            "sold_orders": paginated_sold_orders,
         }
         return render(request, self.template_name, context)
 
-
-def get_last_8_purchased_courses_with_details(user):
+def get_purchased_courses(user):
     user_purchased_courses = PurchasedCourse.objects.filter(
         course__instructor__app_user=user
-    ).order_by("-id")[:8]
-
+    ).order_by("-id")
     courses_with_details = []
     for purchased_course in user_purchased_courses:
         course = purchased_course.course
@@ -51,6 +57,9 @@ def get_last_8_purchased_courses_with_details(user):
 
         first_image = course.courseimage_set.first()
         image_url = first_image.image_thumb.url if first_image else None
+
+        order = OrderHistory.objects.filter(purchased_courses=purchased_course).first()
+        order_date = order.order_date if order else None
 
         courses_with_details.append(
             {
@@ -60,7 +69,34 @@ def get_last_8_purchased_courses_with_details(user):
                 "course_image": image_url,
                 "course_price": course.price,
                 "quantity": purchased_course.quantity,
+                'order_date': order_date,
             }
         )
-
     return courses_with_details
+
+
+# def get_last_8_purchased_courses_with_details(user):
+#     user_purchased_courses = PurchasedCourse.objects.filter(
+#         course__instructor__app_user=user
+#     ).order_by("-id")[:8]
+
+#     courses_with_details = []
+#     for purchased_course in user_purchased_courses:
+#         course = purchased_course.course
+#         instructor = course.instructor
+
+#         first_image = course.courseimage_set.first()
+#         image_url = first_image.image_thumb.url if first_image else None
+
+#         courses_with_details.append(
+#             {
+#                 "course_title": course.title,
+#                 "course_description": course.course_description,
+#                 "instructor_name": instructor.fullname,
+#                 "course_image": image_url,
+#                 "course_price": course.price,
+#                 "quantity": purchased_course.quantity,
+#             }
+#         )
+
+#     return courses_with_details
