@@ -1,6 +1,7 @@
 {% extends "layout/base.html" %} {% block styles %}
 <link rel="stylesheet" href="{% static 'css/global.min.css' %}" />
 <link rel="stylesheet" href="{% static 'css/account.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/category.min.css' %}" />
 {% endblock %} {% block content %}
 <section class="user-bar">
 	<div class="container">
@@ -132,7 +133,7 @@
 		</div>
 </section>
 {%endif%}
-{% include 'partials/pagination.html' with pagination=account %}
+{% include 'partials/pagination.html' with pagination=sold_orders %}
 {% endblock %} {% block scripts %}
 <script src="{% static 'js/main.min.js' %}"></script>
 {% endblock %}
