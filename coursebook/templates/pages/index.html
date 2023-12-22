@@ -73,10 +73,10 @@
 							<div class="offert-card">
 								<div class="offert-card__image">
 									{% if recommended.image.image.url %}
-									<img loading="lazy" width="400" height="200"
+									<img loading="lazy" 
 										src="{{ recommended.image.image_medium_thumb.url }}" alt="{{ recommended.title }}" />
 									{%else%}
-									<img loading="lazy" width="400" height="200"
+									<img loading="lazy" 
 										src=" https://placehold.co/400x200?text={{recommended.title}}" alt="" />
 									{% endif %}
 								</div>
