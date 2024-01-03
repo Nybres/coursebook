@@ -27,12 +27,16 @@
             <select
               class="form__group-input jsSort js-niceselect"
               name=""
-              id=""
+              id="categorySelectBtn"
             >
-              <option value="">Kolejność domyślna</option>
-              <option value="">Kolejność A-Z</option>
-              <option value="">Cena malejąco</option>
-              <option value="">Cena rosnąco</option>
+            {% if course_category %}
+              {% for course in course_category %}
+              <option value="{% url 'course_category' province_slug=province_slug %}">Kolejność domyślna</option>
+              <option value="{% url 'course_category' province_slug=province_slug %}?sort=name">Kolejność A-Z</option>
+              <option value="{% url 'course_category' province_slug=province_slug %}?sort=price_desc">Cena malejąco</option>
+              <option value="{% url 'course_category' province_slug=province_slug %}?sort=price_asc">Cena rosnąco</option>
+              {% endfor %}
+            {% endif %}
             </select>
           </div>
         </div>

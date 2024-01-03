@@ -86,9 +86,7 @@
 
 			<div class="sales-history-title">
 				<p class="sales-history-title__title">Historia sprzedaży</p>
-				<a class="sales-history-title__link" href="#">
-					<p>Zobacz statystyki</p>
-				</a>
+
 			</div>
 			<div class="sales-history">
 				{% for order in sold_orders %}
@@ -124,7 +122,8 @@
 						</div>
 						<div class="list__item-box2-date">
 							<p class="list__box-title">Data sprzedaży</p>
-							<p class="list__box-name">{{ order.order_date|date }}</p>
+							<p class="list__box-name">{{order.order_date|date:"d.m.Y"}}
+							</p>
 						</div>
 					</div>
 				</div>
