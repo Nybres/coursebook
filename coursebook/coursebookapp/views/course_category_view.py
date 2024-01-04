@@ -46,5 +46,6 @@ class CourseCategoryView(generics.ListAPIView):
         context = {
             "courses": paginated_courses,
             "breadcrumbs": breadcrumbs,
+            'slug':province_slug,
         }
         return render(request, self.template_name, context)
