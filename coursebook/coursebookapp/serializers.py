@@ -202,6 +202,7 @@ class ActiveProvincesSerializer(serializers.Serializer):
 class CourseSerializer(serializers.ModelSerializer):
     # instructor = InstructorSerializer()
     images = ImageSerializer(many=True, read_only=True)
+    # carousel_image = serializers.SerializerMethodField()
     uploaded_images = serializers.ListField(
         child=serializers.ImageField(allow_empty_file=True, use_url=False),
         write_only=True,
@@ -211,6 +212,19 @@ class CourseSerializer(serializers.ModelSerializer):
     photo_change = serializers.ListField(
         child=serializers.CharField(), write_only=True, required=False, default=[]
     )
+
+    # def get_carousel_image(self, instance):
+    #     carousel_image = instance.courseimage_set.first()
+    #     return ImageSerializer(carousel_image).data if carousel_image else None
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        carousel_image = instance.courseimage_set.first()
+        data["carousel_image"] = (
+            ImageSerializer(carousel_image).data if carousel_image else None
+        )
+
+        return data
 
     class Meta:
         model = Course
