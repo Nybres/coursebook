@@ -11,6 +11,7 @@ class ActiveCoursesListView(generics.ListAPIView):
     def get_queryset(self):
         limit = self.request.query_params.get('limit', None)
         queryset = Course.objects.filter(available=True)
+        queryset = queryset.order_by('-id')
         if limit:
             queryset = queryset[:int(limit)]
         return queryset
@@ -26,7 +27,8 @@ class CoursesByProvinceSlugView(generics.ListAPIView):
     def get_queryset(self):
         province_slug = self.kwargs.get('province_slug')
         limit = self.request.query_params.get('limit', None)
-        queryset = Course.objects.filter(available=True, province_slug=province_slug)    
+        queryset = Course.objects.filter(available=True, province_slug=province_slug)
+        queryset = queryset.order_by('-id')
         if limit:
             queryset = queryset[:int(limit)]
         return queryset
