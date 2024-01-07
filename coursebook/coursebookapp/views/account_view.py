@@ -31,6 +31,7 @@ class AccountView(generics.ListAPIView):
 
         # COMPANY
         # sold_orders = get_last_8_purchased_courses_with_details(user)
+        paginated_sold_orders = None   
         sold_orders = get_purchased_courses(user)
         if sold_orders:
             paginator = Paginator(sold_orders, self.default_pagination_size)

@@ -33,24 +33,22 @@
 									<div class="mainCartHead__container__boxes__box-left-item-body-form">
 										<div class="form__row">
 											<div class="form__group">
-												<input id="cart-order-name" value="Karol" name="" placeholder="Imię"
-													class="form__group-input" type="text">
+												<input id="buyerName" value="" name="" placeholder="Imię" class="form__group-input"
+													type="text">
 											</div>
 											<div class="form__group">
-												<input id="cart-order-surname" value="Nowak" name="" placeholder="Nazwisko"
+												<input id="buyerSurname" value="" name="" placeholder="Nazwisko"
 													class="form__group-input" type="text">
 											</div>
 										</div>
 										<div class="mainCartHead__container__boxes__box-left-item-body-form-formColumn">
 											<div class="form__group">
-												<input id="cart-order-email" value="karol@nowak.pl" name=""
-													placeholder="Adres e-mail" class="form__group-input form__group-input-first"
-													type="email">
+												<input id="buyerEmail" value="" name="" placeholder="Adres e-mail"
+													class="form__group-input form__group-input-first" type="email">
 											</div>
 											<div class="form__group">
-												<input id="cart-order-phone" value="+48888000555" name=""
-													placeholder="Numer telefonu" class="form__group-input form__group-input-second"
-													type="tel">
+												<input id="buyerPhone" value="" name="" placeholder="Numer telefonu"
+													class="form__group-input form__group-input-second" type="tel">
 											</div>
 										</div>
 									</div>
@@ -60,36 +58,38 @@
 
 
 							{% for cart_item in cart_items %}
-							<div class="mainCartHead__container__boxes__box-left-item">
+							<div data-course-quantity="{{cart_item.quantity}}" data-course-id="{{cart_item.course.id}}"
+								class="mainCartHead__container__boxes__box-left-item jsCartCourse">
 								<div class="mainCartHead__container__boxes__box-left-item-head">
 									<div class="mainCartHead__container__boxes__box-left-item-head-number">
 										<div class="mainCartHead__container__boxes__box-left-item-head-number-item">
-											<p class="mainCartHead__container__boxes__box-left-item-head-number-item-txt">{{
-												forloop.counter }}</p>
+											<p class="mainCartHead__container__boxes__box-left-item-head-number-item-txt">
+												{{forloop.counter }}</p>
 										</div>
-										<p class="mainCartHead__container__boxes__box-left-item-head-number-item-txt-title">
-											{{ cart_item.course.title }}</p>
+										<p class="mainCartHead__container__boxes__box-left-item-head-number-item-txt-title">{{cart_item.course.title }}</p>
 									</div>
 								</div>
 								<div class="mainCartHead__container__boxes__box-left-item-body">
 									{% for i in "x"|ljust:cart_item.quantity %}
 									<p class="mainCartHead__container__boxes__box-left-item-body-member">Uczestnik</p>
-									<div class="mainCartHead__container__boxes__box-left-item-body-form">
+									<div class="mainCartHead__container__boxes__box-left-item-body-form jsParticipantData">
 										<div class="form__row">
 											<div class="form__group">
-												<input name="" placeholder="Imię" class="form__group-input" type="text">
+												<input id="participantName" value="" name="" placeholder="Imię"
+													class="form__group-input" type="text">
 											</div>
 											<div class="form__group">
-												<input name="" placeholder="Nazwisko" class="form__group-input" type="text">
+												<input id="participantSurname" value="" name="" placeholder="Nazwisko"
+													class="form__group-input" type="text">
 											</div>
 										</div>
 										<div class="mainCartHead__container__boxes__box-left-item-body-form-formColumn">
 											<div class="form__group">
-												<input name="" placeholder="Adres e-mail"
+												<input id="participantEmail" value="" name="" placeholder="Adres e-mail"
 													class="form__group-input form__group-input-first" type="email">
 											</div>
 											<div class="form__group">
-												<input name="" placeholder="Numer telefonu"
+												<input id="participantPhone" value="" name="" placeholder="Numer telefonu"
 													class="form__group-input form__group-input-second" type="tel">
 											</div>
 										</div>
@@ -141,14 +141,17 @@
 						<div class="mainCartHead__container__boxes__box-right-item-body">
 							<div class="nav__cart-container-boxes-box">
 
-								{% if cart_item.course.courseimage_set.first.image_thumb.url %}
+
+
+								{% if cart_item.course.courseimage_set.first %}
 								<img class="nav__cart-container-boxes-box-img"
 									src="{{ cart_item.course.courseimage_set.first.image_thumb.url }}"
 									alt="{{ cart_item.course.title }}" />
 								{% else %}
-								<img class="nav__cart-container-boxes-box-img"
-									src="https://placehold.co/115x112?text={{ cart_item.course.title }}" alt="" />
+								<img class="nav__cart-container-boxes-box-img" loading="lazy"
+									src="https://placehold.co/83x83?text={{ cart_item.course.title }}" alt="{{ cart_item.course.title }}" />
 								{% endif %}
+
 
 
 								<div class="nav__cart-container-boxes-box-content">
@@ -189,8 +192,7 @@
 										</div>
 										<div class="nav__cart-container-boxes-box-price">
 											<p class="nav__cart-container-boxes-box-price-sum">
-												<span class="nav__cart-container-boxes-box-price-sum-item">{{ cart_item.course.price
-													}}zł /</span><span> {{ cart_item.quantity }}szt.</span>
+												<span class="nav__cart-container-boxes-box-price-sum-item">{{cart_item.course.price}}zł /</span><span> {{ cart_item.quantity }}szt.</span>
 											</p>
 										</div>
 									</div>
