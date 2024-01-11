@@ -170,7 +170,7 @@
           <form class="course__add jsAddToCart" action="{% url 'add_to_cart' %}" method="POST">
             {% csrf_token %}
             <div class="">
-              <input placeholder="1" name="quantity" value="1" class="course__add-qty" type="text" />
+              <input placeholder="1" data-quantity="{{ course.seats }}" name="quantity" value="1" class="course__add-qty jsQuantityInputOfferCard" type="text" />
               <input name="course" type="hidden" value="{{course.id}}" />
             </div>
             <button class="btn btn--primary add-to-cart-btn">
