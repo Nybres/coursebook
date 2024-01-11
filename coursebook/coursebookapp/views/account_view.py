@@ -19,7 +19,7 @@ class AccountView(generics.ListAPIView):
         isMember = check_membership(user)
 
         # USER
-        last_5_orders = OrderHistory.objects.order_by("-order_date")[:5]
+        last_5_orders = OrderHistory.objects.filter(user=user).order_by("-order_date")[:5]
 
         for order in last_5_orders:
             total_value = 0
@@ -28,6 +28,8 @@ class AccountView(generics.ListAPIView):
                 total_value += purchased_course.course.price * purchased_course.quantity
 
             order.total_value = total_value
+
+        
 
         # COMPANY
         # sold_orders = get_last_8_purchased_courses_with_details(user)
