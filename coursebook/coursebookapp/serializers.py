@@ -372,6 +372,9 @@ class CartItemSerializer(serializers.ModelSerializer):
         course = validate_data.get("course")
         quantity = validate_data.get("quantity")
 
+        if quantity <= 0:
+            raise serializers.ValidationError("Ilość musi być większa niż 0")
+
         user = request.user
         current_cart = Cart.objects.filter(user=user, is_completed=False).first()
         if not current_cart:
