@@ -89,6 +89,7 @@
 
 			</div>
 			<div class="sales-history">
+				{%if sold_orders %}
 				{% for order in sold_orders %}
 				<div class="list__item list__item2">
 					<div class="list__item-image">
@@ -128,6 +129,9 @@
 					</div>
 				</div>
 				{% endfor %}
+				{%else%}
+				<p class="orders-history__empty">Brak zamówień</p>
+				{%endif%}
 			</div>
 		</div>
 </section>
