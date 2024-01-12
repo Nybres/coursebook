@@ -33,5 +33,6 @@ from .faq import FaqView
 from .gallery import GalleryView
 from .newest_view import NewestView
 from .order_details import OrderDetailsView
+from .order_history import UserOrderHistory
 
 # from .account_courses_delete import delete_course

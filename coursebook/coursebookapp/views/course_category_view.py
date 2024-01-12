@@ -3,10 +3,10 @@ from django.urls import reverse
 from django.urls import resolve
 from django.core.paginator import Paginator
 from rest_framework import generics
+from django.db.models.functions import Lower
 
 from ..models.course import Course
 from ..serializers import CourseSerializer
-
 
 class CourseCategoryView(generics.ListAPIView):
     serializer_class = CourseSerializer
@@ -24,7 +24,7 @@ class CourseCategoryView(generics.ListAPIView):
         elif sort_by == "price_desc":
             queryset = queryset.order_by("-price")
         elif sort_by == "name":
-            queryset = queryset.order_by("title")
+            queryset = queryset.order_by(Lower("title"))
         else:
             queryset = queryset.order_by("id")
 
@@ -46,6 +46,6 @@ class CourseCategoryView(generics.ListAPIView):
         context = {
             "courses": paginated_courses,
             "breadcrumbs": breadcrumbs,
-            'slug':province_slug,
+            "slug": province_slug,
         }
         return render(request, self.template_name, context)

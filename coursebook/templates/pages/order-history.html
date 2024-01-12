@@ -18,19 +18,16 @@
 		</div>
 	</div>
 </section>
-{% include 'partials/account_panel.html' %} {%if isMember%}
+{% include 'partials/account_panel.html' %} 
+{%if isMember%}
 <section class="list">
 	<div class="container">
-
 		<div class="list__inner">
-
 			<div class="sales-history-title">
-				<p class="sales-history-title__title">Ostatnie zamówienia</p>
+				<p class="sales-history-title__title">Historia zamówień</p>
 			</div>
-
 			{% if orders %} {% for order in orders %}
 			<div class="sales-history orders-history">
-
 				<div class="list__item list__orders">
 					<div class="list__item-box orders-history__inner">
 						<p class="list__box-title">Numer zamówienia</p>
@@ -54,85 +51,15 @@
 						<a class="list__box-title orders-history__link" href="order-details/{{order.id}}">Szczegóły</a>
 					</div>
 				</div>
-
 			</div>
 			{% endfor %} {% else %}
 			<p class="orders-history__empty">Brak zamówień</p>
 			{% endif %}
-
-
-			
-
-
-
-
-			
-			
-
-
 		</div>
-
-
-
 	</div>
 </section>
-{%else%}
-<section class="list">
-	<div class="container">
-		<div class="list__inner">
-
-
-			<!-- <p>{{ order.course_description }}</p> -->
-
-			<div class="sales-history-title">
-				<p class="sales-history-title__title">Historia sprzedaży</p>
-
-			</div>
-			<div class="sales-history">
-				{% for order in sold_orders %}
-				<div class="list__item list__item2">
-					<div class="list__item-image">
-						{% if order.course_image %}
-						<img class="list__img2" loading="lazy" src="{{ order.course_image }}"
-							alt="CourseBook - zdjęcie kursu gotowania">
-						{% else %}
-						<img class="list__img2" loading="lazy"
-							src="https://placehold.co/200x100?text={{ order.course_title }}"
-							alt="CourseBook - zdjęcie kursu gotowania">
-						{% endif %}
-					</div>
-					<div class="list__item-box">
-						<p class="list__box-title">Nazwa</p>
-						<p class="list__box-name list__box-nameWrap">{{ order.course_title }}</p>
-					</div>
-					<div class="list__item-box">
-						<p class="list__box-title">Prowadzący</p>
-						<p class="list__box-name">{{ order.instructor_name }}</p>
-					</div>
-
-					<div class="list__item-box">
-						<p class="sales-history__name">Ilość</p>
-						<p class="list__box-name">{{ order.quantity }} szt.</p>
-					</div>
-
-					<div class="list__item-box list__item-box2">
-						<div>
-							<p class="list__box-title">Cena</p>
-							<p class="list__box-name">{{ order.course_price }}zł</p>
-						</div>
-						<div class="list__item-box2-date">
-							<p class="list__box-title">Data sprzedaży</p>
-							<p class="list__box-name">{{order.order_date|date:"d.m.Y"}}
-							</p>
-						</div>
-					</div>
-				</div>
-				{% endfor %}
-			</div>
-		</div>
-</section>
 {%endif%}
-{% include 'partials/pagination.html' with pagination=sold_orders %}
+{% include 'partials/pagination.html' with pagination=orders %}
 {% endblock %} {% block scripts %}
 <script src="{% static 'js/main.min.js' %}"></script>
 {% endblock %}

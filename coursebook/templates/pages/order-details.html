@@ -45,7 +45,16 @@
           {% for course_detail in purchased_courses %}
           <div class="order">
             {% if course_detail.course_image %}
-             <img class="order__img" src="{{ course_detail.course_image }}" alt="CourseBook zakupione kursy">
+             <img width="215" height="165" class="order__img" src="{{ course_detail.course_image }}" alt="CourseBook zakupione kursy">
+             {%else%}
+             <img
+             class="order__img"
+             loading="lazy"
+             width="215"
+             height="165"
+             src=" https://placehold.co/215x165?text={{course.title}}"
+             alt=""
+           />
             {% endif %}
              <div class="order__box">
                 <p class="order-details__title-style">Nazwa kursu</p>

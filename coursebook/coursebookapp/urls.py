@@ -18,6 +18,7 @@ urlpatterns = [
     path("account", views.AccountView.as_view(), name="account"),
     path("account-courses", views.AccountCoursesView.as_view(), name="account_courses"),
     path("order-details/<int:pk>/", views.OrderDetailsView.as_view(), name="order_details"),
+    path("order-history", views.UserOrderHistory.as_view(), name="order_history"),
     path(
         "payment/failed/<str:transaction_id>/",
         views.CancelView.as_view(),
