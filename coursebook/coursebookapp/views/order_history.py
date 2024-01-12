@@ -23,7 +23,7 @@ class UserOrderHistory(generics.ListAPIView):
             total_value = 0
             purchased_courses = order.purchased_courses.all()
             for purchased_course in purchased_courses:
-                total_value += purchased_course.course.price * purchased_course.quantity
+                total_value += purchased_course.course_price * purchased_course.quantity
 
             order.total_value = total_value
 

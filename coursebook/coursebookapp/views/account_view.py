@@ -25,7 +25,7 @@ class AccountView(generics.ListAPIView):
             total_value = 0
             purchased_courses = order.purchased_courses.all()
             for purchased_course in purchased_courses:
-                total_value += purchased_course.course.price * purchased_course.quantity
+                total_value += purchased_course.course_price * purchased_course.quantity
 
             order.total_value = total_value
 
@@ -70,7 +70,7 @@ def get_purchased_courses(user):
                 "course_description": course.course_description,
                 "instructor_name": instructor.fullname,
                 "course_image": image_url,
-                "course_price": course.price,
+                "course_price": purchased_course.course_price,
                 "quantity": purchased_course.quantity,
                 'order_date': order_date,
             }

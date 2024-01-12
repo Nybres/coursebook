@@ -22,7 +22,7 @@ class OrderDetailsView(generics.RetrieveAPIView):
         total_order_amount = (
             instance.purchased_courses.annotate(
                 total_amount=ExpressionWrapper(
-                    F("course__price") * F("quantity"),
+                    F("course_price") * F("quantity"),
                     output_field=fields.DecimalField(),
                 )
             ).aggregate(total=Sum("total_amount"))["total"]
