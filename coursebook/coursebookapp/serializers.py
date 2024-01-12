@@ -461,7 +461,7 @@ class OrderHistorySerializer(serializers.ModelSerializer):
             quantity = purchased_course_data.get("quantity")
 
             purchased_course = PurchasedCourse.objects.create(
-                course=course, quantity=quantity
+                course=course, quantity=quantity, course_price=course.price
             )
 
             if "participants" in purchased_course_data:
