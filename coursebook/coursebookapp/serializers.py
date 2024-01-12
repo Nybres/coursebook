@@ -326,6 +326,9 @@ class CourseSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         uploaded_images = validated_data.pop("uploaded_images", [])
         validated_data.pop("photo_change", None)
+        instructor = validated_data.get("instructor")
+        if instructor is None:
+            raise serializers.ValidationError("Pole 'instructor' jest wymagane.")
         course = Course.objects.create(**validated_data)
         images_to_save = []
         for idx, image in enumerate(uploaded_images):
