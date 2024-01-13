@@ -193,16 +193,17 @@
       Dodaj kurs
     </div>
 
-    <form method="POST" action="" class="jsCourseForm">
+    <form novalidate method="POST" action="" class="jsCourseForm">
       {% csrf_token %}
       <div class="form__row">
         <div class="form__group">
           <input
             name="title"
             placeholder="Tytuł"
-            class="form__group-input"
+            class="form__group-input jsCourseTitle"
             type="text"
           />
+          <p class="form__group-paragraph--error">error</p>
         </div>
       </div>
       <div class="form__row">
@@ -210,25 +211,30 @@
           <input
             name="seats"
             placeholder="Ilość miejsc"
-            class="form__group-input"
+            class="form__group-input form__group-inputPrice jsCourseQuantity"
             type="number"
           />
+          <p class="form__group-paragraph--error">error</p>
         </div>
         <div class="form__group">
           <input
             name="city"
             placeholder="Miasto"
-            class="form__group-input"
+            class="form__group-input jsCourseCity"
             type="text"
           />
+          <p class="form__group-paragraph--error">error</p>
         </div>
         <div class="form__group">
           <input
             name="price"
             placeholder="Cena"
-            class="form__group-input"
+            class="form__group-input form__group-inputPrice jsCoursePrice"
             type="number"
+            inputmode="numeric" 
+            pattern="\d+(.\d{2})?"
           />
+          <p class="form__group-paragraph--error">error</p>
         </div>
       </div>
       <div class="form__row">
@@ -236,75 +242,83 @@
           <input
             name="date"
             placeholder="Data kursu"
-            class="form__group-input"
+            class="form__group-input jsCourseDate"
             type="date"
           />
+          <p class="form__group-paragraph--error">error</p>
         </div>
         <div class="form__group">
           <input
             name="time_start"
             placeholder="Data kursu"
-            class="form__group-input"
+            class="form__group-input jsCourseHour"
             type="time"
           />
+          <p class="form__group-paragraph--error">error</p>
         </div>
       </div>
       <div class="form__row">
         <div class="form__group">
-          <select class="form__group-input js-niceselect" name="province">
+          <select class="form__group-input js-niceselect JScourseProvinces" name="province">
             <option value="" disabled selected>Wybierz województwo</option>
             {% for province in provinces %}
             <option data-name="{{province.1 }}" value="{{province.0}}">{{province.1}}</option>
             {% endfor %}
           </select>
+          <p class="form__group-paragraph--error">error</p>
         </div>
         <div class="form__group">
-          <select class="form__group-input js-niceselect" name="instructor">
+          <select class="form__group-input js-niceselect jsCourseInstructor" name="instructor">
             <option value="" disabled selected>Wybierz prowadzącego</option>
             {% for instructor in instructors %}
             <option data-name="{{instructor.fullname}}" value="{{instructor.id}}">{{instructor.fullname}}</option>
             {% endfor %}
           </select>
+          <p class="form__group-paragraph--error">error</p>
         </div>
       </div>
       <div class="form__row">
         <div class="form__group">
           <textarea
             placeholder="Krótki opis"
-            class="form__group-textarea"
+            class="form__group-textarea jsCourseShortDescribe"
             rows="4"
             name="short_description"
           ></textarea>
+          <p class="form__group-paragraph--error">error</p>
         </div>
       </div>
       <div class="form__row">
         <div class="form__group">
           <textarea
             placeholder="Opis szkolenia"
-            class="form__group-textarea"
+            class="form__group-textarea jsCourseDescribe"
             rows="6"
             name="course_description"
           ></textarea>
+          <p class="form__group-paragraph--error">error</p>
         </div>
       </div>
       <div class="form__row">
         <div class="form__group">
           <textarea
             placeholder="Dla kogo"
-            class="form__group-textarea"
+            class="form__group-textarea jsCourseForWho"
             rows="6"
             name="course_for"
           ></textarea>
+          <p class="form__group-paragraph--error">error</p>
         </div>
       </div>
       <div class="form__row">
         <div class="form__group">
           <textarea
             placeholder="Korzyści"
-            class="form__group-textarea"
+            class="form__group-textarea jsCourseBenefits"
             rows="6"
             name="course_benefit"
           ></textarea>
+          <p class="form__group-paragraph--error">error</p>
         </div>
       </div>
       <div class="form__row">
