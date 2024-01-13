@@ -11,4 +11,8 @@ class UserLogoutView(LogoutView):
     def dispatch(self, request, *args, **kwargs):
         logout(request)
         messages.success(self.request, "Zostałeś wylogowany")
-        return redirect(self.next_page)
+        response = super().dispatch(request, *args, **kwargs)
+        response.delete_cookie('is_logged')
+
+        return response
+        # return redirect(self.next_page)

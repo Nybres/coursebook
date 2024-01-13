@@ -8,31 +8,34 @@
       <div class="login__left">
         <div class="login__box">
           <div class="login__box-title">Zaloguj się</div>
-          <form method="POST" class="login__form" action="">
+          <form method="POST" class="login__form jsloginUsers" action="">
             {% csrf_token %}
             <div class="form__row">
               <div class="form__group">
                 <input
+                  id="userEmail"
                   name="username"
                   placeholder="Adres e-mail"
                   class="form__group-input"
                   type="text"
                 />
+                <p class="form__group-paragraph--error">error</p>
               </div>
             </div>
             <div class="form__row">
               <div class="form__group">
-                <!-- zrobić potem password -->
                 <input
+                  id="userPassword"
                   name="password"
                   placeholder="Hasło"
                   class="form__group-input"
-                  type="text"
+                  type="password"
                 />
+                <p class="form__group-paragraph--error">error</p>
               </div>
             </div>
             <a href="#" class="login__box-pass"> Nie pamiętasz hasła? </a>
-            <button title="Zaloguj się" href="#" class="btn btn--primary">
+            <button title="Zaloguj się"  class="btn btn--primary jsloginUsersBtn form__group-loginBtn">
               Zaloguj się
               <span class="btn__arrow">
                 <svg
@@ -147,5 +150,6 @@
   </div>
 </section>
 {% endblock %} {% block scripts %}
+<script src="{% static 'js/register-user.min.js' %}"></script>
 <script src="{% static 'js/main.min.js' %}"></script>
 {% endblock %}
