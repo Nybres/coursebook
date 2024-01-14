@@ -98,7 +98,10 @@
           <div class="price-sum">
             {% if total_amount is not None %}
              <p class="price-sum__title">Cena całkowita</p>
-             <p class="price-sum__sum">{{ total_amount }}zł</p>
+             <div class="price-sum__displayPrice">
+             <p class="price-sum__sum jsOrderDetailsPrice">{{ total_amount }}</p>
+             <p class="price-sum__zl">&nbspzł</p>
+            </div>
              {% else %}
              <p class="price-sum__sum ">Brak danych</p>
     {% endif %}
