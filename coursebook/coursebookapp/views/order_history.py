@@ -31,6 +31,8 @@ class UserOrderHistory(generics.ListAPIView):
             paginator = Paginator(last_orders, self.default_pagination_size)
             page_number = request.GET.get("page")
             paginated_last_orders = paginator.get_page(page_number)
+        else:
+            paginated_last_orders = {}
 
         context = {
             "user": user,
