@@ -45,8 +45,10 @@
           {% for course_detail in purchased_courses %}
           <div class="order">
             {% if course_detail.course_image %}
-             <img class="order__img" src="{{ course_detail.course_image }}" alt="CourseBook zakupione kursy">
-            {% endif %}
+            <img class="order__img" loading="lazy" src="{{ course_detail.course_image }}" alt="CourseBook zakupione kursy">
+          {% else %}
+            <img class="order__img" loading="lazy" src="https://placehold.co/400x200?text={{ course_detail.purchased_course.course.title }}" alt="Brak obrazka">
+          {% endif %}
              <div class="order__box">
                 <p class="order-details__title-style">Nazwa kursu</p>
                 <p class="order-details__data order-details__data-line">{{ course_detail.purchased_course.course.title }}</p>
@@ -89,7 +91,10 @@
           <div class="price-sum">
             {% if total_amount is not None %}
              <p class="price-sum__title">Cena całkowita</p>
-             <p class="price-sum__sum">{{ total_amount }}zł</p>
+             <div class="price-sum__displayPrice">
+             <p class="price-sum__sum jsOrderDetailsPrice">{{ total_amount }}</p>
+             <p class="price-sum__zl">&nbspzł</p>
+            </div>
              {% else %}
              <p class="price-sum__sum ">Brak danych</p>
     {% endif %}
