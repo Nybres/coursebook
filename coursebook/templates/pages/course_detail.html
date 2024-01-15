@@ -171,7 +171,7 @@
             {% csrf_token %}
             <p class="course__sets-quantity">Ilość wolnych miejsc to</p>
             <div class="course__elements">
-              <div class="">
+              <div class="form__group">
                 <input placeholder="1" data-quantity="{{ course.seats }}" name="quantity" value="1"
                   class="course__add-qty course__mr jsQuantityInputOfferCard" type="text" />
                 <input name="course" type="hidden" value="{{course.id}}" />
@@ -185,6 +185,7 @@
                 </span>
               </button>
             </div>
+            <p class="error-valid">Podana wartość jest błędna</p>
           </form>
         </div>
       </div>
