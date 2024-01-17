@@ -64,8 +64,10 @@
       <div>
         <div class="blog-content__item__picture">
           {% if post.photo %}
-          <img class="blog-content__item__picture__img" src="{{post.photo_thumb.url}}" alt="Kreatywne gotowanie">
-          {% endif %}
+          <img class="blog-content__item__picture__img" src="{{post.photo.url}}" alt="{{post.title}}">
+      {% else %}
+          <img class="blog-content__item__picture__img" src="https://placehold.co/400x200?text={{post.title}}" alt="{{post.title}}">
+      {% endif %}
         </div>
         <div class="blog-content__item__labels">
           {%if post.categories%}
